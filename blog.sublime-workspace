@@ -1,0 +1,550 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "themes/light/layout/_partial/after_footer.ejs",
+			"settings":
+			{
+				"buffer_size": 934,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 197.0,
+		"selected_items":
+		[
+			[
+				"symar",
+				"Set Syntax: Markdown"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"css",
+				"Set Syntax: CSS"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"thmer",
+				"Themr: Next theme"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"ther",
+				"Themr: List themes"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 386.0
+	},
+	"console":
+	{
+		"height": 146.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/code/regularjs-github-io/asserts/mcss/_var.mcss",
+		"/home/code/regular/guide/zh/advanced/review.md",
+		"/home/code/regular/blog/node_modules/gulp-yuidoc/node_modules/yuidocjs/node_modules/yui/calendar-base/lang/calendar-base_es-AR.js",
+		"/home/code/regular/blog/node_modules/gulp-yuidoc/node_modules/yuidocjs/node_modules/yui/arraylist/arraylist-min.js",
+		"/home/code/regular/guide/en/core/animation.md",
+		"/home/code/regularjs-github-io/bower_components/codemirror/mode/css/scss_test.js",
+		"/home/code/regular/guide/en/SUMMARY.md",
+		"/home/code/regular/blog/themes/regular/layout/banner.ejs",
+		"/home/code/regular/blog/node_modules/gulp-yuidoc/node_modules/yuidocjs/node_modules/yui/stylesheet/stylesheet-min.js",
+		"/home/code/regularjs-github-io/template/common/header.ejs",
+		"/home/code/regular/blog/public/js/script.js",
+		"/home/code/regularjs-github-io/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/supports-color",
+		"/home/code/regularjs-github-io/asserts/mcss/_ui.mcss",
+		"/home/code/regular/blog/node_modules/gulp-yuidoc/node_modules/yuidocjs/node_modules/yui/io-upload-iframe/io-upload-iframe.js",
+		"/home/code/regular/guide/en/core/use.md",
+		"/home/code/regular/guide/_book/gitbook/style.css",
+		"/home/code/regular/blog/themes/regular/source/css/style.mcss",
+		"/home/code/regular/blog/themes/regular/source/css/_partials/_ui.mcss",
+		"/home/code/regular/blog/themes/regular/layout/_partial/header.ejs",
+		"/home/code/regular/blog/themes/regular/_config.yml",
+		"/home/code/regular/blog/themes/regular/source/js/home.js",
+		"/home/code/regular/blog/source/index.html",
+		"/home/code/regular/blog/themes/regular/layout/layout.ejs",
+		"/home/code/regularjs-github-io/asserts/font/style.css",
+		"/home/code/regular/blog/themes/regular/layout/index.ejs",
+		"/home/code/regular/blog/themes/regular/layout/_partial/after-footer.ejs",
+		"/home/code/regular/blog/node_modules/hexo-renderer-mcss/index.js",
+		"/home/code/regular/blog/scripts/render.js",
+		"/home/code/regularjs-github-io/asserts/font/demo.html",
+		"/home/code/regularjs-github-io/asserts/font/demo-files/demo.css",
+		"/home/code/regular/blog/themes/regular/source/js/nes.js",
+		"/home/code/regular/blog/themes/regular/source/css/_partials/module.styl",
+		"/home/code/regular/blog/themes/regular/source/css/_partials/ui.styl",
+		"/home/code/regular/blog/themes/regular/source/css/_partials/var.styl",
+		"/home/code/regular/blog/node_modules/hexo-renderer-stylus/package.json",
+		"/home/code/regular/blog/node_modules/hexo-renderer-stylus/index.js",
+		"/home/code/regular/blog/node_modules/hexo-renderer-stylus/node_modules/mcss/lib/main.js",
+		"/home/code/regular/guide/en/core/event.md",
+		"/home/code/regular/guide/en/core/animate.md",
+		"/home/code/regular/blog/node_modules/hexo-renderer-stylus/README.md",
+		"/home/code/regular/blog/node_modules/hexo-renderer-stylus/node_modules/mcss/lib/helper/util.js",
+		"/home/code/regular/blog/node_modules/hexo-renderer-stylus/node_modules/mcss/lib/index.js",
+		"/home/code/regular/blog/node_modules/hexo-yuidoc/lib/model.js",
+		"/usr/local/lib/node_modules/hexo/node_modules/warehouse/lib/schema.js",
+		"/home/code/regular/blog/themes/regular/source/css/_partials/font.styl",
+		"/home/code/regular/blog/node_modules/hexo-renderer-stylus/node_modules/mcss/package.json",
+		"/home/code/regular/blog/public/css/style1.css",
+		"/home/code/regular/blog/themes/regular/source/css/style.styl",
+		"/home/code/regular/blog/themes/regular/source/css/style1.mcss",
+		"/home/code/regular/blog/node_modules/gulp-yuidoc/node_modules/yuidocjs/node_modules/yui/axis-numeric/axis-numeric.js",
+		"/home/code/regularjs-github-io/bower_components/codemirror/AUTHORS",
+		"/home/code/regular/blog/node_modules/gulp-yuidoc/node_modules/yuidocjs/node_modules/yui/event-valuechange/event-valuechange.js",
+		"/home/code/regularjs-github-io/example.html",
+		"/home/code/regular/blog/themes/regular/layout/api/_partial/classitem.ejs",
+		"/home/code/regular/blog/package.json",
+		"/home/code/regular/blog/_config.yml",
+		"/home/code/regular/blog/gulpfile.js",
+		"/home/code/regular/blog/source/_yuidoc/index.json",
+		"/home/code/regular/blog/scripts/helpers.js",
+		"/home/code/regular/blog/node_modules/hexo-renderer-mcss/README.md",
+		"/home/code/regular/blog/source/docs/Hello.md",
+		"/home/code/regular/blog/source/demos/Hello.md",
+		"/home/code/regular/blog/themes/regular/layout/_partial/head.ejs",
+		"/home/code/regular/blog/themes/regular/layout/page.ejs",
+		"/home/code/regular/blog/themes/regular/layout/_partial/post/date.ejs",
+		"/home/code/regular/blog/node_modules/hexo-renderer-mcss/package.json",
+		"/home/code/regular/blog/source/index2.jade",
+		"/home/code/regular/blog/.gitignore",
+		"/home/code/regular/blog/source/_posts/helloworld.md",
+		"/home/code/regular/blog/themes/light/_config.yml",
+		"/home/code/regular/blog/db.json",
+		"/home/code/regularjs-github-io/bower_components/codemirror/theme/ambiance-mobile.css",
+		"/home/code/regularjs/node_modules/karma-phantomjs-launcher/node_modules/phantomjs/node_modules/adm-zip/MIT-LICENSE.txt",
+		"/home/code/regularjs-github-io/asserts/mcss/index.mcss",
+		"/home/code/regularjs-github-io/bower_components/codemirror/theme/ambiance.css",
+		"/home/luobo/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/luobo/.config/sublime-text-3/Packages/Emmet/Default (Linux).sublime-keymap",
+		"/home/luobo/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/luobo/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/code/regularjs/example/feature-collection/animation.html",
+		"/home/code/regularjs/node_modules/gulp-browserify/node_modules/browserify/node_modules/JSONStream/test/fixtures/all_npm.json",
+		"/home/code/regularjs/node_modules/gulp-istanbul/node_modules/event-stream/test/writeArray.asynct.js",
+		"/home/code/regularjs/src/walkers.js",
+		"/home/code/regularjs/node_modules/karma/node_modules/http-proxy/test/core/simple/test-http-upgrade-server2.js",
+		"/home/code/regularjs/node_modules/karma/node_modules/source-map/build/test-suffix.js",
+		"/home/code/regularjs/test/spec/test-util.js",
+		"/home/code/regularjs/test/spec/test-event.js",
+		"/home/code/regularjs/test/tmp/usecase.js",
+		"/home/code/regularjs/node_modules/gulp-istanbul/node_modules/event-stream/test/pause.asynct.js",
+		"/home/code/regularjs-github-io/perf/todomvc-benchmark/bower_components/regularjs/example/tmp/use.html",
+		"/home/code/regularjs/node_modules/mocha/node_modules/mkdirp/test/umask_sync.js",
+		"/home/code/regularjs/src/util.js",
+		"/home/code/regularjs/node_modules/gulp-browserify/node_modules/browserify-shim/test/fixtures/entry-requires-root-level-var.js",
+		"/home/code/regularjs/node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/node_modules/ws/test/testserver.js",
+		"/home/code/regularjs/node_modules/karma-coverage/node_modules/ibrik/node_modules/coffee-script-redux/node_modules/cscodegen/test/interpolations.coffee",
+		"/home/code/regularjs/node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/node_modules/ws/test/WebSocket.integration.js",
+		"/home/code/regularjs/node_modules/karma-coverage/node_modules/ibrik/node_modules/coffee-script-redux/node_modules/esmangle/lib/post/transform-infinity.js",
+		"/home/code/regularjs/node_modules/karma/node_modules/connect/lib/middleware/responseTime.js",
+		"/home/code/regularjs/node_modules/karma/node_modules/rimraf/test/setup.sh",
+		"/home/code/regularjs/node_modules/karma/node_modules/log4js/test/setLevel-asymmetry-test.js",
+		"/home/code/regularjs/node_modules/gulp-browserify/node_modules/browserify/test/standalone_events.js",
+		"/home/code/regularjs-github-io/examples/slider.html",
+		"/home/code/regularjs/test/spec/browser-directive.js",
+		"/home/code/regularjs/test/spec/browser-watcher.js",
+		"/home/code/regularjs/node_modules/gulp-browserify/node_modules/.bin/browserify",
+		"/home/code/regularjs/node_modules/karma/lib/browser_result.js",
+		"/home/code/regularjs/bower.json",
+		"/home/code/regularjs/src/Regular.js",
+		"/home/code/regularjs/dist/regular.js",
+		"/home/code/regularjs/regular.sublime-project",
+		"/home/code/regularjs/bin/regular",
+		"/home/code/regularjs-github-io/bower_components/bootstrap/less/responsive-embed.less",
+		"/home/code/regularjs/README.md",
+		"/home/code/regularjs/example/getting-start.html",
+		"/home/luobo/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/code/regularjs/node_modules/gulp-util/lib/isNull.js",
+		"/home/code/regularjs-github-io/index.html"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 95.5,
+		"where_history":
+		[
+			"/home/code/regular/blog/themes/regular/layout"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"false",
+			"prev",
+			"pagenation",
+			"pagination",
+			"Blog",
+			"News",
+			"span",
+			"div",
+			"span",
+			"import",
+			"g-nav",
+			"Referrence",
+			"API",
+			"Example",
+			"text",
+			"link",
+			"title",
+			"menu",
+			"layoutName",
+			"comment",
+			"sidebars",
+			"current",
+			"docs",
+			"pageName",
+			"modal",
+			"Example",
+			"docs",
+			"Example",
+			"modal",
+			"Demo",
+			"logo",
+			"modal",
+			"index",
+			"icn",
+			"Search",
+			"m-nav",
+			"$",
+			"\\$",
+			"nes",
+			"regular",
+			"regularjs",
+			"codemirror",
+			"retina",
+			"index",
+			"config",
+			"site",
+			"this",
+			"search",
+			"jquery",
+			"layout",
+			"permalink",
+			"swiftype",
+			"swf",
+			"github",
+			"Search",
+			"fonts",
+			"Blog",
+			"inner",
+			"reference",
+			"active",
+			"Reference",
+			"h2",
+			"inverse",
+			"background-color",
+			"asserts",
+			"dynamic",
+			"library",
+			"framework",
+			"./",
+			"_partials",
+			"error",
+			"hahah",
+			"style",
+			"config",
+			"Text",
+			"Compositor",
+			"all",
+			"the",
+			"ability",
+			"extensiable",
+			"and",
+			"two",
+			"as",
+			"delegate",
+			"is",
+			"two",
+			"using",
+			"freque",
+			"filename",
+			"stylus",
+			"styl",
+			"stylus",
+			"hexojs",
+			"stylus",
+			"Stylus",
+			"stylus",
+			"Stylus",
+			"stylus",
+			"Stylus",
+			"stylus",
+			"nib",
+			"Stylus",
+			"Function",
+			"__msetter",
+			"stylus",
+			"styl",
+			"stylus",
+			"border",
+			"grey",
+			"default",
+			"codemirror",
+			"font",
+			"var",
+			"header",
+			"side",
+			"siderbar",
+			"sidebar.ejs",
+			"stylus",
+			"styl",
+			"mcss",
+			"stylus",
+			"renderer",
+			"stylus",
+			"styl",
+			"stylus",
+			"Stylus",
+			"stylus",
+			"hexojs"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "themes/light/layout/_partial/after_footer.ejs",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 934,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								254,
+								254
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/EJS/EJS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "blog.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"ar.mcss",
+				"blog/themes/regular/source/css/_partials/_article.mcss"
+			],
+			[
+				"style.mcss",
+				"blog/themes/regular/source/css/style.mcss"
+			],
+			[
+				"stylemc",
+				"blog/themes/regular/source/css/style.mcss"
+			],
+			[
+				"head",
+				"blog/themes/regular/layout/_partial/head.ejs"
+			],
+			[
+				"style.mcs",
+				"blog/themes/regular/source/css/style.mcss"
+			],
+			[
+				"h",
+				"regularjs-github-io/template/common/header.ejs"
+			],
+			[
+				"hea",
+				"regularjs-github-io/template/common/header.ejs"
+			],
+			[
+				"ui.mc",
+				"blog/themes/regular/source/css/_partials/_ui.mcss"
+			],
+			[
+				"animati",
+				"guide/en/core/animation.md"
+			],
+			[
+				"event",
+				"guide/en/core/event.md"
+			],
+			[
+				"animation.js",
+				"regularjs/src/module/animation.js"
+			],
+			[
+				"aniamte.js",
+				"regularjs/src/helper/animate.js"
+			],
+			[
+				"walker",
+				"regularjs/src/walkers.js"
+			],
+			[
+				"browser-u",
+				"regularjs/test/spec/browser-modular.js"
+			],
+			[
+				"brow-do",
+				"regularjs/test/spec/browser-dom.js"
+			],
+			[
+				"regular.js",
+				"regularjs/src/Regular.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/home/code/regular/guide.sublime-project"
+			],
+			[
+				"bl",
+				"/home/code/leeluolee.github.com/blog.sublime-project"
+			],
+			[
+				"re",
+				"/home/code/regularjs/regular.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 408.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

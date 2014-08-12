@@ -2,6 +2,7 @@ menu:
   首页: /
   归档: /archives
   订阅: /atom.xml
+  Github: https://github.com/leeluolee
 
 widgets: 
 - search
@@ -26,5 +27,5 @@ addthis:
 
 fancybox: true
 
-google_analytics:
+google_analytics: true
 rss:

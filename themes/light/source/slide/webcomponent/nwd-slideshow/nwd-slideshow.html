@@ -1,0 +1,146 @@
+<script src="bower_components/bespoke.js/dist/bespoke.min.js"></script>
+<script src="bower_components/bespoke-hash/dist/bespoke-hash.min.js"></script>
+<script src="bower_components/bespoke-bullets/dist/bespoke-bullets.min.js"></script>
+<script src="bower_components/bespoke-state/dist/bespoke-state.min.js"></script>
+<link rel="stylesheet" id='default' href="http://yandex.st/highlightjs/7.5/styles/default.min.css">
+<link rel="import" href="./nwd-slide.html" />
+
+
+<template>
+  <style>
+    nw-slideshow:host{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      -webkit-perspective: 1200px;
+      -moz-perspective: 1200px;
+      perspective: 1200px; 
+    }
+    .bespoke-slide{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      visibility: hidden;
+      overflow: hidden;
+      -webkit-backface-visibility: hidden;
+      -moz-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-transform: translate3d(0, 0, 0);
+      -moz-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      -webkit-transform-style: preserve-3d;
+      -moz-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+    }
+
+    .controls {
+      position: absolute;
+      z-index: 1;
+      width: 100px;
+      bottom: 20px;
+      right: 20px;
+      text-align: justify;
+    }
+    .controls:after {
+      content: "";
+      display: inline-block;
+      width: 100%;
+    }
+    .control {
+      font-size: 42px;
+      line-height: 1;
+      display: inline-block;
+      color: #ccc;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .control:hover{
+      color: #ddd;
+    }
+    .control:active{
+      color: #aaa;
+    }
+
+  </style>
+  <content></content>
+  <div class="controls">
+    <span on-click="prevSlide" class="control prev">&#9664;</span>
+    <span on-click="nextSlide" class="control next">&#9654;</span>
+  </div>
+</template>
+<script type="text/javascript">
+  var proto = Object.create(HTMLElement.prototype);
+  var thisDoc = document.currentScript.ownerDocument;
+  document.head.appendChild(thisDoc.getElementById('default'))
+
+  var http = function(url, callback){
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState !== 4) return;
+        var status = xhr.status;
+        if((status >= 200 && status < 300)){
+          callback(null, xhr.responseText)
+        }else{
+          callback(xhr)
+        }
+    }
+    xhr.send();
+    return xhr
+  }
+
+
+  proto.createdCallback = function() {
+    var root = this.createShadowRoot();
+    var content = thisDoc.querySelector('template').content.cloneNode(true);
+    root.appendChild(content);
+    var src;
+    var node = this;
+    if(src = this.getAttribute('src')){
+      http(src, function(err, text){
+        var sections;
+        if(text){
+          sections  = text.split(/\-{3,}[\r\n|\n]/);
+          sections.forEach(function(section){
+            if(section){
+              var slide = document.createElement('nwd-slide');
+              slide.setContent(section)
+              node.appendChild(slide)
+            }
+          })
+        }
+        node.init(root)
+      })
+    }else{
+      node.init(root)
+    }
+
+  };
+  proto.init = function(root){
+    var binstance = bespoke.horizontal.from('nwd-slideshow', {
+      hash: true,
+      state: true,
+      bullets: 'li,blockquote, .blt, h1, h2, pre'
+    });
+
+    binstance.on('next', function(event){
+      var slide = event.slide;
+    })
+    binstance.on('prev', function(event){
+    })
+    root.querySelector('.prev').addEventListener('click', function(){
+      binstance.prev();
+    });
+    root.querySelector('.next').addEventListener('click', function(){
+      binstance.next();
+    });
+    var script = document.createElement('script');
+    script.src = '//codepen.io/assets/embed/ei.js';
+    document.body.appendChild(script)
+  }
+  window.NwdSlideshow = document.register('nwd-slideshow', {
+    prototype: proto
+  });
+</script>

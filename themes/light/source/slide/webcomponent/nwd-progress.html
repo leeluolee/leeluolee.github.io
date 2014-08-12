@@ -1,0 +1,92 @@
+<template id='template'>
+  <style>
+    :host{
+      
+      box-sizing: border-box;
+      display: inline-block;
+      height: 1em;
+      width: 10em;
+      vertical-align: -0.2em;
+    }
+    .progress-inner-element{
+      height: 100%;
+      width: 100%;
+    }
+  .progress-bar {
+    overflow:hidden;
+    border-radius: 2px;
+    background-color: #eee;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .progress-value {
+    overflow:hidden;
+    position:relative;
+    background-color: #8cb1b2;
+    height: 100%;
+    width: 50%;
+    
+    box-sizing: border-box;
+    -webkit-transition: width .8s cubic-bezier(0.770, 0.000, 0.175, 1.000);
+  }
+  .progress-value:before{
+    content:"";
+    width:200%;
+    height:200%;
+    position:absolute;
+    background-image:-webkit-linear-gradient(155deg,rgba(255,255,255,0) 10%,rgba(255,255,255,0.6) 50%,rgba(255,255,255,0) 90%);
+    background-image:linear-gradient(155deg,rgba(255,255,255,0) 10%,rgba(255,255,255,0.6) 50%,rgba(255,255,255,0) 90%);
+    top:-200%;
+    left:-200%;
+    -webkit-animation:gleam 3.4s infinite ease-out;
+    animation:gleam 3.4s infinite ease-out;
+  }
+
+    </style>
+      <div class="progress-inner-element">
+      <div class="progress-bar">
+        <div class="progress-value" style="width: 0%;" pseudo="x-progress-value">
+        </div>
+      </div>
+    </div>
+</template>
+
+<script>
+    
+  var proto = Object.create(HTMLElement.prototype);
+  var thisDoc = document.currentScript.ownerDocument;
+
+  function $(sl,ctx){return (ctx||thisDoc).querySelector(sl)}
+  // 继承自HTMLElement
+  var proto = Object.create(HTMLElement.prototype,{
+      position: {
+       get: function(){
+         return this.getAttribute('value') / this.getAttribute('max')
+       }
+      }
+  });
+  // 创建回调
+  proto.createdCallback = function(){
+   
+    var root = this.createShadowRoot();
+    root.applyAuthorStyles = true;
+    root.appendChild( $('#template').content.cloneNode(true)); 
+    this._reset();
+  }
+  // 属性更改回调
+  proto.attributeChangedCallback = function(attrName, oldVal, newVal){
+
+    if(~['max', 'value'].indexOf(attrName)) this._reset(); 
+  }
+  // 重新设置宽度
+  proto._reset = function(){
+    this.shadowRoot.querySelector('.progress-value').style.width = this.position * 100 + '%';
+  }
+  //注册 custom element
+  document.register('nwd-progress', {
+    prototype: proto
+  });
+
+
+</script>

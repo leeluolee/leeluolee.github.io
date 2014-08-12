@@ -1,6 +1,6 @@
 title: 开始使用Hexo
 date: 2013-03-02 11:34:51
-tags: ["tool", "nodejs"]
+tags: ["tool"]
 ---
 
 去年毕业后配置Otcopress完后就没用过了,反正不会去折腾Ruby，发现问题也不好解决，索性就换到[Hexo](http://zespia.tw/hexo/)了, 文档很丰富, 没有累赘的功能部署很快, 简单记录下

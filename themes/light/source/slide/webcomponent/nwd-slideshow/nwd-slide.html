@@ -1,0 +1,153 @@
+<script src="bower_components/marked/lib/marked.js"></script>
+<script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
+<script src="bower_components/marked/lib/marked.js"></script>
+<link rel="import" href="./nwd-codepen.html" />
+  <template>
+   <style>
+    @host {
+      nwd-slide {
+        font-family: Helvetica,  Arial,STHeiti STXihei, Microsoft JhengHei, STXihei, "华文细黑","Microsoft YaHei", "微软雅黑",  Heiti, "黑体", SimSun, "宋体", sans-serif;
+        font-size: 30px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        /* 配色 https://kuler.adobe.com/vintage-card-color-theme-3165833/ */
+        /**
+         * bg : #f2ebbf;
+         * color: #5c4b51;
+         * link: #8cbeb2;
+         */
+        background: #F2EBBF;
+        color: #5C4B51;
+      }
+      .bespoke-slide{
+        opacity: 0;
+        z-index: 0;
+        -webkit-transition: opacity .5s ease-in-out;
+        transition: opacity .5s ease-in-out;
+      }
+      .bespoke-active{
+        opacity: 1;
+        z-index: 1;
+      }
+      .bespoke-active .bespoke-bullet{
+        opacity: 0;
+  
+      }
+      .bespoke-active .bespoke-bullet-active{
+        opacity: 1;
+      }
+    
+    }
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      max-height: 90%;
+      max-width: 80%;
+      width: 80%;
+      padding: 1rem;
+      text-align: left;
+      -webkit-transform: translate3d(-50%, -50%, 0);
+      transform: translate3d(-50%, -50%, 0);
+      -moz-box-sizing: border-box;
+      box-sizing: border-box
+    }
+
+    content::-webkit-distributed(ul),
+    content::-webkit-distributed(ol) {
+      text-align: left;
+      margin: 0 0 15px;
+    }
+    content::-webkit-distributed(h2) {
+      font-size: 1.2em;
+      color: #777;
+    }
+    content::-webkit-distributed(h1) {
+      text-align: center;
+    }
+    content::-webkit-distributed(blockquote ) {
+      border-top: 1px solid #fffffe;
+      border-bottom: 1px solid #fff;
+      font-style: italic;
+      color: #888;
+      font-family: "Georgia", serif;
+      font-size: 0.8em;
+      text-align: center;
+    }
+    content::-webkit-distributed(pre) {
+      font-size: .7em;
+      text-align: left;
+      display: block;
+      background: #fafaff;
+      border-radius: 4px;
+      line-height: 1.4;
+      font-family: monaco;
+      padding: 4px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    content::-webkit-distributed(h1) {
+      margin: 0 0 20px;
+    }
+    content::-webkit-distributed(a) {
+      color:  #8cb1b2;
+      text-decoration: none;
+    }
+    content::-webkit-distributed(.bespoke-bullet-inactive) {
+      opacity: 0;
+    }
+    content::-webkit-distributed(.bespoke-bullet) {
+      opacity: 0;
+      -webkit-transition: opacity .5s ease-in-out;
+      transition: opacity .5s ease-in-out;
+    }
+    content::-webkit-distributed(.bespoke-bullet-active) {
+      opacity: 1;
+    }
+  </style>
+  <div class="content"><content></content></div>
+</template>
+<style>
+pre{
+  color: red !important;
+}
+</style>
+<script type="text/javascript">
+(function(){
+  var proto = Object.create(HTMLElement.prototype);
+  var thisDoc = document.currentScript.ownerDocument;
+  
+  marked.setOptions({
+    gfm: true,
+    highlight: function (code, lang, callback) {
+      callback(null, hljs.highlight(lang||'javascript', code).value)
+    }
+  });
+
+  proto.setContent = function(txt){
+    var node = this;
+    var content = thisDoc.querySelector('template').content.cloneNode(true);
+    marked(txt,function(err,html){
+      if(err) throw err;
+      else{
+        node.innerHTML = html;
+        var root = node.shadowRoot || node.createShadowRoot();
+        root.applyAuthorStyles = true;
+        root.appendChild(content);
+      }
+    })
+  }
+  proto.createdCallback = function() {
+    if(this.innerHTML){
+      this.setContent(this.innerHTML||'');
+    }
+  };
+
+  document.register('nwd-slide', {
+    prototype: proto
+  });
+})();
+</script>

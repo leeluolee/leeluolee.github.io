@@ -1,6 +1,6 @@
 title: GitBook: Git + Markdown 快速发布你的书籍
 date: 2014-07-22 15:39:17
-tags: ["gitbook", "tools"]
+tags: ["npm", "tool"]
 ---
 
 
@@ -14,10 +14,10 @@ gitbook提供了一个简单的命令行工具`gitbook`用来编译和预览的�
 [![NPM](https://nodei.co/npm/gitbook.png?downloads=true&stars=true)](https://nodei.co/npm/gitbook/)
 
 
-
 ## 安装
 
 你可以直接通过npm安装gitbook到全局
+
 
 ```shell
 npm install -g gitbook
