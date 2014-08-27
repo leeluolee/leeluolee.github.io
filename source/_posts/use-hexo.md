@@ -43,6 +43,10 @@ deploy:
 hexo支持摘要断行 `<!-- more -->`
 
 
+## 坑
+
+1. 尽量将source和page分在不同的repo里
+2. 关于swig模板与代码高亮的冲突: {%raw%} {%endraw%} 即可
 
 ## 结尾
 
