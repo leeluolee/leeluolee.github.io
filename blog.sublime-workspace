@@ -8,10 +8,10 @@
 	"buffers":
 	[
 		{
-			"file": "themes/light/layout/_partial/after_footer.ejs",
+			"file": "source/_posts/create-a-todomvc-step-by-step.md",
 			"settings":
 			{
-				"buffer_size": 934,
+				"buffer_size": 14250,
 				"line_ending": "Unix"
 			}
 		}
@@ -80,6 +80,7 @@
 	},
 	"file_history":
 	[
+		"/home/code/leeluolee.github.com/source/_posts/a-introduction-to-webpack.md",
 		"/home/code/regularjs-github-io/asserts/mcss/_var.mcss",
 		"/home/code/regular/guide/zh/advanced/review.md",
 		"/home/code/regular/blog/node_modules/gulp-yuidoc/node_modules/yuidocjs/node_modules/yui/calendar-base/lang/calendar-base_es-AR.js",
@@ -365,24 +366,26 @@
 			[
 				{
 					"buffer": 0,
-					"file": "themes/light/layout/_partial/after_footer.ejs",
-					"semi_transient": true,
+					"file": "source/_posts/create-a-todomvc-step-by-step.md",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 934,
+						"buffer_size": 14250,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								254,
-								254
+								290,
+								290
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/EJS/EJS.tmLanguage"
+							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -512,6 +515,10 @@
 		"height": 500.0,
 		"selected_items":
 		[
+			[
+				"gui",
+				"/home/code/regular/guide.sublime-project"
+			],
 			[
 				"",
 				"/home/code/regular/guide.sublime-project"
