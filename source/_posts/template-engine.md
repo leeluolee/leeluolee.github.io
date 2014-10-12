@@ -1,4 +1,4 @@
-title: dhadhada
+title: 前端模板技术面面观
 date: 2014-10-10 18:59:49
 tags: [regularjs, javascript]
 categories:
@@ -111,7 +111,7 @@ document.body.innerHTML = "<img src=x   onerror='alert(xss)'/>"
 __2. 它很慢__
 
 等等，你刚才说了它很快！
-是的，但是如果你仅仅为了替换一个属性而用`innerHTML`替换了所有的Dom节点，这显然不是一个明知的决定，因为你深知这是低效的。所以说:
+是的，但是如果你仅仅为了替换一个属性而用`innerHTML`替换了所有的Dom节点，这显然不是一个明智的决定，因为你深知这是低效的。所以说:
 
 > Context is everything
 
@@ -119,7 +119,7 @@ __2. 它很慢__
 
 __3. 它很笨__
 
-它会完全移除所有现有的Dom，并重新渲染一边，包括事件和状态都以不复存在，这点利用innerHTML来进行render的框架(例如Backbone)的开发者应该深有体会，为了减少损失，不能不把View拆的越来越细，从而抱着看似“解耦完美”的架构体系进入了维护的深渊。
+它会完全移除所有现有的Dom，并重新渲染一遍，包括事件和状态都以不复存在，这点利用innerHTML来进行render的框架(例如Backbone)的开发者应该深有体会，为了减少损失，不能不把View拆的越来越细，从而抱着看似“解耦完美”的架构体系进入了维护的深渊。
 
 _注: 其实react的最大贡献就是它差不多是提供了一个更smart的innerHTML解决方案。_
     
@@ -141,20 +141,20 @@ __4. 有可能会创建出意料之外的节点.__
 
 __示例__
 
-1. Mustache: 弱逻辑
-2. Dust.js: 强逻辑 (推荐)
-3. doT.js: 超级快
+1. [mustache](http://mustache.github.io/)及其衍生: 弱逻辑
+2. [Dust.js](http://linkedin.github.io/dustjs/): 强逻辑 (推荐)
+3. [doT.js](olado.github.io/):  超级快
 
-__The basic process__
+__基本原理__
 
-&lt;a href="http://modernweb.com/wp-content/uploads/2014/09/String-based-Template.png">&lt;img src="http://modernweb.com/wp-content/uploads/2014/09/String-based-Template.png" alt="String-based Template" width="540" class="alignnone size-medium wp-image-3150" />&lt;/a>
+<a href="http://modernweb.com/wp-content/uploads/2014/09/String-based-Template.png"><img src="http://modernweb.com/wp-content/uploads/2014/09/String-based-Template.png" alt="String-based Template" width="540" class="alignnone size-medium wp-image-3150" /></a>
 
 如上图所示，我们发现字符串模板强依赖于`innerHTML`(渲染), 因为它的输出物就是字符串。由于这篇文章的重点不在这里，我们不会再对它们如何使用作深究。
 
 
 __优点__
 
-1. 快速的启动时间: 很多类似angular的簇拥者在奚落String-based templating似乎遗漏了这一点。
+1. 快速的初始化时间: 很多angular的簇拥者在奚落String-based templating似乎遗漏了这一点。
 2. 同构性: 完全的dom-independent，即可作为用服务器端和浏览器端(客官先不要急着搬phantomjs哈).
 3. 更强大的语法支持：因为它们都是不是自建DSL就是基于JavaScript语法，Parser的灵活性与受限于HTML的Dom-based模板技术不可同日而语
 
@@ -183,7 +183,7 @@ __大致流程__
 
 
 
-&lt;a href="http://modernweb.com/wp-content/uploads/2014/09/Dom-based-Template.png">&lt;img class="alignnone size-medium wp-image-3143" src="http://modernweb.com/wp-content/uploads/2014/09/Dom-based-Template.png" alt="Dom-based Template" width="540" />&lt;/a>
+<a href="http://modernweb.com/wp-content/uploads/2014/09/Dom-based-Template.png"><img class="alignnone size-medium wp-image-3143" src="http://modernweb.com/wp-content/uploads/2014/09/Dom-based-Template.png" alt="Dom-based Template" width="540" /></a>
 
 Dom-based的模板技术事实上并没有完整的parse的过程(先抛开表达式不说)，如果你需要从一段字符串创建出一个view，你必然通过`innerHTML`来获得初始Dom结构. 然后引擎会利用`Dom API`(`attributes`, `getAttribute`, `firstChild`... etc)层级的从这个原始Dom的属性中提取指令、事件等信息，继而完成数据与View的绑定，使其"活动化"。
 
@@ -216,7 +216,7 @@ String-based 和 Dom-based的模板技术都或多或少的依赖与`innerHTML`,
 
 >  所以为什么不结合它们两者来完全移除对`innerHTML`的依赖呢？
 
-我们可以利用一个如字符串模板的自定义DSL来描述结构并在Parse后承载信息(AST)，并在Compile时候,利用这些结构和`Dom API`来完成View的组装，在组装过程中，我们同样可以引入Dom-based 模板技术的诸如`Directive`等优良的种子。
+我们可以利用一个如字符串模板的自定义DSL来描述结构并在Parse后承载信息(AST)，并在Compile时候,利用这些结构和`Dom API`来完成View的组装，在组装过程中，我们同样可以引入Dom-based模板技术的诸如`Directive`等优良的种子。
 
 事实上，值得庆幸的是，已经有几个现实例子在这么做了。
 
@@ -229,11 +229,9 @@ __例子__
 
 __基本原理__
 
-&lt;a href="http://modernweb.com/wp-content/uploads/2014/09/Living-Template.png">&lt;img class="alignnone size-medium wp-image-3144" src="http://modernweb.com/wp-content/uploads/2014/09/Living-Template.png" alt="Living Template" width="540" />&lt;/a>
+<img class="alignnone size-medium wp-image-3144" src="http://modernweb.com/wp-content/uploads/2014/09/Living-Template.png" alt="Living Template" width="540" />
 
-就如图中所示，parse和compile的过程分别类似于String-based 模板技术 和 Dom-based模板技术，从而可以结合它们的优势
-
-> 事实上，Living template的compile过程比Dom-based 模板的link过程更加纯粹
+就如图中所示，parse和compile的过程分别类似于String-based 模板技术 和 Dom-based模板技术，从而可以结合它们的优势。
 
 下面来完整讲述下这两个过程
 
@@ -299,22 +297,18 @@ __基本原理__
 
 1. 灵活强大的语法，因为它与基于字符串的模板一般，DSL是自治的，完全不依赖与html，你可以想像下dom-based的模板的那些语法相关的指令，**事实上它们甚至无法表达上述那段简单的模板的逻辑。**
 2. Living模板技术需要同时处理`dsl元素` 与 `xml元素`来实现最终视图层的活动性，即它们是**dom-aware**的，而在字符串模板中其实`xml元素`完全可以无需关心，它们被统一视为`文本元素`。
-3. string-based templates only parse the "dsl element" and simply consider the "xml element" as the "text". but in living template, we need parse the "xml" together with the "dsl element". beacuse we need the infomation for creating living dom.
-3. unlike Dom-based templating, instead of real dom, this AST holds the all information we need(statement, directive, attributes and tagname...etc). 
-  1. it is more **lightweight**, setter and getter on dom is expensive.
-  2. it is **reusable**.
-  3. it can **be serialized** , so you can preparse it on server.
 
   
 ### 2 Compiler
 
-with spcified model (in regularjs, it is a plain object), template engine walks the AST and generating the dom recursively, meanwhile, according to the directive and other binder(event, inteplation... etc), it also create the binding between model and dom to **make the view living**. 
+结合特定的数据模型(在regularjs中，是一个裸数据)， 模板引擎层级游历AST并递归生成Dom节点(不会涉及到`innerHTML`). 与此同时，指令、事件和插值等binder也同时完成了绑定，使得最终产生的Dom是与Model相维系的，即是**活动的**. 
 
-for example, just like the inteplation `{{isLogin? 'Login': 'Wellcome'}}` we showed above.  once the compiler seen it, template will enter the `expression` walker: 
+事实上，Living template的compile过程相对与Dom-based的模板技术更加纯粹, 因为它完全的依照AST生成，而不是在原Dom上的改写。
+
+以上面的模板代码的一个插值为例:`{{isLogin? 'Login': 'Wellcome'}}`。一旦regularjs的引擎遇到这段模板与代表的语法元素节点，会进入如下函数处理
 
 ```javascript
-// some source from regularjs
-
+// some sourcecode from regularjs
 walkers.expression = function(ast){
   var node = document.createTextNode("");
   this.$watch(ast, function(newval){
@@ -324,17 +318,21 @@ walkers.expression = function(ast){
 }
 
 ```
+正如我们所见， 归功于`$watch`函数，一旦表达式发生改变，文本节点也会随之改变，这一切其实与angularjs并无两样(事实上regularjs同样也是基于脏检查)
 
-as shown above, once the expression changed, node.textContent(or innerText) will changes synchronous.
+与Dom-based 模板技术利用Dom节点承载信息所不同的是，它的中间产物AST 承载了所有Compile过程中需要的信息(语句, 指令, 属性...等等). 这带来几个好处
+
+  1. **轻量级**, 在Dom中进行读写操作是低效的.
+  2. **可重用的**. 
+  3. **可序列化** , 你可以在本地或服务器端预处理这个过程。
 
 
-1. instead of `innerHTML`, we use `DOM` api to generate the 
-2. 
 
 
-### living template's clever brother —— React
+### living template's 近亲 —— React
 
-React can be considered as a templating solution，it avoid be coupled with `innerHTML` by using virtual dom which is created by nested function call(you can also use jsx syntax)
+React当然也可以称之为一种模板解决方案，它同样也巧妙规避了`innerHTML`，不过却使用的是截然不同的策略：react使用一种`virtual dom` 的技术，它也同样基于脏检查，不过与众不同的是，它的脏检查发生在view层面，即发生在virtual dom上，从而可以以较小的开销来实现局部更新。
+
 
 __Example__
 
@@ -342,44 +340,45 @@ __Example__
 var MyComponent = React.createClass({
  render: function() {
    if (this.props.first) {
-     return &lt;div className="first">&lt;span>A Span&lt;/span>&lt;/div>;
+     return <div className="first"><span>A Span</span></div>;
    } else {
-     return &lt;div className="second">&lt;p>A Paragraph&lt;/p>&lt;/div>;
+     return <div className="second"><p>A Paragraph</p></div>;
    }
  }
 });
 
 ```
 
-which in regularjs
+同样的逻辑使用regularjs描述
 
 ```html
 {{#if first}}
-  &lt;div className="first">&lt;span>A Span&lt;/span>&lt;/div>
+  <div className="first"><span>A Span</span></div>
 {{#else}}
-  &lt;div className="second">&lt;p>A Paragraph&lt;/p>&lt;/div>;
+  <div className="second"><p>A Paragraph</p></div>;
 {{/if}}
 
 ```
 
-__Every one thinks in his way__, And I prefer using template to describe my structure, do you?
+
+__仁者见仁智者见智__, 反正我倾向于使用模板来描述结构，而不是杂糅Virtual dom和js语句。你呢？
 
 
 
-## A comparison table
+## 一个全面的对照表
 
 
 
 | Contrast /Solutions  |  String-based templating | Dom-based templating  | Living templating|
 | -------------|-------------             | ---------| ------------- |
-|Example       |  Mustache,Dustjs|Angularjs, Vuejs  |Regularjs 、Ractivejs、htmlbars||Usage| | | |
-|Syntax| &amp;diams;&amp;diams;&amp;diams;| &amp;diams; | &amp;diams;&amp;diams;&amp;diams; |
-|reactive| X | &amp;diams;&amp;diams;&amp;diams; | &amp;diams;&amp;diams;&amp;diams; |
-|Performance| Initialize: &amp;diams;&amp;diams;&amp;diams; &lt;br/> Update: &amp;diams; | Initialize: &amp;diams; &lt;br/> Update: &amp;diams;&amp;diams;&amp;diams; | Initialize: &amp;diams; &lt;br/> Update: &amp;diams;&amp;diams;&amp;diams;  |
-|Security| &amp;diams;| &amp;diams;&amp;diams; | &amp;diams;&amp;diams;&amp;diams; |
-|SVG support(*1)| X | &amp;diams;&amp;diams; | &amp;diams;&amp;diams;&amp;diams; |
-|Dom independent| &amp;diams;&amp;diams;&amp;diams; | X | &amp;diams;&amp;diams; |
-|Server Rendering | &amp;diams;&amp;diams;&amp;diams; | &amp;diams; | &amp;diams; |
+|例子       |  Mustache,Dustjs|Angularjs, Vuejs  |Regularjs 、Ractivejs、htmlbars||Usage| | | |
+|语法| ♦♦♦ | ♦♦♦  | ♦♦♦ |
+|活动性| X | ♦♦♦ | ♦♦♦|
+|性能| 初始: ♦♦♦<br/> 更新: ♦ | 初始: ♦ <br/> 更新: ♦♦♦ | 初始: ♦ <br/> 更新: ♦♦♦   |
+|安全性| ♦ | ♦♦ | ♦♦♦♦♦ |
+|Dom 无关| ♦♦♦♦♦ | X | ♦♦ |
+|SVG support(*1)| X | ♦♦ | ♦♦♦ |
+
 
 
 

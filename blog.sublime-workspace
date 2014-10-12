@@ -11,7 +11,15 @@
 			"file": "source/_posts/create-a-todomvc-step-by-step.md",
 			"settings":
 			{
-				"buffer_size": 14250,
+				"buffer_size": 14274,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/_posts/template-engine.md",
+			"settings":
+			{
+				"buffer_size": 10847,
 				"line_ending": "Unix"
 			}
 		}
@@ -19,7 +27,7 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 197.0,
+		"height": 375.0,
 		"selected_items":
 		[
 			[
@@ -59,7 +67,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 386.0
+		"width": 410.0
 	},
 	"console":
 	{
@@ -80,6 +88,10 @@
 	},
 	"file_history":
 	[
+		"/home/code/leeluolee.github.com/source/_posts/template-engine.md",
+		"/home/code/leeluolee.github.com/.deploy/js/twitter.js",
+		"/home/code/leeluolee.github.com/source/_posts/template-string-vs-dom.md",
+		"/home/code/leeluolee.github.com/source/_posts/yeoman-generator-start.md",
 		"/home/code/leeluolee.github.com/source/_posts/a-introduction-to-webpack.md",
 		"/home/code/regularjs-github-io/asserts/mcss/_var.mcss",
 		"/home/code/regular/guide/zh/advanced/review.md",
@@ -216,6 +228,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"structure",
+			"template",
 			"false",
 			"prev",
 			"pagenation",
@@ -341,9 +355,7 @@
 			"stylus",
 			"styl",
 			"stylus",
-			"Stylus",
-			"stylus",
-			"hexojs"
+			"Stylus"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -361,7 +373,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -370,25 +382,70 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14250,
+						"buffer_size": 14274,
+						"regions":
+						{
+							"TagLint":
+							{
+								"flags": 2356,
+								"icon": "dot",
+								"regions":
+								[
+									[
+										4543,
+										4549
+									]
+								],
+								"scope": "variable.parameter"
+							}
+						},
+						"selection":
+						[
+							[
+								1693,
+								1693
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1656.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "source/_posts/template-engine.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10847,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								290,
-								290
+								3470,
+								3470
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"is_xml": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 5185.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -443,6 +500,10 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"te",
+				"source/_posts/template-engine.md"
+			],
 			[
 				"ar.mcss",
 				"blog/themes/regular/source/css/_partials/_article.mcss"
@@ -516,6 +577,10 @@
 		"selected_items":
 		[
 			[
+				"re",
+				"/home/code/regularjs/regular.sublime-project"
+			],
+			[
 				"gui",
 				"/home/code/regular/guide.sublime-project"
 			],
@@ -526,10 +591,6 @@
 			[
 				"bl",
 				"/home/code/leeluolee.github.com/blog.sublime-project"
-			],
-			[
-				"re",
-				"/home/code/regularjs/regular.sublime-project"
 			]
 		],
 		"width": 380.0
