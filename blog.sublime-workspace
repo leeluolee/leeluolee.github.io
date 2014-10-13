@@ -19,7 +19,7 @@
 			"file": "source/_posts/template-engine.md",
 			"settings":
 			{
-				"buffer_size": 10847,
+				"buffer_size": 9826,
 				"line_ending": "Unix"
 			}
 		}
@@ -402,8 +402,8 @@
 						"selection":
 						[
 							[
-								1693,
-								1693
+								1692,
+								1692
 							]
 						],
 						"settings":
@@ -426,15 +426,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10847,
+						"buffer_size": 9826,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3470,
-								3470
+								674,
+								674
 							]
 						],
 						"settings":
@@ -445,7 +445,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 5185.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

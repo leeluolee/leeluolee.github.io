@@ -9,11 +9,16 @@ categories:
 
 其实从发布[regularjs](http://github.com/regularjs/regular)之后，我发现在google搜索regularjs 不是给我这个画面
 
+![regular-search-1](http://leeluolee.github.io/attach/template-engine/regularjs-search1.png)
+
 就是给我这个画面
 
-突然发现取名字真是个大学问，当时就基本预计到了会有不明真相的朋友认为它只是一个照搬[angularjs](http://angularjs.org)的轮子。
+![regular-search-2](http://leeluolee.github.io/attach/template-engine/regular-search-2.png)
 
-在这个文章，我**不会直截了当去与angular做直接的对比**，而是从最基本原理开始对现有的**模板解决方案**进行一个全面的分类，同时会给出它们的一些或优或劣的特性，这些特性基本都是本质性的，即它不为**维护者的水平高低和勤勉与否**所限制，所以是具有客观性的。
+
+突然发现取名字真是个大学问，当时就基本预计到了会有不明真相的朋友认为它只是一个照搬[angularjs](http://angularjs.org)的家伙，对于这点，有兴趣的朋友可以看下[【为什么要造Regularjs这个轮子】](http://regularjs.github.io/guide/zh/introduct/README.html)。
+
+而在这个文章，我**不会直截了当去与angular做直接的对比**，而是从最基本原理开始对现有的**模板解决方案**进行一个全面的分类，同时会给出它们的一些或优或劣的特性，这些特性基本都是本质性的，即它不为**维护者的水平高低和勤勉与否**所限制，所以是具有客观性的。
 
 > 此文的写作耗时很长，称之为雄文不为过，小心慢用
 
@@ -27,12 +32,12 @@ categories:
 这篇文章会对当今前端界的三种截然不同的模板方案做一个全面的对比，它们分别是
 
 1. **String-based 模板技术** (基于字符串的parse和compile过程)
-2. **Dom-based 模板技术** (基于Dom的link或compiler过程)
+2. **Dom-based 模板技术** (基于Dom的link或compile过程)
 3. 杂交的**Living templating 技术** (基于字符串的parse 和 基于dom的compile过程)
 
-同种类型的模板技术的**可能性**都是相同的，即vuejs如果愿意可以发展为angularjs的相同功能层级。
+同种类型的模板技术的**可能性**都是相同的，即同样身为dom-based的[vuejs](http://vuejs.org)如果愿意可以发展为angularjs的相同功能层级。
 
-(*注: 其实这么说作者后续思考后觉得并不是很妥当，因为决定这里框架的还有重要一环就是它们的数据管理层:，比如是基于脏检查还是基于setter和getter，就会有截然不同的定位*)
+(*注: 其实这么说作者后续思考后觉得并不是很妥当，因为决定这类框架的还有重要一环就是它们的数据管理层:，比如是基于脏检查还是基于setter和getter，就会有截然不同的定位*)
 
 另外需要注意的是任何一种类型的模板技术都是不可被替代的，它们甚至可以结合使用，并且很长一段时间内还会继续共存下去。
 
@@ -41,17 +46,17 @@ categories:
 除此之外另外一种奇葩模板技术本文也会提到即**react**，了解后你会发现它的特性更接近于Living templating。
 
 
-在进入介绍之前，我们需要先过一下 **InnerHTML**，它是本文的关键因素，所以不得不说。
+在进入介绍之前，我们需要先过一下不得不说的 **InnerHTML**，它是本文的关键因素。
 
 
 ## innerHTML
 
-我不认为我还需要从`innerHTML`的细节讲起，我们对它太熟悉了，那就直接从优劣开始讲吧！
+我不认为还需要从`innerHTML`的细节讲起，我们对它太熟悉了，那就直接从优劣开始讲吧！
 
 
 ### innerHTML 毫无疑问是好的
 
-在`innerHTML`正是成为 [web 标准](https://domparsing.spec.whatwg.org/#innerhtml) 前，它当之无愧的已经是大家公认的事实标准。 这是因为：
+在`innerHTML`正是成为 [web 标准](https://domparsing.spec.whatwg.org/#innerhtml) 前，它当之无愧的已经是大家公认的事实标准，这是因为：
 
 
 __1 . 它便于书写并且直观__
@@ -147,7 +152,7 @@ __示例__
 
 __基本原理__
 
-<a href="http://modernweb.com/wp-content/uploads/2014/09/String-based-Template.png"><img src="http://modernweb.com/wp-content/uploads/2014/09/String-based-Template.png" alt="String-based Template" width="540" class="alignnone size-medium wp-image-3150" /></a>
+![string-based](http://leeluolee.github.io/attach/template-engine/String-based-Template.png)
 
 如上图所示，我们发现字符串模板强依赖于`innerHTML`(渲染), 因为它的输出物就是字符串。由于这篇文章的重点不在这里，我们不会再对它们如何使用作深究。
 
@@ -171,7 +176,7 @@ __缺点__
 
 ## Dom-based Template Engine
 
-近几年，借着Angularjs的东风，Dom-based的模板技术开始大行其道，与此同时也出现了一些优秀的替代者，就我们国人而言，近的就有[@尤小右](http://weibo.com/arttechdesign)的[Vuejs](http://vuejs.org) 和 [司徒大大]()的[avalonjs](https://github.com/RubyLouvre/avalon)。看仓库就可以发现风格也是完全不同：1) 一个简洁  2)一个奔放不羁
+近几年，借着Angularjs的东风，Dom-based的模板技术开始大行其道，与此同时也出现了一些优秀的替代者，就我们国人而言，近的就有[@尤小右](http://weibo.com/arttechdesign)的[Vuejs](http://vuejs.org) 和 [司徒大大]()的[avalonjs](https://github.com/RubyLouvre/avalon)。看仓库就可以发现风格也是完全不同：1) 一个简洁优雅  2)一个奔放不羁
 
 __示例__
 
@@ -182,8 +187,7 @@ __示例__
 __大致流程__
 
 
-
-<a href="http://modernweb.com/wp-content/uploads/2014/09/Dom-based-Template.png"><img class="alignnone size-medium wp-image-3143" src="http://modernweb.com/wp-content/uploads/2014/09/Dom-based-Template.png" alt="Dom-based Template" width="540" /></a>
+![dom-based](http://leeluolee.github.io/attach/template-engine/Dom-based-Template.png)
 
 Dom-based的模板技术事实上并没有完整的parse的过程(先抛开表达式不说)，如果你需要从一段字符串创建出一个view，你必然通过`innerHTML`来获得初始Dom结构. 然后引擎会利用`Dom API`(`attributes`, `getAttribute`, `firstChild`... etc)层级的从这个原始Dom的属性中提取指令、事件等信息，继而完成数据与View的绑定，使其"活动化"。
 
@@ -192,20 +196,23 @@ Dom-based的模板技术事实上并没有完整的parse的过程(先抛开表�
 _注意，dom-based的模板技术不一定要使用`innerHTML`，比如所有模板都是写在入口页面中时, 但是此时parse过程仍然是浏览器所为。_
 
 
+
 __优点__
 
 1. 是活动的:  完成compile之后，data与View仍然保持联系，即你可以不依赖与手动操作`Dom API`来更新View
 2. 是**运行时**高效的: 可以实现局部更新
-3. 
+3. 指令等强大的附属物帮助我们用声明式的方式开发APP
 
 
 __缺点__
 
 1. 部分请见innerHTML
-2. Link过程对Dom强依赖：
-3. 信息承载于属性中，这个其实是不必要和冗余的的。
-	部分框架在读取属性后会通过诸如`removeAttribute`的方式移除它们，其实这个不一定必要，而且其实并无解决它们Dom强依赖的特性
-4. 大
+2. 没有独立的Parser，必须通过innerHTML(或首屏)获取初始节点，即它的语法是强依赖与HTML，这也导致它有潜在的安全问题
+3. 信息承载于属性中，这个其实是不必要和冗余的。
+	部分框架在读取属性后会通过诸如`removeAttribute`的方式移除它们，其实这个不一定必要，而且其实并无解决它们Dom强依赖的特性，比如如果你查看[angular的todomvc]的节点，你会发现它的输出是这样的:
+	![angular-todo](http://leeluolee.github.io/attach/template-engine/angular-todo.png)
+4. FOUC(Flash of unstyled content)：即内容闪动，这个无需多说了，只怪它初次进入dom的内容并不是最终想要的内容。
+
 
 ## Living Template Engine
 
@@ -216,7 +223,7 @@ String-based 和 Dom-based的模板技术都或多或少的依赖与`innerHTML`,
 
 >  所以为什么不结合它们两者来完全移除对`innerHTML`的依赖呢？
 
-我们可以利用一个如字符串模板的自定义DSL来描述结构并在Parse后承载信息(AST)，并在Compile时候,利用这些结构和`Dom API`来完成View的组装，在组装过程中，我们同样可以引入Dom-based模板技术的诸如`Directive`等优良的种子。
+
 
 事实上，值得庆幸的是，已经有几个现实例子在这么做了。
 
@@ -224,14 +231,17 @@ __例子__
 
 1. [htmlbar](https://github.com/tildeio/htmlbars):  运行在[handlebar]()之后的二次编译
 2. [ractivejs](https://github.com/ractivejs/ractive):  独立
-3. [Regularjs](https://github.com/regularjs/regular) 独立,  __本文作者结精之一__
+3. [**Regularjs**](https://github.com/regularjs/regular) 独立,  __本文作者结精之一__
 
 
 __基本原理__
 
-<img class="alignnone size-medium wp-image-3144" src="http://modernweb.com/wp-content/uploads/2014/09/Living-Template.png" alt="Living Template" width="540" />
 
-就如图中所示，parse和compile的过程分别类似于String-based 模板技术 和 Dom-based模板技术，从而可以结合它们的优势。
+
+![Living-Template](http://leeluolee.github.io/attach/template-engine/Living-Template.png)
+
+
+就如图中所示，parse和compile的过程分别类似于String-based 模板技术 和 Dom-based模板技术。
 
 下面来完整讲述下这两个过程
 
@@ -298,6 +308,7 @@ __基本原理__
 1. 灵活强大的语法，因为它与基于字符串的模板一般，DSL是自治的，完全不依赖与html，你可以想像下dom-based的模板的那些语法相关的指令，**事实上它们甚至无法表达上述那段简单的模板的逻辑。**
 2. Living模板技术需要同时处理`dsl元素` 与 `xml元素`来实现最终视图层的活动性，即它们是**dom-aware**的，而在字符串模板中其实`xml元素`完全可以无需关心，它们被统一视为`文本元素`。
 
+
   
 ### 2 Compiler
 
@@ -325,6 +336,19 @@ walkers.expression = function(ast){
   1. **轻量级**, 在Dom中进行读写操作是低效的.
   2. **可重用的**. 
   3. **可序列化** , 你可以在本地或服务器端预处理这个过程。
+  4. **安全**, 因为安全不需要`innerHTML`帮我们生成初始Dom
+
+如果你查看Living Template的输出，你会发现是这样的
+
+![regular-todo](http://leeluolee.github.io/attach/template-engine/regular-todo.png)
+
+只有需要的内容被输出了
+
+__总结Living templating __
+
+我们可以发现Living templating几乎同时拥有String-based和Dom-based模板技术的优点
+
+利用一个如字符串模板的自定义DSL来描述结构来达到了语法上的灵活性，并在Parse后承载信息(AST)。而在Compile阶段,利用AST和`Dom API`来完成View的组装，在组装过程中，我们同样可以引入Dom-based模板技术的诸如`Directive`等优良的种子。
 
 
 
@@ -363,6 +387,7 @@ var MyComponent = React.createClass({
 
 __仁者见仁智者见智__, 反正我倾向于使用模板来描述结构，而不是杂糅Virtual dom和js语句。你呢？
 
+值得一提的是，由于React的特性，它两次render之间，内部节点的替换是无法预计的(参考[这里](http://calendar.perfplanet.com/2013/diff/))，所以无法有效的保留信息，所以它也有大量的关于id的placeholder存在。你可以同样查看[react-todomvc生成的节点](http://todomvc.com/architecture-examples/react/#/)
 
 
 ## 一个全面的对照表
@@ -378,6 +403,17 @@ __仁者见仁智者见智__, 反正我倾向于使用模板来描述结构，�
 |安全性| ♦ | ♦♦ | ♦♦♦♦♦ |
 |Dom 无关| ♦♦♦♦♦ | X | ♦♦ |
 |SVG support(*1)| X | ♦♦ | ♦♦♦ |
+
+1. 任何一类无法被另一类全面替代
+2. 它们并不是无法同时存在的，比如你可以使用字符串模板来生成Dom-based的模板需要的模板字符串。
+
+
+###参考资料
+
+
+1. [Template Engines by @Sendhil](http://codingarchitect.wordpress.com/2012/10/22/template-engines/)
+2. [string-templating-considered-harmful](http://modernweb.com/2014/03/24/string-templating-considered-harmful/)
+
 
 
 
