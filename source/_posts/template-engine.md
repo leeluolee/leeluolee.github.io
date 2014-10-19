@@ -5,11 +5,18 @@ categories:
 ---
 {%raw%}
 
+> 此文的写作耗时很长，称之为雄文不为过，小心慢用
+
+
 ## 此文缘由
+
+
 
 其实从发布[regularjs](http://github.com/regularjs/regular)之后，我发现在google搜索regularjs 不是给我这个画面
 
 ![regular-search-1](http://leeluolee.github.io/attach/template-engine/regularjs-search1.png)
+
+<!-- more -->
 
 就是给我这个画面
 
@@ -20,8 +27,10 @@ categories:
 
 而在这个文章，我**不会直截了当去与angular做直接的对比**，而是从最基本原理开始对现有的**模板解决方案**进行一个全面的分类，同时会给出它们的一些或优或劣的特性，这些特性基本都是本质性的，即它不为**维护者的水平高低和勤勉与否**所限制，所以是具有客观性的。
 
-> 此文的写作耗时很长，称之为雄文不为过，小心慢用
 
+
+
+---------------------------------
 
 ## 什么是模板解决方案？
 

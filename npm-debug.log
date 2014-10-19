@@ -1,10 +1,10 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-g', 'hexo' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'spm@2.x', '-g' ]
 2 info using npm@1.4.16
 3 info using node@v0.10.25
 4 verbose node symlink /usr/bin/node
-5 verbose cache add [ 'hexo', null ]
-6 verbose cache add name=undefined spec="hexo" args=["hexo",null]
+5 verbose cache add [ 'spm@2.x', null ]
+6 verbose cache add name=undefined spec="spm@2.x" args=["spm@2.x",null]
 7 verbose parsed url { protocol: null,
 7 verbose parsed url   slashes: null,
 7 verbose parsed url   auth: null,
@@ -14,248 +14,308 @@
 7 verbose parsed url   hash: null,
 7 verbose parsed url   search: null,
 7 verbose parsed url   query: null,
-7 verbose parsed url   pathname: 'hexo',
-7 verbose parsed url   path: 'hexo',
-7 verbose parsed url   href: 'hexo' }
-8 silly lockFile 3f1a2efe-hexo hexo
-9 verbose lock hexo /home/luobo/.npm/3f1a2efe-hexo.lock
-10 silly lockFile 3f1a2efe-hexo hexo
-11 silly lockFile 3f1a2efe-hexo hexo
-12 verbose addNamed [ 'hexo', '' ]
-13 verbose addNamed [ null, '*' ]
-14 silly lockFile c225e5a0-hexo hexo@
-15 verbose lock hexo@ /home/luobo/.npm/c225e5a0-hexo.lock
-16 silly addNameRange { name: 'hexo', range: '*', hasData: false }
-17 verbose request where is /hexo
-18 verbose request registry http://registry.npmjs.org/
-19 verbose request id 5020d3d93dd16067
-20 verbose url raw /hexo
-21 verbose url resolving [ 'http://registry.npmjs.org/', './hexo' ]
-22 verbose url resolved http://registry.npmjs.org/hexo
-23 verbose request where is http://registry.npmjs.org/hexo
-24 info trying registry request attempt 1 at 00:41:40
-25 verbose etag "B0FLCOL54JVVZ5TI6BZU1BHRK"
-26 http GET http://registry.npmjs.org/hexo
-27 http 200 http://registry.npmjs.org/hexo
-28 silly registry.get cb [ 200,
-28 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-28 silly registry.get     etag: '"3GTE7AN2LHHRSNJ00793P2HBB"',
-28 silly registry.get     'content-type': 'application/json',
-28 silly registry.get     'cache-control': 'max-age=60',
-28 silly registry.get     'content-length': '130699',
-28 silly registry.get     'accept-ranges': 'bytes',
-28 silly registry.get     date: 'Sat, 11 Oct 2014 16:41:42 GMT',
-28 silly registry.get     via: '1.1 varnish',
-28 silly registry.get     age: '1918',
-28 silly registry.get     connection: 'keep-alive',
-28 silly registry.get     'x-served-by': 'cache-ty67-TYO',
-28 silly registry.get     'x-cache': 'HIT',
-28 silly registry.get     'x-cache-hits': '1',
-28 silly registry.get     'x-timer': 'S1413045702.159670,VS0,VE765',
-28 silly registry.get     vary: 'Accept' } ]
-29 silly addNameRange number 2 { name: 'hexo', range: '*', hasData: true }
-30 silly addNameRange versions [ 'hexo',
-30 silly addNameRange   [ '0.0.1',
-30 silly addNameRange     '0.0.2',
-30 silly addNameRange     '0.0.3',
-30 silly addNameRange     '0.0.4',
-30 silly addNameRange     '0.0.5',
-30 silly addNameRange     '0.0.6',
-30 silly addNameRange     '0.1.0',
-30 silly addNameRange     '0.1.1',
-30 silly addNameRange     '0.1.2',
-30 silly addNameRange     '0.1.3',
-30 silly addNameRange     '0.1.4',
-30 silly addNameRange     '0.1.5',
-30 silly addNameRange     '0.1.6',
-30 silly addNameRange     '0.1.7',
-30 silly addNameRange     '0.1.8',
-30 silly addNameRange     '0.1.9',
-30 silly addNameRange     '0.1.10',
-30 silly addNameRange     '0.1.11',
-30 silly addNameRange     '0.2.0',
-30 silly addNameRange     '0.2.1',
-30 silly addNameRange     '0.3.0',
-30 silly addNameRange     '0.3.1',
-30 silly addNameRange     '0.3.2',
-30 silly addNameRange     '0.4.0',
-30 silly addNameRange     '0.4.1',
-30 silly addNameRange     '0.4.2',
-30 silly addNameRange     '0.4.3',
-30 silly addNameRange     '0.4.4',
-30 silly addNameRange     '0.4.5',
-30 silly addNameRange     '0.5.0',
-30 silly addNameRange     '0.5.1',
-30 silly addNameRange     '0.5.2',
-30 silly addNameRange     '0.5.3',
-30 silly addNameRange     '0.5.4',
-30 silly addNameRange     '0.5.5',
-30 silly addNameRange     '0.5.6',
-30 silly addNameRange     '0.5.7',
-30 silly addNameRange     '0.5.8',
-30 silly addNameRange     '0.5.9',
-30 silly addNameRange     '0.5.10',
-30 silly addNameRange     '0.5.11',
-30 silly addNameRange     '0.5.12',
-30 silly addNameRange     '1.0.0',
-30 silly addNameRange     '1.0.1',
-30 silly addNameRange     '1.0.2',
-30 silly addNameRange     '1.0.3',
-30 silly addNameRange     '1.0.4',
-30 silly addNameRange     '1.0.5',
-30 silly addNameRange     '1.0.6',
-30 silly addNameRange     '1.0.7',
-30 silly addNameRange     '1.0.8',
-30 silly addNameRange     '1.0.9',
-30 silly addNameRange     '1.1.0',
-30 silly addNameRange     '1.1.1',
-30 silly addNameRange     '1.1.2',
-30 silly addNameRange     '1.1.3',
-30 silly addNameRange     '1.1.4',
-30 silly addNameRange     '1.2.0',
-30 silly addNameRange     '1.2.1',
-30 silly addNameRange     '1.2.2',
-30 silly addNameRange     '1.2.3',
-30 silly addNameRange     '1.2.4',
-30 silly addNameRange     '2.0.0-beta2',
-30 silly addNameRange     '2.0.0-rc1',
-30 silly addNameRange     '2.0.0-rc2',
-30 silly addNameRange     '2.0.0-beta1',
-30 silly addNameRange     '2.0.0-rc3',
-30 silly addNameRange     '2.0.0',
-30 silly addNameRange     '2.0.1',
-30 silly addNameRange     '2.0.2',
-30 silly addNameRange     '2.0.3',
-30 silly addNameRange     '2.0.4',
-30 silly addNameRange     '2.0.5',
-30 silly addNameRange     '2.0.6',
-30 silly addNameRange     '2.0.7',
-30 silly addNameRange     '2.1.0',
-30 silly addNameRange     '2.1.1',
-30 silly addNameRange     '2.2.0',
-30 silly addNameRange     '2.2.1',
-30 silly addNameRange     '2.3.0',
-30 silly addNameRange     '2.4.0',
-30 silly addNameRange     '2.4.1',
-30 silly addNameRange     '2.4.2',
-30 silly addNameRange     '2.4.3',
-30 silly addNameRange     '2.4.4',
-30 silly addNameRange     '2.4.5',
-30 silly addNameRange     '2.5.1',
-30 silly addNameRange     '2.5.2',
-30 silly addNameRange     '2.5.3',
-30 silly addNameRange     '2.5.4',
-30 silly addNameRange     '2.5.5',
-30 silly addNameRange     '2.5.6',
-30 silly addNameRange     '2.5.7',
-30 silly addNameRange     '2.6.0',
-30 silly addNameRange     '2.6.1',
-30 silly addNameRange     '2.6.2',
-30 silly addNameRange     '2.6.3',
-30 silly addNameRange     '2.7.0',
-30 silly addNameRange     '2.7.1',
-30 silly addNameRange     '2.8.0',
-30 silly addNameRange     '2.8.1',
-30 silly addNameRange     '2.8.2',
-30 silly addNameRange     '2.8.3' ] ]
-31 verbose addNamed [ 'hexo', '2.8.3' ]
-32 verbose addNamed [ '2.8.3', '2.8.3' ]
-33 silly lockFile 5b4a9e86-hexo-2-8-3 hexo@2.8.3
-34 verbose lock hexo@2.8.3 /home/luobo/.npm/5b4a9e86-hexo-2-8-3.lock
-35 silly lockFile 03a49f00-ry-npmjs-org-hexo-hexo-2-8-3-tgz http://registry.npmjs.org/hexo/-/hexo-2.8.3.tgz
-36 verbose lock http://registry.npmjs.org/hexo/-/hexo-2.8.3.tgz /home/luobo/.npm/03a49f00-ry-npmjs-org-hexo-hexo-2-8-3-tgz.lock
-37 verbose addRemoteTarball [ 'http://registry.npmjs.org/hexo/-/hexo-2.8.3.tgz',
-37 verbose addRemoteTarball   '79eb17e64b73b25d4e7abc565e039ca107cef802' ]
-38 info retry fetch attempt 1 at 00:41:44
-39 verbose fetch to= /tmp/npm-4362-Dg698hpL/registry.npmjs.org/hexo/-/hexo-2.8.3.tgz
-40 http GET http://registry.npmjs.org/hexo/-/hexo-2.8.3.tgz
-41 http 200 http://registry.npmjs.org/hexo/-/hexo-2.8.3.tgz
-42 silly lockFile 03a49f00-ry-npmjs-org-hexo-hexo-2-8-3-tgz http://registry.npmjs.org/hexo/-/hexo-2.8.3.tgz
-43 silly lockFile 03a49f00-ry-npmjs-org-hexo-hexo-2-8-3-tgz http://registry.npmjs.org/hexo/-/hexo-2.8.3.tgz
-44 silly lockFile 5b4a9e86-hexo-2-8-3 hexo@2.8.3
-45 silly lockFile 5b4a9e86-hexo-2-8-3 hexo@2.8.3
-46 silly lockFile c225e5a0-hexo hexo@
-47 silly lockFile c225e5a0-hexo hexo@
-48 silly resolved [ { name: 'hexo',
-48 silly resolved     version: '2.8.3',
-48 silly resolved     description: 'A fast, simple & powerful blog framework, powered by Node.js.',
-48 silly resolved     main: 'lib/hexo',
-48 silly resolved     bin: { hexo: './bin/hexo' },
-48 silly resolved     scripts: { test: 'gulp test' },
-48 silly resolved     directories: { lib: './lib', bin: './bin' },
-48 silly resolved     engines: { node: '>= 0.10.0' },
-48 silly resolved     repository: { type: 'git', url: 'git://github.com/hexojs/hexo.git' },
-48 silly resolved     bugs: { url: 'https://github.com/hexojs/hexo/issues' },
-48 silly resolved     homepage: 'http://hexo.io/',
-48 silly resolved     keywords: [ 'website', 'blog', 'cms', 'framework', 'hexo' ],
-48 silly resolved     author:
-48 silly resolved      { name: 'Tommy Chen',
-48 silly resolved        email: 'tommy351@gmail.com',
-48 silly resolved        url: 'http://zespia.tw' },
-48 silly resolved     license: 'MIT',
-48 silly resolved     dependencies:
-48 silly resolved      { async: '^0.9.0',
-48 silly resolved        cheerio: '0.17.0',
-48 silly resolved        chokidar: '0.8.2',
-48 silly resolved        colors: '0.6.2',
-48 silly resolved        compression: '^1.0.3',
-48 silly resolved        connect: '3.x',
-48 silly resolved        'graceful-fs': '^3.0.2',
-48 silly resolved        'hexo-front-matter': '0.0.4',
-48 silly resolved        'highlight.js': '8.1.0',
-48 silly resolved        'js-yaml': '^3.1.0',
-48 silly resolved        lodash: '^2.4.1',
-48 silly resolved        mime: '^1.2.11',
-48 silly resolved        minimist: '0.2.0',
-48 silly resolved        moment: '^2.8.1',
-48 silly resolved        morgan: '^1.1.1',
-48 silly resolved        'serve-static': '^1.2.0',
-48 silly resolved        'sprintf-js': '0.0.7',
-48 silly resolved        'strip-indent': '^0.1.3',
-48 silly resolved        swig: '1.4.1',
-48 silly resolved        warehouse: '0.2.2' },
-48 silly resolved     devDependencies:
-48 silly resolved      { mocha: '^1.20.1',
-48 silly resolved        chai: '^1.9.1',
-48 silly resolved        gulp: '^3.6.2',
-48 silly resolved        'gulp-jshint': '^1.5.5',
-48 silly resolved        'gulp-mocha': '^0.5.1',
-48 silly resolved        'jshint-stylish': '^0.4.0' },
-48 silly resolved     gitHead: '9779191fead4f590a96f7f0dd4ba1b94ec29c025',
-48 silly resolved     _id: 'hexo@2.8.3',
-48 silly resolved     _shasum: '79eb17e64b73b25d4e7abc565e039ca107cef802',
-48 silly resolved     _from: 'hexo@',
-48 silly resolved     _npmVersion: '1.4.23',
-48 silly resolved     _npmUser: { name: 'tommy351', email: 'tommy351@gmail.com' },
-48 silly resolved     maintainers: [ [Object] ],
-48 silly resolved     dist:
-48 silly resolved      { shasum: '79eb17e64b73b25d4e7abc565e039ca107cef802',
-48 silly resolved        tarball: 'http://registry.npmjs.org/hexo/-/hexo-2.8.3.tgz' },
-48 silly resolved     _resolved: 'http://registry.npmjs.org/hexo/-/hexo-2.8.3.tgz' } ]
-49 info install hexo@2.8.3 into /usr/lib
-50 info installOne hexo@2.8.3
-51 verbose lib/node_modules/hexo unbuild
-52 info preuninstall hexo@2.8.1
-53 info uninstall hexo@2.8.1
-54 verbose true,/usr/lib/node_modules,/usr/lib/node_modules unbuild hexo@2.8.1
-55 verbose /usr/bin,[object Object] binRoot
-56 verbose lib/node_modules/hexo unbuild
-57 info preuninstall hexo@2.8.1
-58 info uninstall hexo@2.8.1
-59 verbose true,/usr/lib/node_modules,/usr/lib/node_modules unbuild hexo@2.8.1
-60 verbose /usr/bin,[object Object] binRoot
-61 error error rolling back Error: EACCES, unlink '/usr/bin/hexo'
-61 error error rolling back  hexo@2.8.3 { [Error: EACCES, unlink '/usr/bin/hexo'] errno: 3, code: 'EACCES', path: '/usr/bin/hexo' }
-62 error Error: EACCES, unlink '/usr/bin/hexo'
-62 error  { [Error: EACCES, unlink '/usr/bin/hexo'] errno: 3, code: 'EACCES', path: '/usr/bin/hexo' }
-63 error Please try running this command again as root/Administrator.
-64 error System Linux 3.13.0-34-generic
-65 error command "node" "/usr/local/bin/npm" "install" "-g" "hexo"
-66 error cwd /home/code/leeluolee.github.com
-67 error node -v v0.10.25
-68 error npm -v 1.4.16
-69 error path /usr/bin/hexo
-70 error code EACCES
-71 error errno 3
-72 error stack Error: EACCES, unlink '/usr/bin/hexo'
-73 verbose exit [ 3, true ]
+7 verbose parsed url   pathname: 'spm@2.x',
+7 verbose parsed url   path: 'spm@2.x',
+7 verbose parsed url   href: 'spm@2.x' }
+8 verbose cache add name="spm" spec="2.x" args=["spm","2.x"]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: '2.x',
+9 verbose parsed url   path: '2.x',
+9 verbose parsed url   href: '2.x' }
+10 verbose addNamed [ 'spm', '2.x' ]
+11 verbose addNamed [ null, '>=2.0.0-0 <3.0.0-0' ]
+12 silly lockFile 7b3d9236-spm-2-x spm@2.x
+13 verbose lock spm@2.x /home/luobo/.npm/7b3d9236-spm-2-x.lock
+14 silly addNameRange { name: 'spm', range: '>=2.0.0-0 <3.0.0-0', hasData: false }
+15 verbose request where is /spm
+16 verbose request registry http://registry.npmjs.org/
+17 verbose request id 1a5cf34ad8e4070b
+18 verbose url raw /spm
+19 verbose url resolving [ 'http://registry.npmjs.org/', './spm' ]
+20 verbose url resolved http://registry.npmjs.org/spm
+21 verbose request where is http://registry.npmjs.org/spm
+22 info trying registry request attempt 1 at 11:16:55
+23 verbose etag "7KS7YMYURZUYD6X728IJPL656"
+24 http GET http://registry.npmjs.org/spm
+25 http 304 http://registry.npmjs.org/spm
+26 silly registry.get cb [ 304,
+26 silly registry.get   { date: 'Sun, 19 Oct 2014 03:16:57 GMT',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     'last-modified': 'Sun, 19 Oct 2014 03:16:57 GMT',
+26 silly registry.get     'cache-control': 'max-age=60',
+26 silly registry.get     etag: '"7KS7YMYURZUYD6X728IJPL656"',
+26 silly registry.get     age: '0',
+26 silly registry.get     connection: 'keep-alive',
+26 silly registry.get     'x-served-by': 'cache-ty66-TYO',
+26 silly registry.get     'x-cache': 'MISS',
+26 silly registry.get     'x-cache-hits': '0',
+26 silly registry.get     'x-timer': 'S1413688617.006454,VS0,VE779',
+26 silly registry.get     vary: 'Accept' } ]
+27 verbose etag http://registry.npmjs.org/spm from cache
+28 silly addNameRange number 2 { name: 'spm', range: '>=2.0.0-0 <3.0.0-0', hasData: true }
+29 silly addNameRange versions [ 'spm',
+29 silly addNameRange   [ '0.2.0',
+29 silly addNameRange     '0.2.1',
+29 silly addNameRange     '0.3.0',
+29 silly addNameRange     '0.4.0',
+29 silly addNameRange     '0.4.1',
+29 silly addNameRange     '0.9.0',
+29 silly addNameRange     '0.9.1',
+29 silly addNameRange     '0.9.2',
+29 silly addNameRange     '0.9.3',
+29 silly addNameRange     '0.9.4-1',
+29 silly addNameRange     '0.9.5',
+29 silly addNameRange     '0.9.6',
+29 silly addNameRange     '0.9.7',
+29 silly addNameRange     '0.9.8',
+29 silly addNameRange     '0.9.9',
+29 silly addNameRange     '0.9.10',
+29 silly addNameRange     '0.9.11',
+29 silly addNameRange     '0.9.12',
+29 silly addNameRange     '0.9.12-1',
+29 silly addNameRange     '1.0.0-rc1',
+29 silly addNameRange     '1.0.0',
+29 silly addNameRange     '1.0.1',
+29 silly addNameRange     '1.1.0',
+29 silly addNameRange     '1.1.1',
+29 silly addNameRange     '1.1.2',
+29 silly addNameRange     '1.1.3',
+29 silly addNameRange     '1.2.0-dev',
+29 silly addNameRange     '1.2.0',
+29 silly addNameRange     '1.2.1',
+29 silly addNameRange     '1.3.0',
+29 silly addNameRange     '1.3.1',
+29 silly addNameRange     '1.3.2',
+29 silly addNameRange     '1.4.0',
+29 silly addNameRange     '1.5.0',
+29 silly addNameRange     '1.5.1',
+29 silly addNameRange     '1.5.2',
+29 silly addNameRange     '1.6.0-dev',
+29 silly addNameRange     '1.6.0',
+29 silly addNameRange     '1.7.0',
+29 silly addNameRange     '1.7.1',
+29 silly addNameRange     '1.7.2',
+29 silly addNameRange     '1.7.3',
+29 silly addNameRange     '1.7.4',
+29 silly addNameRange     '1.7.5',
+29 silly addNameRange     '1.7.6',
+29 silly addNameRange     '1.7.7',
+29 silly addNameRange     '2.0.0',
+29 silly addNameRange     '2.0.1',
+29 silly addNameRange     '2.0.2',
+29 silly addNameRange     '2.0.3',
+29 silly addNameRange     '2.1.0',
+29 silly addNameRange     '2.1.1',
+29 silly addNameRange     '2.1.2',
+29 silly addNameRange     '2.1.3',
+29 silly addNameRange     '2.1.4',
+29 silly addNameRange     '2.1.5',
+29 silly addNameRange     '2.1.6',
+29 silly addNameRange     '2.1.7',
+29 silly addNameRange     '2.1.8',
+29 silly addNameRange     '2.1.9',
+29 silly addNameRange     '2.1.10-rc',
+29 silly addNameRange     '2.1.10',
+29 silly addNameRange     '2.1.11',
+29 silly addNameRange     '2.1.12',
+29 silly addNameRange     '2.2.0',
+29 silly addNameRange     '2.2.1',
+29 silly addNameRange     '2.2.2',
+29 silly addNameRange     '2.2.3',
+29 silly addNameRange     '2.2.4',
+29 silly addNameRange     '2.2.5',
+29 silly addNameRange     '3.0.0',
+29 silly addNameRange     '3.0.0-rc1',
+29 silly addNameRange     '3.0.0-rc2',
+29 silly addNameRange     '3.0.0-rc3',
+29 silly addNameRange     '2.2.6',
+29 silly addNameRange     '3.0.0-rc4',
+29 silly addNameRange     '3.0.0-rc5',
+29 silly addNameRange     '3.0.0-rc6',
+29 silly addNameRange     '3.0.0-rc7',
+29 silly addNameRange     '3.0.0-rc8',
+29 silly addNameRange     '2.2.7',
+29 silly addNameRange     '3.0.0-rc9',
+29 silly addNameRange     '3.0.0-rc10',
+29 silly addNameRange     '3.0.0-rc11',
+29 silly addNameRange     '3.0.0-rc12',
+29 silly addNameRange     '3.0.0-rc13',
+29 silly addNameRange     '3.0.0-rc14',
+29 silly addNameRange     '3.0.0-dev',
+29 silly addNameRange     '3.0.0-rc15',
+29 silly addNameRange     '3.0.0-rc16',
+29 silly addNameRange     '3.0.0-rc17',
+29 silly addNameRange     '3.0.0-rc18',
+29 silly addNameRange     '3.0.0-rc19',
+29 silly addNameRange     '3.0.0-rc20',
+29 silly addNameRange     '3.0.1',
+29 silly addNameRange     '3.0.2',
+29 silly addNameRange     '3.0.3',
+29 silly addNameRange     '2.2.8',
+29 silly addNameRange     '3.1.0-rc1',
+29 silly addNameRange     '3.1.0-rc3',
+29 silly addNameRange     '3.1.0-rc4',
+29 silly addNameRange     '2.0.0-b1',
+29 silly addNameRange     '2.0.0-b2',
+29 silly addNameRange     '2.0.0-b3',
+29 silly addNameRange     '2.0.0-b4',
+29 silly addNameRange     '2.0.0-b5',
+29 silly addNameRange     '2.0.0-b6',
+29 silly addNameRange     '2.1.0-a1',
+29 silly addNameRange     '2.1.0-a2',
+29 silly addNameRange     '2.1.1-a1',
+29 silly addNameRange     '3.1.0',
+29 silly addNameRange     '2.2.9',
+29 silly addNameRange     '3.1.1',
+29 silly addNameRange     '2.2.10',
+29 silly addNameRange     '2.2.11',
+29 silly addNameRange     '3.2.0-rc1',
+29 silly addNameRange     '3.2.0',
+29 silly addNameRange     '3.2.1',
+29 silly addNameRange     '3.2.2',
+29 silly addNameRange     '3.2.3' ] ]
+30 verbose addNamed [ 'spm', '2.2.11' ]
+31 verbose addNamed [ '2.2.11', '2.2.11' ]
+32 silly lockFile ee1a5bde-spm-2-2-11 spm@2.2.11
+33 verbose lock spm@2.2.11 /home/luobo/.npm/ee1a5bde-spm-2-2-11.lock
+34 silly lockFile ee1a5bde-spm-2-2-11 spm@2.2.11
+35 silly lockFile ee1a5bde-spm-2-2-11 spm@2.2.11
+36 silly lockFile 7b3d9236-spm-2-x spm@2.x
+37 silly lockFile 7b3d9236-spm-2-x spm@2.x
+38 silly resolved [ { name: 'spm',
+38 silly resolved     version: '2.2.11',
+38 silly resolved     preferGlobal: 'true',
+38 silly resolved     description: 'Static Package Manager',
+38 silly resolved     author: { name: 'Hsiaoming Yang', email: 'me@lepture.com' },
+38 silly resolved     repository: { type: 'git', url: 'https://github.com/spmjs/spm/tree/2.x' },
+38 silly resolved     keywords: [ 'seajs', 'module', 'cmd', 'package', 'tool', 'browser' ],
+38 silly resolved     dependencies:
+38 silly resolved      { 'win-spawn': '~1.1.0',
+38 silly resolved        inherits: '~1.0.0',
+38 silly resolved        fstream: '~0.1.22',
+38 silly resolved        'fstream-ignore': '~0.0.6',
+38 silly resolved        spmrc: '~0.1.3',
+38 silly resolved        semver: '~1.1.4',
+38 silly resolved        async: '~0.1.22',
+38 silly resolved        tar: '~0.1.16',
+38 silly resolved        request: '~2.39.0',
+38 silly resolved        colorful: '~2.1.0',
+38 silly resolved        commander: '~1.1.1',
+38 silly resolved        'cmd-util': '~0.3.10',
+38 silly resolved        archy: '~0.0.2',
+38 silly resolved        rimraf: '~2.1.4',
+38 silly resolved        lodash: '~1.3.1' },
+38 silly resolved     devDependencies: { sinon: '*', jshint: '*', mocha: '*', should: '*' },
+38 silly resolved     bin: { spm: 'bin/spm' },
+38 silly resolved     engines: { node: '>=0.8.19' },
+38 silly resolved     scripts: { preinstall: 'node scripts/preinstall.js', test: 'make test' },
+38 silly resolved     _id: 'spm@2.2.11',
+38 silly resolved     _shasum: '3f77def3927bdc8fd5631b0204d10bb79362a5e0',
+38 silly resolved     _from: 'spm@2.x',
+38 silly resolved     _npmVersion: '1.4.9',
+38 silly resolved     _npmUser: { name: 'afc163', email: 'afc163@gmail.com' },
+38 silly resolved     maintainers:
+38 silly resolved      [ [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object] ],
+38 silly resolved     dist:
+38 silly resolved      { shasum: '3f77def3927bdc8fd5631b0204d10bb79362a5e0',
+38 silly resolved        tarball: 'http://registry.npmjs.org/spm/-/spm-2.2.11.tgz' },
+38 silly resolved     directories: {},
+38 silly resolved     _resolved: 'http://registry.npmjs.org/spm/-/spm-2.2.11.tgz',
+38 silly resolved     readme: 'ERROR: No README data found!' } ]
+39 info install spm@2.2.11 into /usr/lib
+40 info installOne spm@2.2.11
+41 verbose lib/node_modules/spm unbuild
+42 info preuninstall spm@3.2.3
+43 info uninstall spm@3.2.3
+44 verbose true,/usr/lib/node_modules,/usr/lib/node_modules unbuild spm@3.2.3
+45 verbose /usr/bin,[object Object] binRoot
+46 info postuninstall spm@3.2.3
+47 verbose tar unpack /home/luobo/.npm/spm/2.2.11/package.tgz
+48 silly lockFile 8752f0b3-tar-usr-lib-node-modules-spm tar:///usr/lib/node_modules/spm
+49 verbose lock tar:///usr/lib/node_modules/spm /home/luobo/.npm/8752f0b3-tar-usr-lib-node-modules-spm.lock
+50 silly lockFile dc76aeda-luobo-npm-spm-2-2-11-package-tgz tar:///home/luobo/.npm/spm/2.2.11/package.tgz
+51 verbose lock tar:///home/luobo/.npm/spm/2.2.11/package.tgz /home/luobo/.npm/dc76aeda-luobo-npm-spm-2-2-11-package-tgz.lock
+52 silly gunzTarPerm modes [ '755', '644' ]
+53 silly gunzTarPerm extractEntry package.json
+54 silly gunzTarPerm extractEntry .npmignore
+55 silly gunzTarPerm extractEntry README.md
+56 silly gunzTarPerm extractEntry LICENSE
+57 silly gunzTarPerm extractEntry index.js
+58 silly gunzTarPerm extractEntry bin/spm
+59 silly gunzTarPerm extractEntry bin/spm-config
+60 silly gunzTarPerm extractEntry bin/spm-info
+61 silly gunzTarPerm extractEntry bin/spm-install
+62 silly gunzTarPerm extractEntry bin/spm-login
+63 silly gunzTarPerm extractEntry bin/spm-plugin
+64 silly gunzTarPerm extractEntry bin/spm-publish
+65 silly gunzTarPerm extractEntry bin/spm-search
+66 silly gunzTarPerm extractEntry bin/spm-tree
+67 silly gunzTarPerm extractEntry bin/spm-unpublish
+68 silly gunzTarPerm extractEntry CONTRIBUTING.md
+69 silly gunzTarPerm extractEntry lib/config.js
+70 silly gunzTarPerm extractEntry lib/info.js
+71 silly gunzTarPerm extractEntry lib/install.js
+72 silly gunzTarPerm extractEntry lib/login.js
+73 silly gunzTarPerm extractEntry lib/plugin.js
+74 silly gunzTarPerm extractEntry lib/publish.js
+75 silly gunzTarPerm extractEntry lib/search.js
+76 silly gunzTarPerm extractEntry lib/unpublish.js
+77 silly gunzTarPerm extractEntry lib/sdk/file.js
+78 silly gunzTarPerm extractEntry lib/sdk/git.js
+79 silly gunzTarPerm extractEntry lib/sdk/iduri.js
+80 silly gunzTarPerm extractEntry lib/sdk/module.js
+81 silly gunzTarPerm extractEntry lib/sdk/yuan.js
+82 silly gunzTarPerm extractEntry lib/utils/index.js
+83 silly gunzTarPerm extractEntry lib/utils/log.js
+84 silly gunzTarPerm extractEntry lib/utils/program.js
+85 silly gunzTarPerm extractEntry lib/utils/run.js
+86 silly gunzTarPerm extractEntry lib/utils/tar.js
+87 silly gunzTarPerm extractEntry Makefile
+88 silly gunzTarPerm extractEntry scripts/preinstall.js
+89 silly gunzTarPerm extractEntry scripts/githooks/post-merge
+90 silly gunzTarPerm extractEntry scripts/githooks/pre-commit
+91 silly gunzTarPerm extractEntry scripts/nico.json
+92 silly lockFile 8752f0b3-tar-usr-lib-node-modules-spm tar:///usr/lib/node_modules/spm
+93 silly lockFile 8752f0b3-tar-usr-lib-node-modules-spm tar:///usr/lib/node_modules/spm
+94 silly lockFile dc76aeda-luobo-npm-spm-2-2-11-package-tgz tar:///home/luobo/.npm/spm/2.2.11/package.tgz
+95 silly lockFile dc76aeda-luobo-npm-spm-2-2-11-package-tgz tar:///home/luobo/.npm/spm/2.2.11/package.tgz
+96 info preinstall spm@2.2.11
+97 verbose unsafe-perm in lifecycle false
+98 info spm@2.2.11 Failed to exec preinstall script
+99 verbose lib/node_modules/spm unbuild
+100 info preuninstall spm@2.2.11
+101 info uninstall spm@2.2.11
+102 verbose true,/usr/lib/node_modules,/usr/lib/node_modules unbuild spm@2.2.11
+103 verbose /usr/bin,[object Object] binRoot
+104 info postuninstall spm@2.2.11
+105 error spm@2.2.11 preinstall: `node scripts/preinstall.js`
+105 error Exit status 1
+106 error Failed at the spm@2.2.11 preinstall script.
+106 error This is most likely a problem with the spm package,
+106 error not with npm itself.
+106 error Tell the author that this fails on your system:
+106 error     node scripts/preinstall.js
+106 error You can get their info via:
+106 error     npm owner ls spm
+106 error There is likely additional logging output above.
+107 error System Linux 3.13.0-34-generic
+108 error command "node" "/usr/local/bin/npm" "install" "spm@2.x" "-g"
+109 error cwd /home/code/leeluolee.github.com
+110 error node -v v0.10.25
+111 error npm -v 1.4.16
+112 error code ELIFECYCLE
+113 verbose exit [ 1, true ]
