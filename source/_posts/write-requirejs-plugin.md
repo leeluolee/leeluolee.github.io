@@ -41,7 +41,7 @@ require(['text!foo.html', 'jquery'], function(foo, $){
 })
 ```
 
->需要注意的是由于文本无法用script标签进行加载，所以text内部是通过XHR来载入的，即它会受到同源策略的影响。
+需要注意的是由于文本无法用script标签进行加载，所以text内部是通过XHR来载入的，即它会受到同源策略的影响。
 
 
 __优化OPTIMIZER__
@@ -90,7 +90,7 @@ __顺便列举一些有用的requirejs插件__
 
 
 
-> 其实由于amd等模块系统占据了开发中的模块入口这一环，其实在开发中可以有无限的可能性，这也是常规大公司都会自造一个轮子来最优配置的缘由之一，事实上requirejs目前的插件系统已经有足够的灵活性来定制自己的策略。
+其实由于amd等模块系统占据了开发中的模块入口这一环，其实在开发中可以有无限的可能性，这也是常规大公司都会自造一个轮子来最优配置的缘由之一，事实上requirejs目前的插件系统已经有足够的灵活性来定制自己的策略。
 
 
 ###实现requirejs-regular的过程
@@ -224,13 +224,13 @@ define("rgl!foo.html",function(){return [{"type":"element","tag":"h2","attrs":[]
 
 即上线后就不会有parse了，比如PO主目前正在开发的项目在初期就有几十个模板文件，build成单文件后的运行时开销还是应该尽量避免.
 
->tip：build.js记得通过__stubModules__配置项目删除掉这个插件模块，具体看demo的[build.js](https://github.com/regularjs/requirejs-regular/blob/master/demo/build.js)。
+__tip：build.js记得通过__stubModules__配置项目删除掉这个插件模块，具体看demo的[build.js](https://github.com/regularjs/requirejs-regular/blob/master/demo/build.js)。__
 
 
 
 ###对于NEJ的使用者
 
->__NEJ的新模块系统支持上述类似的regular模板加载了__
+__NEJ的新模块系统支持上述类似的regular模板加载了__
 
 网易杭州的同事，事实上你已经可以在NEJ的__新模块系统中__（完全兼容老版本）通过`regular!path/to/template.html`的方式来加载你的regular模板了，打包之后模板将会被预解析，同时新版NEJ也支持`text!`加载纯文本内容, 详询__@飞锅__。新版本的加载系统，支持类似AMD的注入写法，并且兼容老版本的模块写法，亲测好用哈。
 
