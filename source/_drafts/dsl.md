@@ -251,7 +251,6 @@ descritbe "hello" ->
 这个bug影响了V8.
 
 
-define()
 
 define pro < Class({
 
@@ -315,7 +314,6 @@ gulp.task "clean the repo", ->
 new Element("div")
 
 
-__内部DSL的好基友，未来的proxy API__: DefineProperty是js构建dsl的好基友，
 但是其实有一个更强的工具(我们思考我们之前的设计 有什么问题？)
 
 html是一个，对未来的CustomElement而言，识别不了的节点被称之为Unresolved Element
