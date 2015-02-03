@@ -51,9 +51,3 @@ hexo支持摘要断行 `<!-- more -->`
 ## 结尾
 
 Hexo是一个很精简的blog generator && deploy, 完全满足技术人员日常的博客需求, 使用过Octopress的应该是完全没有学习成本, 本人是典型极简癖, 跟这个Hexo简直是一拍即合
-
-
-
-
-
-

@@ -5,10 +5,9 @@
 <link rel="stylesheet" id='default' href="http://yandex.st/highlightjs/7.5/styles/default.min.css">
 <link rel="import" href="./nwd-slide.html" />
 
-
-<template>
+<template >
   <style>
-    nw-slideshow:host{
+    :host(nw-slideshow){
       position: relative;
       width: 100%;
       height: 100%;
@@ -16,7 +15,7 @@
       -moz-perspective: 1200px;
       perspective: 1200px; 
     }
-    .bespoke-slide{
+    :host(.bespoke-slide){
       width: 100%;
       height: 100%;
       position: absolute;
@@ -35,7 +34,7 @@
       transform-style: preserve-3d;
     }
 
-    .controls {
+    :host(.controls) {
       position: absolute;
       z-index: 1;
       width: 100px;
@@ -43,12 +42,12 @@
       right: 20px;
       text-align: justify;
     }
-    .controls:after {
+    :host(.controls:after) {
       content: "";
       display: inline-block;
       width: 100%;
     }
-    .control {
+    :host(.control) {
       font-size: 42px;
       line-height: 1;
       display: inline-block;
@@ -56,10 +55,10 @@
       cursor: pointer;
       z-index: 2;
     }
-    .control:hover{
+    :host(.control:hover){
       color: #ddd;
     }
-    .control:active{
+    :host(.control:active){
       color: #aaa;
     }
 
@@ -71,6 +70,7 @@
   </div>
 </template>
 <script type="text/javascript">
+~function(){
   var proto = Object.create(HTMLElement.prototype);
   var thisDoc = document.currentScript.ownerDocument;
   document.head.appendChild(thisDoc.getElementById('default'))
@@ -140,7 +140,8 @@
     script.src = '//codepen.io/assets/embed/ei.js';
     document.body.appendChild(script)
   }
-  window.NwdSlideshow = document.register('nwd-slideshow', {
+  window.NwdSlideshow = document.registerElement('nwd-slideshow', {
     prototype: proto
   });
+}();
 </script>

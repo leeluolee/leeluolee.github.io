@@ -4,8 +4,7 @@
 <link rel="import" href="./nwd-codepen.html" />
   <template>
    <style>
-    @host {
-      nwd-slide {
+      :host(nwd-slide) {
         font-family: Helvetica,  Arial,STHeiti STXihei, Microsoft JhengHei, STXihei, "华文细黑","Microsoft YaHei", "微软雅黑",  Heiti, "黑体", SimSun, "宋体", sans-serif;
         font-size: 30px;
         position: absolute;
@@ -22,26 +21,25 @@
         background: #F2EBBF;
         color: #5C4B51;
       }
-      .bespoke-slide{
+      :host(.bespoke-slide){
         opacity: 0;
         z-index: 0;
         -webkit-transition: opacity .5s ease-in-out;
         transition: opacity .5s ease-in-out;
       }
-      .bespoke-active{
+      :host(.bespoke-active){
         opacity: 1;
         z-index: 1;
       }
-      .bespoke-active .bespoke-bullet{
+      :host(.bespoke-active .bespoke-bullet){
         opacity: 0;
   
       }
-      .bespoke-active .bespoke-bullet-active{
+      :host(.bespoke-active .bespoke-bullet-active){
         opacity: 1;
       }
     
-    }
-    .content {
+    :host(.content) {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -146,7 +144,7 @@ pre{
     }
   };
 
-  document.register('nwd-slide', {
+  document.registerElement('nwd-slide', {
     prototype: proto
   });
 })();
