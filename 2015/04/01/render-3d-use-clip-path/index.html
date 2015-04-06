@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>前端黑科技——纯clip-path打造的3D模型渲染器 | 拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="前端黑科技——纯clip-path打造的3D模型渲染器"/>
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-04-01T14:49:03.000Z"><a href="/2015/04/01/render-3d-use-clip-path/">4月 1 2015</a></time>
+      
+      
+  
+    <h1 class="title">前端黑科技——纯clip-path打造的3D模型渲染器</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>本页DEMO只兼容到webkit浏览器(如chrome)， 请确保你的正确打开姿势</em></p>
+<p><em>本文涉及到的资源clip3d: <a href="https://github.com/leeluolee/clip3d" target="_blank" rel="external">https://github.com/leeluolee/clip3d</a> </em></p>
+<h2 id="缘由">缘由</h2>
+<p>几天之前, 一个<a href="http://species-in-pieces.com/#" target="_blank" rel="external">species-in-pieces</a>的网站把我震到了(如下图), 出于一个<strong>优秀前端的敏锐嗅觉和原始本能</strong>，<br>我立刻祭出了看家法宝——Chrome开发者工具开始偷窥这个网站.</p>
+<p><img src="http://www.species-in-pieces.com/img/assets/poster-detail-2.png" alt="species in pieces"></p>
+<p>简单推敲之后，我发现其实原理可以归结为一个属性—<code>clip-path</code>, 又一篇博文的材料到手！<br>当我兴高采烈的将我的《Species in Pieces原理解析》进行到一半时，发现First blood在weibo上已经被人抢了.</p>
+<a id="more"></a>
+<p><img src="http://pan.zuifengyun.com/wp-content/uploads/2013/03/4437e6032a160f2a0c1523.jpg" alt="坑爹啊"></p>
+<p>几乎在崩溃的同时，我突然意识这个属性其实可以用来更酷的事情, 即：</p>
+<blockquote>
+<p><strong>渲染3D模型</strong></p>
+</blockquote>
+<p>由浅入深的传统不能破，我们还是先简单来回顾下<code>clip-path</code>这个属性.</p>
+<h2 id="clip-path初见">clip-path初见</h2>
+<p>既然要讲<code>clip-path</code>, 我们就不得不提<code>clip</code>, 它可以选择显示一个矩形区域.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="id">#middle</span> <span class="rules">{</span></div><div class="line">   <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">280px</span></span></span>;</div><div class="line">   <span class="rule"><span class="attribute">clip</span>:<span class="value"> <span class="function">rect</span>(<span class="number">119px</span>, <span class="number">255px</span>, <span class="number">229px</span>, <span class="number">80px</span>)</span></span>;</div><div class="line">   <span class="comment">/* standard syntax, unsupported by Internet Explorer 4-7 */</span></div><div class="line"><span class="rule">}</span></div><div class="line"></div><div class="line"><span class="id">#bottom-right</span> <span class="rules">{</span></div><div class="line">   <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">200px</span></span></span>;</div><div class="line">   <span class="rule"><span class="attribute">clip</span>:<span class="value"> <span class="function">rect</span>(<span class="number">235px</span> <span class="number">335px</span> <span class="number">345px</span> <span class="number">160px</span>)</span></span>;</div><div class="line">   <span class="comment">/* non-standard syntax, but supported by all major browsers*/</span></div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
+
+<p>缺陷显而易见，它只能裁剪矩形区域。这个属性目前已经被 <a href="http://www.w3.org/TR/css-masking-1/#clip-property" target="_blank" rel="external">deprecated</a>, 因为我们有了更强大的<a href="http://www.w3.org/TR/css-masking-1/#the-clip-path" target="_blank" rel="external"><code>clip-path</code></a>.</p>
+<blockquote>
+<p>clip-path 用来显示一个特殊的路径, 所有裁剪路径内的内容才会被显示。<br>— <a href="https://css-tricks.com/almanac/properties/c/clip/" target="_blank" rel="external">https://css-tricks.com/almanac/properties/c/clip/</a></p>
+</blockquote>
+<p>这个属性支持<a href="">css Shape Module Level 1</a>的图形定义, 例如(示例来自于css-trick)</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class">.cliped</span><span class="rules">{</span></div><div class="line">  <span class="comment">/* 圆 */</span></div><div class="line">  <span class="rule"><span class="attribute">clip-path</span>:<span class="value"> <span class="function">circle</span>(<span class="number">30px</span> at <span class="number">35px</span> <span class="number">35px</span>)</span></span>;</div><div class="line"></div><div class="line">  <span class="comment">/* 椭圆 */</span></div><div class="line">  <span class="rule"><span class="attribute">clip-path</span>:<span class="value"> <span class="function">ellipse</span>(<span class="number">65px</span> <span class="number">30px</span> at <span class="number">125px</span> <span class="number">40px</span>)</span></span>;</div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
+
+<p>其实css和svg在很多方面有着千丝万缕的关系, <a href="http://www.w3.org/TR/2014/WD-css-masking-1-20140213/" target="_blank" rel="external">Masking Module规范</a>(clip-path隶属)基本源自于SVG. 所以支持svg的<a href="http://www.w3.org/TR/css-masking-1/#svg-clipping-paths" target="_blank" rel="external">clipPath</a>来定义裁剪图形也丝毫都不奇怪了, 如下例所示</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class">.cliped</span><span class="rules">{</span></div><div class="line">  <span class="comment">/* 本页的内联svg */</span></div><div class="line">  <span class="rule"><span class="attribute">clip-path</span>:<span class="value"> <span class="function">url</span>(<span class="hexcolor">#c1</span>)</span></span>;</div><div class="line"></div><div class="line">  <span class="comment">/* 远程svg信息, c1代表的是id */</span></div><div class="line">  <span class="rule"><span class="attribute">clip-path</span>:<span class="value"> <span class="function">url</span>(path.svg<span class="hexcolor">#c1</span>)</span></span>;</div><div class="line"></div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
+
+<p>对应的<code>&lt;clipPath&gt;</code>节点.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">clipPath</span> <span class="attribute">id</span>=<span class="value">"clipping"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">circle</span> <span class="attribute">cx</span>=<span class="value">"150"</span> <span class="attribute">cy</span>=<span class="value">"150"</span> <span class="attribute">r</span>=<span class="value">"50"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">rect</span> <span class="attribute">x</span>=<span class="value">"150"</span> <span class="attribute">y</span>=<span class="value">"150"</span> <span class="attribute">width</span>=<span class="value">"100"</span> <span class="attribute">height</span>=<span class="value">"100"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">clipPath</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>今天我们会提到的图形定义主要是多边形polygon, 这也是最为灵活的一种图形描述方式, 例如下图</p>
+<p><img src="/attach/2015/clip/raw.jpg" alt="/attach/2015/clip/raw.jpg"></p>
+<p>利用以下代码(兼容非IE浏览器)裁剪后</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">.clip{</div><div class="line">/*Chrome,Safari*/</div><div class="line">-webkit-clip-path: polygon(647px 409px,840px 203px,619px 12px,418px 213px);</div><div class="line"></div><div class="line">/*Firefox*/</div><div class="line">clip-path: url("#clipPolygon");</div><div class="line"></div><div class="line">/* iOS support inline encoded svg file*/</div><div class="line">-webkit-mask: url(data:image/svg+xml;charset=utf-8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSIwIiBoZWlnaHQ9IjAiPgogIDxjbGlwUGF0aCBpZD0ic3ZnQ2xpcCI+CiAgICA8cGF0aCBpZD0ic3ZnUGF0aCIgZD0iTTY0Nyw0MDkgTDg0MCwyMDMgNjE5LDEyIDQxOCwyMTMgeiIvPgogIDwvY2xpcFBhdGg+CiAgPHBhdGggaWQ9InN2Z01hc2siIGQ9Ik02NDcsNDA5IEw4NDAsMjAzIDYxOSwxMiA0MTgsMjEzIHoiICAvPgo8L3N2Zz4=) no-repeat;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>结果</strong></p>
+<p><img src="/attach/2015/clip/cliped.jpg" alt="/attach/2015/clip/cliped.jpg"></p>
+<p>对于firefox，我们需要用<code>&lt;clipPath&gt;</code>来定义图形.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">svg</span> <span class="attribute">width</span>=<span class="value">"0"</span> <span class="attribute">height</span>=<span class="value">"0"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">clipPath</span> <span class="attribute">id</span>=<span class="value">"clipPolygon"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">polygon</span> <span class="attribute">points</span>=<span class="value">"647 409,840 203,619 12,418 213"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">polygon</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="title">clipPath</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">svg</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p><code>clip-path</code>完成的就是这样一个简单的工作， 但是恰恰解决了前端开发中一系列头疼的限制.</p>
+<p>我们先从文章开始的《species in pieces》来剖析下<code>clip-path</code>的妙用吧.</p>
+<h2 id="借《species_in_pieces》深入学习clip-path">借《species in pieces》深入学习<code>clip-path</code></h2>
+<p>我们先来看下在《species in pieces》中每个动物的组成节点.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"wrap left-to-right"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"shard-wrap"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"shard"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"shard-wrap"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"shard"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">    .</div><div class="line">    .</div><div class="line">    省略若干30个</div><div class="line">    .</div><div class="line">    .</div><div class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"shard-wrap"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"shard"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"shard-wrap"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"shard"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>对应的部分关键css</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="class">.shard-wrap</span> <span class="rules">{ <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>; <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>; <span class="rule"><span class="attribute">transition</span>:<span class="value"> .<span class="number">5s</span></span></span>; <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">2</span></span></span>; <span class="rule">}</span></span></div><div class="line"></div><div class="line"><span class="comment">/* crow 乌鸦的图形描述 */</span></div><div class="line"><span class="class">.crow</span> <span class="class">.shard-wrap</span><span class="pseudo">:nth-child(1)</span> <span class="class">.shard</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> <span class="function">polygon</span>(<span class="number">20%</span> <span class="number">50%</span>,<span class="number">25%</span> <span class="number">52.4%</span>,<span class="number">11.5%</span> <span class="number">54.5%</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#2C323D</span></span></span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="class">.crow</span> <span class="class">.shard-wrap</span><span class="pseudo">:nth-child(2)</span> <span class="class">.shard</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> <span class="function">polygon</span>(<span class="number">14.7%</span> <span class="number">47.5%</span>,<span class="number">35.2%</span> <span class="number">50.2%</span>,<span class="number">25%</span> <span class="number">52.5%</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#63676F</span></span></span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="class">.crow</span> <span class="class">.shard-wrap</span><span class="pseudo">:nth-child(3)</span> <span class="class">.shard</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> <span class="function">polygon</span>(<span class="number">22.9%</span> <span class="number">44.5%</span>,<span class="number">35.2%</span> <span class="number">50.2%</span>,<span class="number">25%</span> <span class="number">48.9%</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#0F1622</span></span></span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">.</div><div class="line">.</div><div class="line">省略中间25个</div><div class="line">.</div><div class="line">.</div><div class="line">*/</div><div class="line"><span class="class">.crow</span> <span class="class">.shard-wrap</span><span class="pseudo">:nth-child(29)</span> <span class="class">.shard</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> <span class="function">polygon</span>(<span class="number">61.7%</span> <span class="number">44.7%</span>,<span class="number">64.4%</span> <span class="number">44%</span>,<span class="number">65.1%</span> <span class="number">36.2%</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#0f1622</span></span></span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="class">.crow</span> <span class="class">.shard-wrap</span><span class="pseudo">:nth-child(30)</span> <span class="class">.shard</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> <span class="function">polygon</span>(<span class="number">78.5%</span> <span class="number">21.5%</span>,<span class="number">76.3%</span> <span class="number">23.7%</span>,<span class="number">74.6%</span> <span class="number">22.5%</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#0f1622</span></span></span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>我们可以发现，每个动物其实都是由30个三角形组成的, 每个三角形就代表一对<code>.shard-wrap&gt;.shard</code>节点, 它们都是100%的宽高的盒子.所以图形完完全全是通过<code>clip-path:polygon</code>裁剪而来的.</p>
+<p>以上例的<code>crow</code>乌鸦为例，所有的图形描述其实都定义在css中, 由<code>:nth-child</code>伪类选择器来控制每一块三角的形状. polygon传入了三个参数即代表三角形的 三个顶点. 这里注意到由于是百分比单位， <strong>图形天然就是响应式的, 创建的图形就像是svg图形</strong>.</p>
+<p><img src="/attach/2015/clip/responsive.jpg" alt="responsive"></p>
+<p>另外几个关键知识点</p>
+<ul>
+<li><p><strong>clip-path的碰撞盒</strong></p>
+<p>上面的这种绘图在体验上非常接近我们使用canvas, 但是虽然被裁减后，仿佛我们创造了其他的图形，<br>其实节点的碰撞盒(Bounding Box)仍然是原长方形, 这它仍然会和未裁剪时一样进行排版. 使得如果我们应用此项技术到游戏相关开发中时， 我们仍需要去实现一套对应的碰撞盒机制. </p>
+</li>
+</ul>
+<ul>
+<li><p><strong>clip-path区域的UI响应</strong></p>
+<p>有些人可能会问， 这是否意味着，其实只是相当于: 将裁剪区域外的内容隐藏了， 而不是真正的剔除?<br>答案不完全正确, 因为<code>clip-path</code>实现了只有保留区域可以进行UI响应, 这使得裁剪图形更像是一个独立的个体<br><a href="http://codepen.io/leeluolee/pen/KwJbov" target="_blank" rel="external">【DEMO戳这里】</a></p>
+</li>
+</ul>
+<ul>
+<li><p><strong>clip-path可以触发Animation!</strong> </p>
+<p>最关键的一点还没有提到的就是: 这些动物图形都是活动的, 但是这些动画并不是通过定时器去实现， 而是通过css动画!, 继续<br>深挖一下<code>crow</code>的其余css代码.</p>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class">.shard</span><span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transition</span>:<span class="value"> -webkit-clip-path <span class="number">0.6s</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="comment">/* state-two 状态二 */</span></div><div class="line"><span class="class">.animal-animations-on</span><span class="class">.state-two</span> <span class="class">.crow</span> <span class="class">.wrap</span> <span class="class">.shard-wrap</span><span class="pseudo">:nth-child(1)</span> <span class="class">.shard</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> <span class="function">polygon</span>(<span class="number">44.7%</span> <span class="number">33.5%</span>,<span class="number">65%</span> <span class="number">26.7%</span>,<span class="number">65%</span> <span class="number">36.1%</span>)</span></span></div><div class="line">}</div><div class="line"><span class="comment">/**</span></div><div class="line">.</div><div class="line">.省略若干</div><div class="line">.</div><div class="line">*/</div><div class="line"><span class="class">.animal-animations-on</span><span class="class">.state-two</span> <span class="class">.crow</span> <span class="class">.wrap</span> <span class="class">.shard-wrap</span><span class="pseudo">:nth-child(30)</span> <span class="class">.shard</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> <span class="function">polygon</span>(<span class="number">82.5%</span> <span class="number">26.5%</span>,<span class="number">80.3%</span> <span class="number">28.7%</span>,<span class="number">78.6%</span> <span class="number">27.5%</span>)</span></span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* state-three 状态三 */</span></div><div class="line"><span class="class">.animal-animations-on</span><span class="class">.state-two</span> <span class="class">.crow</span> <span class="class">.wrap</span> <span class="class">.shard-wrap</span><span class="pseudo">:nth-child(1)</span> <span class="class">.shard</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> <span class="function">polygon</span>(<span class="number">86.57%</span> <span class="number">33.5%</span>,<span class="number">63.44%</span> <span class="number">56%</span>,<span class="number">65%</span> <span class="number">36.4%</span>)</span></span></div><div class="line">}</div><div class="line"><span class="comment">/**</span></div><div class="line">.</div><div class="line">.省略若干</div><div class="line">.</div><div class="line">*/</div><div class="line"><span class="class">.animal-animations-on</span><span class="class">.state-two</span> <span class="class">.crow</span> <span class="class">.wrap</span> <span class="class">.shard-wrap</span><span class="pseudo">:nth-child(30)</span> <span class="class">.shard</span> <span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> <span class="function">polygon</span>(<span class="number">44.7%</span> <span class="number">34.5%</span>,<span class="number">65%</span> <span class="number">28.7%</span>,<span class="number">65%</span> <span class="number">36.1%</span>)</span></span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>  我们会发现每种动物的各阶段造型都由父节点<code>.animal-animations-on</code>的全局类名<code>state-x</code>来控制, 这种方式能凑效的根本原因是:<br>  <strong>动画在一定条件下可以对<code>clip-path</code>生效</strong> . 这里的一定条件即:  <strong>裁剪的多边形必须具有相同的顶点数</strong>, 这其实也符合常理, 浏览器怎么知道你如何从三角形变换到四边形呢？</p>
+<p>  <a href="http://codepen.io/leeluolee/pen/EazNjL" target="_blank" rel="external">【DEMO: 满足条件的clip-path可以响应动画】</a></p>
+<p>  这里我们的第二个图形里， 将三角形也使用四个顶点来生成， 这样可以使得变换为四边形的时候可以进行动画。</p>
+<h3 id="pip小节">pip<strong>小节</strong></h3>
+<p>《pecies in pieces》中那些些栩栩如生的动物拼图并没有蕴含什么复杂的技术问题， 微博的<a href="http://weibo.com/u/1820450311" target="_blank" rel="external">@周文彬1986</a>同学将部分形状数据提取了出来<br>，只利用了几行sass代码就实现了<a href="http://codepen.io/zhouwenbin/pen/RNEJjj" target="_blank" rel="external">简化效果</a>. 所以这无论如何都称不上是一个技术性突破, <strong>而是一个100%的充满灵感的图形和动效设计的典范</strong>， 有时还是不禁会唏嘘为什么我们想不到这种创意.</p>
+<p>不过虽然在设计灵感上与别人相去甚远， 我们还可以在技术层面来进行不同的尝试. 比如, 完全利用<code>clip-path</code>实现一个3D模型的渲染器.</p>
+<h2 id="使用clip-path属性实现3D模型渲染器-">使用clip-path属性实现3D模型渲染器.</h2>
+<p>这节我不会对所谓的计算机图形学做深入的探讨, 这是因为:</p>
+<blockquote>
+<p>懂它的肯定比我懂，不懂的我也没法在一篇博文里解释清楚.</p>
+</blockquote>
+<p>所以接下来的原理简要不会涉及到<strong>任意公式推导</strong>, 有兴趣的可以参考下<a href="https://github.com/leeluolee/clip3d" target="_blank" rel="external">clip3d的源码部分</a>. </p>
+<p>我们先来看个简单的例子:</p>
+<p><a href="http://codepen.io/leeluolee/full/xbedLe/" target="_blank" rel="external"><img src="https://raw.githubusercontent.com/leeluolee/clip3d/master/assets/snapshot.gif" alt="">`</a></p>
+<p><a href="">【DEMO】</a></p>
+<p>通过DEMO， 我们会发现实际上它不涉及css用于变换的transform内容, 那它是怎么实现的呢？</p>
+<h3 id="3维坐标系">3维坐标系</h3>
+<p>既然是3d图形， 当然在3维空间内会有一个唯一的定义， 就比如下图的Ag点， 它由x坐标、y坐标与z坐标组成.</p>
+<p><em>事实上，在进行矩阵计算时,是四维齐次坐标</em></p>
+<p><img src="/attach/2015/clip/3d.jpg" alt="/attach/2015/clip/3d.jpg"></p>
+<p>但是问题来了， 我们的窗口只能显示2维平面图形, 如何实现3D展示? </p>
+<p>答案就是利用视觉透视原理的投影变换.</p>
+<h3 id="投影">投影</h3>
+<p>天生的，我们对物体的直观感受是近大远小, 当我们将这种特性应用到二维绘图时， 它就具有真实自然的三维立体形态.</p>
+<p><img src="http://www.57-edu.com/uploads/140307/14-14030G20330646.JPG" alt="透视"></p>
+<p><em>小插曲: 在google搜索“透视”的图片时，我惊呆了</em></p>
+<p>透视投影与连续放映的图片由于视觉暂留效果看起来像是活动的一样， 都一种“视觉欺骗”.</p>
+<p>从3D图形映射到我们的二维平面就称之为“投影”.</p>
+<p><a name="pic3"></a><br><img src="http://xieguanglei.com/post/model-view-projection-matrix/images/mvp-matrix.jpg" alt="图3"></p>
+<p><strong>空间变换</strong></p>
+<p>以上图为例, 在三维空间的三角形到最终投影到屏幕中, 会先经过两次坐标系变换. </p>
+<ol>
+<li>物体空间到全局空间的空间转换, 如图中的L空间 -&gt; G空间</li>
+<li>全局空间到摄像机空间(eye为原点的齐次空间)的空间转换, 如G空间 -&gt;  V空间</li>
+</ol>
+<p>比如局部空间的顶点(1, 0, 0)到了全局空间可能就是(0, 1, 0), 这种变换都是通过矩阵运算来实现的.</p>
+<p>当然你完全可以省去这两个步骤, 直接将模型定义在摄像机空间, 但是这样不利于模型的通用性, 事实上在复杂场景下， 从局部空间到全局空间往往需要多次变换.</p>
+<p><strong>投影变换</strong></p>
+<p>接下来就是摄像机空间到裁剪空间的投影变换了. 熟悉OpenGL的同学可能了解这个正是glPerspective和glFrustum所做的工作.</p>
+<p>刚才<a href="#pic3">图3</a>中， 其实还定义了一个四棱台， 这个称之为“视椎体”, 它定义摄像机的最大可视距离, 最小可视距离(一般为投影面)以及可视角度, 只有在这个视锥体之内的物品是可以被显示的, 否则将会被剔除(或裁减).</p>
+<p>投影变换实际上也是一次空间变换， 它将视锥体内的点映射到了标准化的立方体内(如图4), 坐标范围从<code>[-1, -1, -1]</code> 到 <code>[1, 1, 1]</code>, 所有经过映射点如果落在立方体之外即代表它在视锥体之外.</p>
+<p><img src="http://xieguanglei.com/post/model-view-projection-matrix/images/ccv.jpg" alt="/attach/2015/clip/axis.png"></p>
+<p>这么做带来的最终结果是： 近大远小的视锥体，变成了等宽等长的立方体.</p>
+<p>理论上我们只要将各个面包含的顶点的[x,y]坐标连接起来并填充成面，就可以完成物体的渲染了！ 实际上推广到Web前端实现， 我们还需要多做一步， 那就是:</p>
+<p><strong>荧幕坐标系到窗口坐标系的转换</strong></p>
+<p>经过投影矩阵变换后， x/y轴的范围是[-1, 1]. z轴为[-1, 1]. </p>
+<p>假设我们最终获得的某个三角形顶点位置为分别是<code>-0.2, 0.3, 0.5</code> ，<code>0.2, -0.3, 0.1</code> 和 <code>0.5, 0.5, 0.3</code>. 但由于中心点和坐标轴方向与Web浏览器的定义都完全不同， 如下图所示.</p>
+<p><img src="/attach/2015/clip/axis.png" alt="/attach/2015/clip/axis.png"></p>
+<p>我们需要将x,y坐标修正到与窗口坐标系匹配.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">x<span class="escape">` </span>= <span class="number">0.5</span> - x</div><div class="line">y<span class="escape">` </span>= <span class="number">0.5</span> - y</div></pre></td></tr></table></figure>
+
+<p>即三个顶点分别为<code>0.7, 0.2, 0.5</code>、<code>0.3, 0.8, 0.1</code>和<code>0, 0, 0.3</code>, 为避免计算, 我们换算到百分比坐标并取其x,y坐标利用<code>clip-path</code>渲染出对应的平面图形.</p>
+<p>由于平面图形符合透视常识， 所以在视觉上你会感觉到这是个3D图形.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class">.face1</span><span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> (<span class="number">70%</span> <span class="number">20%</span>, <span class="number">30%</span> <span class="number">80%</span>, <span class="number">0%</span> <span class="number">0%</span>)</span></span>;</div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
+
+<h3 id="锦上添花-">锦上添花.</h3>
+<p><strong>z-sorting</strong></p>
+<p>其实我们发现，经过投影变换后， 得到的坐标是有z分量的. 它正是用来帮助我们处理3D下两个面“谁前谁后的问题”. 由于实现方案的天然限制, 我们是无法实现像素级的Z深度缓存的, 但是我们可以利用<code>z-index</code>来实现一个山寨的z-sorting, 我们首先记录一个面的平均深度(三顶点), 然后直接将其取负作为节点的<code>z-index</code>值就完成了深度排序了</p>
+<p><strong>背面剔除与光照</strong></p>
+<p>背面剔除与光照分别利用平面法线与观察方向和光线投射方向有关， 一些简单的三角函数+向量点积计算和色值混合操作， 这里我们就不再多做说明. 简单起见， 光源这里只处理为平行无限远的光源， 而背面剔除我们仅仅只是<code>display:none</code>而已</p>
+<h3 id="clip小节">clip小节</h3>
+<p>使用<code>clip-path</code>尝试渲染3D 模型其实在绘图部分与之前的《pecies in pieces》并没有本质的不同: </p>
+<p><strong>它们都是由三角形组成的图形, 并且每个三角形是由div和clip-path实现的</strong>. 但是由于引入了透视投影, 使得<code>clip-path</code>有了渲染3D模型的能力。</p>
+<h2 id="别逗我了，css3不是早有transform_3d吗！">别逗我了，css3不是早有transform 3d吗！</h2>
+<p>是的， 上面那个例子其实可以使用transform更简单的解决， 以正方体为例.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class">.back</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateZ</span>(-<span class="number">100px</span>) <span class="function">rotateY</span>(<span class="number">180deg</span>)</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.right</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotateY</span>(-<span class="number">270deg</span>) <span class="function">translateX</span>(<span class="number">100px</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">transform-origin</span>:<span class="value"> top right</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.left</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotateY</span>(<span class="number">270deg</span>) <span class="function">translateX</span>(-<span class="number">100px</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">transform-origin</span>:<span class="value"> center left</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.top</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotateX</span>(-<span class="number">90deg</span>) <span class="function">translateY</span>(-<span class="number">100px</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">transform-origin</span>:<span class="value"> top center</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.bottom</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotateX</span>(<span class="number">90deg</span>) <span class="function">translateY</span>(<span class="number">100px</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">transform-origin</span>:<span class="value"> bottom center</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.front</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateZ</span>(<span class="number">100px</span>)</span></span>;</div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
+
+<p>六面体的例子稍微复杂一点, 但仍然可以做， 即使用<a href="http://www.zhangxinxu.com/wordpress/2010/05/css-border%E4%B8%89%E8%A7%92%E3%80%81%E5%9C%86%E8%A7%92%E5%9B%BE%E5%BD%A2%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/" target="_blank" rel="external">border来模拟出我们的三角形</a>.</p>
+<p>但是如果是下面这种例子呢？<code>transform</code>就束手无策了, <strong><a href="http://codepen.io/leeluolee/full/zxQqpm/" target="_blank" rel="external">【DEMO戳这里】</a></strong></p>
+<p><img src="http://ww4.sinaimg.cn/large/6252205cgw1eqmyg50fsjg208e0a44mf.gif" alt="复杂图形"></p>
+<p>最关键的问题就是, 由于上文所提到的例子在流程上与常规意义上的3d渲染一致的，我们可以使用类似的数据模型来渲染图形。 而transform是以面为基础的， 有着天然的劣势。</p>
+<p>例如DEMO1的数据其实来自于著名的<a href="http://learningwebgl.com/blog/?page_id=1217" target="_blank" rel="external">learningWebGL</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Render = clip3d.Render,</div><div class="line">  Light = clip3d.Light,</div><div class="line">  Camera = clip3d.Camera,</div><div class="line">  vec3 = clip3d.vec3,</div><div class="line">  mat4 = clip3d.mat4,</div><div class="line">  _ = clip3d.util,</div><div class="line">  color = clip3d.color;</div><div class="line"></div><div class="line"><span class="keyword">var</span> render = <span class="keyword">new</span> Render({</div><div class="line">  parent: <span class="built_in">document</span>.getElementById(<span class="string">"app"</span>),</div><div class="line">  camera: <span class="keyword">new</span> Camera({</div><div class="line">    eye: [<span class="number">4</span>,<span class="number">4</span>, -<span class="number">10</span>]</div><div class="line">  }),</div><div class="line">  <span class="comment">// simple point-lighting</span></div><div class="line">  light: <span class="keyword">new</span> Light({</div><div class="line">    position: [ <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span> ],</div><div class="line">    color: [<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>,<span class="number">1</span>]</div><div class="line">  }),</div><div class="line">  <span class="comment">// http://learningwebgl.com/blog/?p=370</span></div><div class="line">  <span class="comment">// entity form learning webgl</span></div><div class="line">  entities: [</div><div class="line">    {</div><div class="line">      vertices: [</div><div class="line">        <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">0</span>,</div><div class="line">        -<span class="number">1</span>, -<span class="number">1</span>, <span class="number">1</span>,</div><div class="line">        <span class="number">1</span>, -<span class="number">1</span>,  <span class="number">1</span>,</div><div class="line"></div><div class="line">        <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">0</span>,</div><div class="line">        <span class="number">1</span>, -<span class="number">1</span>,  <span class="number">1</span>,</div><div class="line">        <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>,</div><div class="line"></div><div class="line">        <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">0</span>,</div><div class="line">        <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>,</div><div class="line">        -<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>,</div><div class="line"></div><div class="line">        <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">0</span>,</div><div class="line">        -<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>,</div><div class="line">        -<span class="number">1</span>, -<span class="number">1</span>,  <span class="number">1</span>,</div><div class="line"></div><div class="line">        <span class="comment">// warning the squence</span></div><div class="line">        <span class="number">1</span>, -<span class="number">1</span>,  <span class="number">1</span>,</div><div class="line">        -<span class="number">1</span>, -<span class="number">1</span>, <span class="number">1</span>,</div><div class="line">        -<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>,</div><div class="line"></div><div class="line">        <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>,</div><div class="line">        <span class="number">1</span>, -<span class="number">1</span>,  <span class="number">1</span>,</div><div class="line">        -<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>,</div><div class="line"></div><div class="line">      ],</div><div class="line">      colors: [</div><div class="line">      ]</div><div class="line">    },</div><div class="line">    {</div><div class="line">      vertices: [</div><div class="line">  <span class="comment">// Front face</span></div><div class="line">      -<span class="number">1.0</span>, -<span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>, -<span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>,  <span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line">      -<span class="number">1.0</span>,  <span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line"></div><div class="line">      <span class="comment">// Back face</span></div><div class="line">      -<span class="number">1.0</span>, -<span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line">      -<span class="number">1.0</span>,  <span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>,  <span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>, -<span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line"></div><div class="line">      <span class="comment">// Top face</span></div><div class="line">      -<span class="number">1.0</span>,  <span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line">      -<span class="number">1.0</span>,  <span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>,  <span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>,  <span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line"></div><div class="line">      <span class="comment">// Bottom face</span></div><div class="line">      -<span class="number">1.0</span>, -<span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>, -<span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>, -<span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line">      -<span class="number">1.0</span>, -<span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line"></div><div class="line">      <span class="comment">// Right face</span></div><div class="line">       <span class="number">1.0</span>, -<span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>,  <span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>,  <span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line">       <span class="number">1.0</span>, -<span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line"></div><div class="line">      <span class="comment">// Left face</span></div><div class="line">      -<span class="number">1.0</span>, -<span class="number">1.0</span>, -<span class="number">1.0</span>,</div><div class="line">      -<span class="number">1.0</span>, -<span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line">      -<span class="number">1.0</span>,  <span class="number">1.0</span>,  <span class="number">1.0</span>,</div><div class="line">      -<span class="number">1.0</span>,  <span class="number">1.0</span>, -<span class="number">1.0</span></div><div class="line">      ],</div><div class="line">      indices : [</div><div class="line">        <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>,      <span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>,    <span class="comment">// Front face</span></div><div class="line">        <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>,      <span class="number">4</span>, <span class="number">6</span>, <span class="number">7</span>,    <span class="comment">// Back face</span></div><div class="line">        <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>,     <span class="number">8</span>, <span class="number">10</span>, <span class="number">11</span>,  <span class="comment">// Top face</span></div><div class="line">        <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>,   <span class="number">12</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="comment">// Bottom face</span></div><div class="line">        <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>,   <span class="number">16</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="comment">// Right face</span></div><div class="line">        <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>,   <span class="number">20</span>, <span class="number">22</span>, <span class="number">23</span>  <span class="comment">// Left face</span></div><div class="line">      ],</div><div class="line">      itemSize: <span class="number">3</span>,</div><div class="line">      <span class="comment">// for simplify. one face only have one color</span></div><div class="line">      colors: [</div><div class="line">        [<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">255</span>, <span class="number">255</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">255</span>, <span class="number">255</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">255</span>, <span class="number">120</span> , <span class="number">255</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">255</span>, <span class="number">120</span> , <span class="number">255</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">120</span>, <span class="number">255</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">120</span>, <span class="number">255</span>, <span class="number">0</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">0</span>, <span class="number">255</span>, <span class="number">120</span>, <span class="number">1</span>],</div><div class="line">        [<span class="number">0</span>, <span class="number">255</span>, <span class="number">120</span>, <span class="number">1</span>]</div><div class="line">      ],</div><div class="line">      matrix: mat4.createRotate([<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>], <span class="number">30</span>)</div><div class="line">    }</div><div class="line">  ]</div><div class="line">})</div></pre></td></tr></table></figure>
+
+<p>即一套模型数据可以应用于不同的环境， 只要我们使用标准化的Render即可， 这是transform所替代不了的</p>
+<h3 id="clip3d的限制"><a href="https://github.com/leeluolee/clip3d" target="_blank" rel="external">clip3d</a>的限制</h3>
+<ul>
+<li>无法引入材质： 这点几乎判了这个clip-path的死刑了, 并且z-sorting是基于面的z-index, 是是有可能出现bug的</li>
+<li>性能: 超过1000个面在动画时就有了明显的卡顿</li>
+<li>浏览器支持度不佳: 比canvas更差</li>
+</ul>
+<h2 id="后记">后记</h2>
+<p>聪明的朋友可能发现了， 本文其实只是一次3D pipeline操作的简单实现, 关键点其实就是”任意多边形”的渲染能力, 而<code>clip-path</code>恰恰是将我们从只能渲染长方形的尴尬境地中解放了出来，使得Web设计实现上有了更大的可能性.</p>
+<p>同理可证前端还有这些平台可以实现这种级别的渲染器. </p>
+<ol>
+<li>canvas/2d</li>
+<li>canvas/webgl</li>
+<li>svg </li>
+<li>快死的vml,flash</li>
+</ol>
+<p>所有的代码都放在<a href="https://github.com/leeluolee/clip3d" target="_blank" rel="external">github: clip3d</a>中， 有兴趣的可以关注一下。</p>
+<hr>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/3d/">3d</a>, <a href="/tags/javascript/">javascript</a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>

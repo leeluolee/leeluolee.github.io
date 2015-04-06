@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CSS预处理器初识 | 拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="CSS预处理器初识"/>
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-08-01T14:49:03.000Z"><a href="/2013/08/01/mcss-start/">8月 1 2013</a></time>
+      
+      
+  
+    <h1 class="title">CSS预处理器初识</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2>
+<p>这些年，从淘宝的工程师翻译LESS首页以及bootstrap带动的LESS热波及到了国内，预处理器开始渐渐被一些工程师所接受。 <a href="http://www.w3cplus.com/sassguide/comments.html" target="_blank" rel="external">@w3cplus</a> 最近也开了一个预处理器专版,主要是针对SASS，版面不错(相较于SASS主页)。同时豆瓣也利用stylus封装了一个简单css framework, 目前三款预处理器算是都有了一定的受众(当然90%应该都是LESS用户)。</p>
+<p>此文会简单进行对预处理器的介绍并进行几款预处理器的简单对比(主要是加入了MCSS,类似的对比文是在太多了)。</p>
+<a id="more"></a>
+<hr>
+<h2 id="CSS的不足_——_抽象能力">CSS的不足 —— 抽象能力</h2>
+<p>CSS是一个近乎完美且富有表现力的语言（抛开永无止境的标准化进程不谈）, 但是仍有很多开发者诟病它的不足，总结下大概有以下几点</p>
+<ol>
+<li>难以维护</li>
+<li>无有效做到DRY(Dont repeat yourself)</li>
+<li>难以真正将既有经验积淀成实际的代码</li>
+<li>缺乏逻辑控制的能力</li>
+<li>…………..</li>
+</ol>
+<p>这以上其实都可以归结为 <strong>抽象能力</strong> 的不足，这个所谓的抽象能力似乎听起来本身就很抽象。我们可以在维基对它的词条上一窥究竟: </p>
+<blockquote>
+<p>Abstraction tries to reduce and factor out details so that the programmer can focus on a few concepts at a time.</p>
+</blockquote>
+<p>是的， <strong>抽离细节，关注更少</strong> 这种抽离无所谓大小， 事实上我们在编程中充斥不断的抽象提取的过程: 小到一个变量参数、一个函数， 大到一个类、模块和基于以上的架构模式。</p>
+<p>并不仅限于普通编程语言，CSS也有其抽象能力，那就它的名字的含义—— <strong>层叠样式</strong> ，具体到实际开发时，我们做的有可能是定义一个类名，进行增量的功能添加。这几乎也是CSS仅有的抽象能力，也很容易引起滥用，比如设置一个<code>display:none</code>样式的类，然后一个个添加到html中，这其实是应该尽量避免的，过分依赖会导致效率低效和难以维护。</p>
+<p>以编程语言的眼光来看，CSS确实抽象能力不足，它也在不断发展（从几套css variable的草案进化就可以一窥端倪）来改善这个问题。但是它实际上并不是一般意义上的编程语言，它有其自身的切实关注点。 这时CSS Preprocessor来解围了。</p>
+<h2 id="初识CSS预处理器">初识CSS预处理器</h2>
+<p>我们先首先来回顾下CSS预处理这个领域的发展。再来看看它们帮我们解决了什么问题。</p>
+<h3 id="预处理的’悠久’历史">预处理的’悠久’历史</h3>
+<p>最原始的CSS预处理器的形式可以追溯到利用服务器端模板语言(如php)通过字符插值拼接输出css，最后慢慢演变为类似SASS的css预处理语言, 不过当时的预处理器偏重语言特性多一点, 与CSS的语法偏离较大(可以参考SASS的语法)。 </p>
+<p>之后LESS出现, LESS基于CSS语法的超集，带来的好处有很多，这个特性也被Sass社区所接纳。 随着SASS的另一个壳SCSS的产生，CSS-Preprocessor开始统一向着正确轨道靠拢——即基于CSS语法</p>
+<p>而11年出现的TJ大神的Stylus似乎要将社区带回最初SASS的位置(虽然它仍然可以支持原生css的写法), 依赖缩进和约定去除多余的符号(比如<code>;</code>、<code>:</code>、<code>{</code>);</p>
+<p>下一节我会仔细探讨下当前市面上的各个预处理</p>
+<h2 id="市面上的CSS预处理们">市面上的CSS预处理们</h2>
+<p>SASS、LESS、Stylus是非常优秀的开源产品, 每一个的产生都推动的社区的前进, 作为一个后来者，MCSS也是广泛参考Sass、Less社区讨论的衍生产物。MCSS也希望自己的理念可以解决前辈们没有解决或未关注到的问题。</p>
+<h3 id="1-_SASS_——_最鲁棒和冗杂的预处理器鼻祖">1. <a href="http://sass-lang.com/" target="_blank" rel="external">SASS</a> —— 最鲁棒和冗杂的预处理器鼻祖</h3>
+<p>SASS早在07年就有雏形产生，伴随着Rails社区不断发展壮大，到目前为止，仍然在CSS预处理器占有度中占据着半壁江山。google甚至直接在Chrome上对其进行实验性质的支持。<br>但同时SASS也是有几个比较严重的问题的</p>
+<ol>
+<li><p>基于Ruby </p>
+<p>无法更有效的贴近目前实际的前端开发者，之前Sass的壮大主要是由于Rails这个一体化开发框架带来的效应，很多Web开发者承担着CSS的开发任务，而目前前端开发领域越来越复杂，更多的前端开发者有能力和需求去接受css预处理器。</p>
+</li>
+<li><p>语法有些冗杂</p>
+<p>这个一方面是由于Sass悠久的 <strong>历史包袱</strong>引起的, 另一方面也是对功能缺乏取舍的后果。比较典型的例子就是难以捉摸的<code>@extend</code>规则和那些循环语法们</p>
+</li>
+</ol>
+<p>从LESS、SASS的社区活跃度对比来看，这些年LESS要比SASS发展的要好得多，但是SASS比LESS在后续的扩展上要有更大的自由度——依赖自定义<code>@At-rule</code>，而这个在LESS中被占用成了变量声明，LESS只能在选择器上做文章了。</p>
+<h3 id="2-_LESS_——_最火和最像CSS的预处理器">2. <a href="http://lesscss.org/" target="_blank" rel="external">LESS</a> —— 最火和最像CSS的预处理器</h3>
+<p>目前版本的LESS是基于Nodejs构建，并且可以在浏览器中运行（在实际开发中请忘记这个功能），目前LESS在github上的start数达到了9000，作者遇到的同事用过预处理器的也几乎都是LESS的支持者。</p>
+<p><strong>LESS的火的原因是什么?</strong></p>
+<ol>
+<li><p>拥有50000+ star数的 <strong>bootstrap</strong></p>
+<p>有个大平台社区的推动，想不火都难啊。有多少人是因为bootstrap关注到LESS的？ 请举个手。反正我是的</p>
+</li>
+<li><p>最像CSS</p>
+<p>这个像指的是词法上最接近，热爱LESS的人们忘记CSS对于<code>@atrule</code>的定义吧，因为LESS使用了这个词法对象作为参数了，成就了简洁的美誉但是却影响了后续的功能扩展。这同时也带来了其它好处，比如几乎不需要去写对应的语法高亮了，开启css的就行，并且更容易被前端开发所接受。</p>
+</li>
+<li><p>突出了最常用的80%的功能</p>
+<p>众所周知，LESS晚于SASS除了语法上的不同，没有引入额外的功能，而是进行了精简，混合了<code>mixin</code>和<code>ruleset</code>虽然给后续扩展带来不足，但是确实是聪明的设计。</p>
+</li>
+</ol>
+<p>但是事实上，大家似乎很少注意到这点 </p>
+<blockquote>
+<p>LESS目前仍然没有出现过一个类似Compass这种功能层级的二级类库</p>
+</blockquote>
+<p>LESS目前有了extend了， 似乎SASS党们无法再攻击它的这个劣势，在我看来LESS似乎是往错误的方向又走了一步，比如两个并列的Selector，你如何判断哪个是extend的？如何处理层级的extend？这些本就可以通过扩展@atrule进行解决，但是设计上走错了一步会导致后续的扩展</p>
+<h3 id="3-_Stylus_——_让人眼前一亮的语法设计">3. <a href="http://learnboost.github.io/stylus/" target="_blank" rel="external">Stylus</a> —— 让人眼前一亮的语法设计</h3>
+<p>Stylus是Node社区的大神TJ的大作， 看似更少的语法噪音(括号, 冒号，分号)，通过缩进来解释, 事实上可能带来维护的深渊，多种语法支持看似灵活，其实在团队开发中也可能带来灾难。 </p>
+<p>综上所述，对于以上三款，我偏向仍然是SASS(SCSS)。文章的末尾 </p>
+<h3 id="4-_MCSS">4. <a href="https://github.com/NeteaseWD/mcss" target="_blank" rel="external">MCSS</a></h3>
+<p>从SASS出现，再到LESS(LESS在功能上只是子集), 再到Stylus, 语法特性整个社区其实一直在增加，但是无论它们任何一个，其实都没有解决或关注到一些一直存在的问题: </p>
+<ol>
+<li><p>无法控制一整个文件模块的输出</p>
+</li>
+<li><p>block不是一种值，无法传递进函数, 这让@keyframes、@media的封装成为不可能</p>
+</li>
+</ol>
+<p>MCSS是我最近完成的CSS预处理器，它同时也可以作为一个 <strong>易用的CSS Parser</strong> , 在小范围已经使用了约两个月， 已经有了完善的测试已经文档， 目前的版本是<code>0.3.4</code> 这里不会事无巨细的介绍太多它的功能点。有兴趣的可以参考</p>
+<hr>
+<h2 id="CSS预处理器的共性">CSS预处理器的共性</h2>
+<p><em>共性是一种类似最佳实践的存在，被各个预处理器社区广泛接受和实现的特性。这里我会以Sass、Less、Mcss三种预处理器进行短暂介绍，以及帮助我们解决什么问题</em></p>
+<h4 id="1-_参数、赋值">1. 参数、赋值</h4>
+<p>参数是一种最基本的抽象, </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//less</span></div><div class="line">@primary: <span class="comment">#ccc;</span></div><div class="line"></div><div class="line"><span class="comment">//scss</span></div><div class="line"><span class="variable">$primary</span>: <span class="comment">#ccc;</span></div><div class="line"></div><div class="line"><span class="comment">//mcss</span></div><div class="line"><span class="variable">$primary</span> = <span class="comment">#ccc;</span></div></pre></td></tr></table></figure>
+
+<h2 id="CSS预处理的几个误区">CSS预处理的几个误区</h2>
+<h2 id="CSS预处理的几个良好实践">CSS预处理的几个良好实践</h2>
+<h3 id="1-_嵌套尽量不要超过三层">1. 嵌套尽量不要超过三层</h3>
+<p>有人可能会疑问: _使用嵌套层级不就是为了更好的表明</p>
+<p>如果你发现你的源文件大范围的超过三层, 或许你应该重构你的html了</p>
+<h3 id="2-">2.</h3>
+<h2 id="个人实际使用中的预处理器">个人实际使用中的预处理器</h2>
+<h2 id="相关资源">相关资源</h2>
+<ol>
+<li><a href="http://www.vanseodesign.com/css/abstraction/" target="_blank" rel="external">Why Abstraction Can Improve Your CSS</a></li>
+<li><a href="http://chriseppstein.github.io/blog/2009/09/20/why-stylesheet-abstraction-matters/" target="_blank" rel="external">why stylesheet abstraction matters</a></li>
+<li><a href="http://dev.w3.org/csswg/css3-syntax/#parsing" target="_blank" rel="external">CSS Syntax</a></li>
+<li><a href="http://css-tricks.com/poll-results-popularity-of-css-preprocessors/" target="_blank" rel="external">几个预处理器的流行度对比 2012数据</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/CSS/Syntax" target="_blank" rel="external">来自mdn的CSS syntax中文解释 短小精悍</a></li>
+<li><a href="http://css-tricks.com/musings-on-preprocessing/" target="_blank" rel="external">musing on preprocessing</a></li>
+</ol>
+<h2 id="后续">后续</h2>
+<ol>
+<li>后续我会仔细阐述mcss的语法以及功能特性以及这个特性所要解决的问题</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/mcss/">mcss</a>, <a href="/tags/css/">css</a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>

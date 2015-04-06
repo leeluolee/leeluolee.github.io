@@ -1,0 +1,730 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>归档 | 拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">归档</h2>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-04-01T14:49:03.000Z"><a href="/2015/04/01/render-3d-use-clip-path/">4月 1 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/04/01/render-3d-use-clip-path/">前端黑科技——纯clip-path打造的3D模型渲染器</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><em>本页DEMO只兼容到webkit浏览器(如chrome)， 请确保你的正确打开姿势</em></p>
+<p><em>本文涉及到的资源clip3d: <a href="https://github.com/leeluolee/clip3d" target="_blank" rel="external">https://github.com/leeluolee/clip3d</a> </em></p>
+<h2 id="缘由">缘由</h2>
+<p>几天之前, 一个<a href="http://species-in-pieces.com/#" target="_blank" rel="external">species-in-pieces</a>的网站把我震到了(如下图), 出于一个<strong>优秀前端的敏锐嗅觉和原始本能</strong>，<br>我立刻祭出了看家法宝——Chrome开发者工具开始偷窥这个网站.</p>
+<p><img src="http://www.species-in-pieces.com/img/assets/poster-detail-2.png" alt="species in pieces"></p>
+<p>简单推敲之后，我发现其实原理可以归结为一个属性—<code>clip-path</code>, 又一篇博文的材料到手！<br>当我兴高采烈的将我的《Species in Pieces原理解析》进行到一半时，发现First blood在weibo上已经被人抢了.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/04/01/render-3d-use-clip-path/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-11-04T01:57:11.000Z"><a href="/2014/11/04/you-dont-know-terminal/">11月 4 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/11/04/you-dont-know-terminal/">你不知道的终端Terminl</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>以下内容大部分源自 <strong><code>man console_codes</code></strong></p>
+<h3 id="关于转移字符">关于转移字符</h3>
+<p>首先废话下转移字符，因为后面介绍到CSI等部分时会涉及到.</p>
+<ol>
+<li>八进制: “\” + 1~3位的8位数字 例如 “\123”;</li>
+<li>16进制长 “\u” + 4位16位数字  例如 “\u738b” (王).<br>数字即 <code>char.charCodeAt(0).toString(16)</code>的值</li>
+<li>16进制短 “\x” + 两位16位数字 例如 “\x55”(U) 它等价于 “\u0055”;</li>
+<li>其它诸如<code>\t</code>等制表符 等就不再做说明了</li>
+</ol>
+<h3 id="终端的control_codes">终端的control codes</h3>
+<p>比如Linux的终端实现了VT102(<a href="http://en.wikipedia.org/wiki/VT100" target="_blank" rel="external">?</a>)和ECMA-48的，以及一些私有字符集。</p>
+<p>看到VT102 terminal实体可能你就明白为何我们称之为“终端”. 对，就是这大家伙<br><img src="http://terminals.classiccmp.org/wiki/images/thumb/d/d0/DEC_VT102_291060983768-1.jpg/800px-DEC_VT102_291060983768-1.jpg" alt="VT102"></p>
+<p>VT102 被称之为 De facto standard, 即虽然没有相关标准化，但是已然成为了一种事实标准，<br>我们常规Linux的终端就是模拟实现了它的接口标准</p>
+<p>当你输入字符时，如果终端判断其为一个控制字符或正处于一个，它不会将其转换为字符实体并显示，<br>而是会发生一些特殊的处理，比如改变字体颜色，上下移动光标隐藏光标，发出蜂鸣声等等。</p>
+<h2 id="控制字符_(Control_characters)_与转移序列">控制字符 (Control characters) 与转移序列</h2>
+<p>有以下控制字符</p>
+<ul>
+<li>00(NUL)</li>
+<li>07(BEL)</li>
+<li>08(BS)</li>
+<li>09(HT)</li>
+<li>0a(LF)</li>
+<li>0b(VT)</li>
+<li>0c(FF)</li>
+<li>0d(CR)</li>
+<li>0e(SO)</li>
+<li>0f(SI)</li>
+<li>18(CAN)</li>
+<li>1a(SUB)</li>
+<li><strong>1b(ESC)</strong></li>
+<li>7f(DEL)</li>
+</ul>
+<p>事实上我们平时term-dom中使用到的只有ESC转义起始符(以及用来蜂鸣的<code>\x07</code> BEL);</p>
+<p>控制字符会立即生效并且不会被显示, 如果前面的序列正处于CSI阶段，CSI会在生效后继续进行,<br>唯一的例外是ESC控制符, 它会终止当前的CSI序列</p>
+<h3 id="ESC">ESC</h3>
+<p>ESC控制符是我们最常用的</p>
+<p>ESC c    RIS    重绘屏幕.<br>ESC D    IND    换行.<br>ESC E    NEL    新的一行.<br>ESC H    HTS    设置当前列为制表位.<br>ESC M    RI    翻转换行(Reverse linefeed).<br>ESC Z    DECID    DEC 私有定义.内核将其解释为<br>        VT102字符,返回字符ESC [ ? 6 c.<br>ESC 7    DECSC    存储当前状态(光标坐标,<br>        属性,字符集).<br>ESC 8    DECRC    恢复上一次储存的设置<br>ESC [    CSI    控制序列介绍<br>ESC %        开始一个字符集选择序列<br>ESC % @        \0\0\0选择默认字符集(ISO 646 / ISO 8859-1)<br>ESC % G        \0\0\0选择 UTF-8<br>ESC % 8        \0\0\0选择 UTF-8(已不用)<br>ESC # 8    DECALN    DEC 屏幕校准测试 - 以E’s填充屏幕.<br>ESC(        开始一个 G0 字符集定义序列<br>ESC( B        \0\0\0选择默认字符集(ISO 8859-1 mapping)<br>ESC( 0        \0\0\0选择 vt100 图形映射<br>ESC( U        \0\0\0选择空映射 - 直接访问字符ROM<br>ESC( K        \0\0\0选择用户映射 -  由程序\fBmapscrn\fP(8)<br>        \0\0\0加载.<br>ESC )        开始一个 G1 字符集定义<br>        (后面跟 B,0,U,K,同上).<br>ESC &gt;    DECPNM    设置数字小键盘模式<br>ESC =    DECPAM    设置程序键盘模式<br>ESC ]    OSC    (是perating system command的缩写)<br>ESC ] P Inrrggbb P: 设置调色板,后面紧跟7个<br>十六进制数,再跟一个 P :-(.<br>这里 \fIn\fP 是颜色(0-16),而 \fIrrggbb\fP 表示<br>红/绿/蓝 值(0-255).<br>ESC ] R: 重置调色板</p>
+<p>这里的部分序列是term-dom中需要的</p>
+<h3 id="CSI">CSI</h3>
+<p>CSI(<code>ESC [</code>) 是由分号隔开的十进制数.空参数或缺少的参数以0处理.<br>可以用一个问号代替参数序列.</p>
+<p>CSI可以实现一些文字效果，比如term-dom大部分实现都基于CSI来实现文件颜色，背景色等</p>
+<p>CSI序列的动作由最后一个数字决定</p>
+<p>那么问题来了，我只是想换个文字颜色你和我扯那么多干嘛？</p>
+<p>1</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-24T08:39:51.000Z"><a href="/2014/10/24/use-puer-helpus-developer-frontend/">10月 24 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/24/use-puer-helpus-developer-frontend/">超简单工具puer——“低碳”的前后端分离开发</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前几天，跟一同事(<a href="http://www.mihtool.com/" target="_blank" rel="external">MIHTool</a>作者)讨教了一下开发调试工具。其实个人觉得相较于定制一个类似MIHTool的Hybrid App容器，基于长连的B/S架构的工具其实会是一个更轻量的解决方案。此文会分享一下超简单工具<a href="http://github.com/leeluolee/puer" target="_blank" rel="external">puer</a>，以及如何利用它在产品开发的各阶段实现高效的开发。</p>
+<p>本文title有点大哈，相较于目前国内正流行起来的前端后移的前后端分离方案，本文介绍是一种“低碳”的版本，所以不要纠结于这个Title的正确性哈。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/10/24/use-puer-helpus-developer-frontend/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-21T13:40:04.000Z"><a href="/2014/10/21/how-ls-help-you-diff-two-array/">10月 21 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/21/how-ls-help-you-diff-two-array/">使用莱文斯坦距离（Levenshtein distance）计算两数组的差异</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2>
+<p><a href="http://en.wikipedia.org/wiki/Levenshtein_distance" target="_blank" rel="external">莱文斯坦距离(Levenshtein distance以下简称ld)</a>是一种常见的算法或可以称之为一种度量单位(前提是操作权重确定)，它用于表示从字串序列A到字串序列B所需要进行操作(增加、删除、更新)的综合。</p>
+<p><strong>鉴于数组与字符的相似性，这个算法当然同样适合与数组</strong></p>
+<p>问题是作为一个前端开发，你不好好切图，用这个算法做啥？</p>
+<p>事实上<a href="https://github.com/regularjs/regular/" target="_blank" rel="external">Regularjs</a>内部就使用到了这种算法，它用于检测数组的变动差异，并将差异反映到View中(即Dom)。</p>
+<p>ld算法的另一个好处是，可以容易的将计算结果映射到未来将会到来的JS ES6<a href="http://wiki.ecmascript.org/doku.php?id=harmony:observe_api_usage#array" target="_blank" rel="external">Array.observe</a>的返回值形式，方便未来的无缝迁移。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/10/21/how-ls-help-you-diff-two-array/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-19T07:39:17.000Z"><a href="/2014/10/19/write-requirejs-plugin/">10月 19 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/19/write-requirejs-plugin/">requirejs的插件介绍与制作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2>
+<p>我这里就不介绍<a href="http://requirejs.org/" target="_blank" rel="external">requirejs</a>了， 简而言之： requirejs是支持<a href="https://github.com/amdjs/amdjs-api/wiki/AMD" target="_blank" rel="external">AMD</a>规范的模块加载器， 事实上它也是AMD的最直接推动者。</p>
+<p>现在可供挑选的开源模块解决方案很多，比如component、cjs+browserify、umd等等，但是无疑类似requirejs这类加载系统是现在最成熟和可靠的解决方案，所以<a href="https://github.com/regularjs/regular" target="_blank" rel="external">regularjs</a>第一步就是提供对requirejs的插件支持。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/10/19/write-requirejs-plugin/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-10T10:59:49.000Z"><a href="/2014/10/10/template-engine/">10月 10 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/10/template-engine/">前端模板技术面面观</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>此文的写作耗时很长，称之为雄文不为过，小心慢用</p>
+</blockquote>
+<h2 id="此文缘由">此文缘由</h2>
+<p>其实从发布<a href="http://github.com/regularjs/regular" target="_blank" rel="external">regularjs</a>之后，我发现在google搜索regularjs 不是给我这个画面</p>
+<p><img src="http://leeluolee.github.io/attach/template-engine/regularjs-search1.png" alt="regular-search-1"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/10/10/template-engine/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-25T01:29:24.000Z"><a href="/2014/08/25/create-a-todomvc-step-by-step/">8月 25 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/25/create-a-todomvc-step-by-step/">一步步教你实现一个todomvc(基于Regularjs)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2>
+<p>现在市面上充斥了越来越多的javascript框架，给开发者的技术选型带来极大的选择成本，<a href="http://todomvc.com/" target="_blank" rel="external">todomvc</a>在这个环境下应运而生. </p>
+<p>由于todomvc有一个完整的实现定义，它复杂度适中，大概就是平时开发的一个组件的功能复杂度，开发者可以轻松对各个框架的代码做对比，同时由于功能一致，也可以进行各框架之间的<a href="http://regularjs.github.io/perf/todomvc-benchmark/index.html" target="_blank" rel="external">性能对比(当然这个测试案例其实并没有很大的实际意义)</a>. </p>
+<p><img src="http://todomvc.com/site-assets/screenshot.png" alt="todomvc"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/08/25/create-a-todomvc-step-by-step/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-22T07:39:17.000Z"><a href="/2014/07/22/2014-07-22-gitbook-guide/">7月 22 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/07/22/2014-07-22-gitbook-guide/">GitBook, Git + Markdown 快速发布你的书籍</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="https://www.gitbook.io/" target="_blank" rel="external">gitbook</a>是一个用于发布个人书籍的平台，类似于国外著名的LeanPub. 其中一个很大的特点是它利用git作为版本管理和发布工具, 加上是在线形式，你可以很方便的进行作为的快速更新. </p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/07/22/2014-07-22-gitbook-guide/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-08-05T13:40:04.000Z"><a href="/2013/08/05/less-to-mcss/">8月 5 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/08/05/less-to-mcss/">LESS to MCSS 指南</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2>
+<p>虽然首页没有开始做，昨天仍决定将<a href="https://github.com/NetEaseWD/mcss" target="_blank" rel="external">MCSS</a>从身边的基友们开始向杭研推广了，从开始做这个直到现在推广遇到最多的问题是：</p>
+<blockquote>
+<p><strong>不是有LESS了吗？</strong></p>
+</blockquote>
+<p>这个问题回答了很多遍了，但是觉得回答的都不够好，所以觉得写一篇文章解释一下。其实很多答案也都可以从基于MCSS封装的函数库<a href="https://github.com/leeluolee/mass" target="_blank" rel="external">mass</a>中得到解答，本文针对MCSS的例子都可以在这个<a href="http://leeluolee.github.io/mcss/" target="_blank" rel="external">Try-Page</a>中进行尝试。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2013/08/05/less-to-mcss/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-08-01T14:49:03.000Z"><a href="/2013/08/01/mcss-start/">8月 1 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/08/01/mcss-start/">CSS预处理器初识</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2>
+<p>这些年，从淘宝的工程师翻译LESS首页以及bootstrap带动的LESS热波及到了国内，预处理器开始渐渐被一些工程师所接受。 <a href="http://www.w3cplus.com/sassguide/comments.html" target="_blank" rel="external">@w3cplus</a> 最近也开了一个预处理器专版,主要是针对SASS，版面不错(相较于SASS主页)。同时豆瓣也利用stylus封装了一个简单css framework, 目前三款预处理器算是都有了一定的受众(当然90%应该都是LESS用户)。</p>
+<p>此文会简单进行对预处理器的介绍并进行几款预处理器的简单对比(主要是加入了MCSS,类似的对比文是在太多了)。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2013/08/01/mcss-start/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+
+  <nav id="pagination">
+  
+  
+    <a href="/archives/page/2/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>

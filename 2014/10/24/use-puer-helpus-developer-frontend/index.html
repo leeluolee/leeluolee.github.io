@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>超简单工具puer——“低碳”的前后端分离开发 | 拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="超简单工具puer——“低碳”的前后端分离开发"/>
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-24T08:39:51.000Z"><a href="/2014/10/24/use-puer-helpus-developer-frontend/">10月 24 2014</a></time>
+      
+      
+  
+    <h1 class="title">超简单工具puer——“低碳”的前后端分离开发</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前几天，跟一同事(<a href="http://www.mihtool.com/" target="_blank" rel="external">MIHTool</a>作者)讨教了一下开发调试工具。其实个人觉得相较于定制一个类似MIHTool的Hybrid App容器，基于长连的B/S架构的工具其实会是一个更轻量的解决方案。此文会分享一下超简单工具<a href="http://github.com/leeluolee/puer" target="_blank" rel="external">puer</a>，以及如何利用它在产品开发的各阶段实现高效的开发。</p>
+<p>本文title有点大哈，相较于目前国内正流行起来的前端后移的前后端分离方案，本文介绍是一种“低碳”的版本，所以不要纠结于这个Title的正确性哈。</p>
+<a id="more"></a>
+<hr>
+<h2 id="简介">简介</h2>
+<p>简而言之，<strong>Puer是一个可以实时编辑刷新的前端服务器</strong>。特性一览:</p>
+<ul>
+<li>提供一个当前或指定路径的静态服务器</li>
+<li>所有浏览器的实时刷新：编辑css实时更新(update)页面样式，其它文件则重载(reload)页面</li>
+<li>提供简单熟悉的mock请求的配置功能，并且配置也是自动更新。</li>
+<li>可用作代理服务器，调试开发既有服务器的页面，可与mock功能配合使用</li>
+<li>集成了<a href="http://people.apache.org/~pmuellr/weinre-docs/latest/" target="_blank" rel="external"><strong>weinre</strong></a>，并提供二维码地址，方便移动端的调试</li>
+<li>可以作为connect中间件使用(前提是后端为nodejs，否则请使用代理模式)</li>
+</ul>
+<p>可以发现这里功能并不多，但罗列的基本都是实际前端开发中会涉及到的。可能敏锐的朋友会点出，同类的<a href="https://github.com/shakyShane/browser-sync" target="_blank" rel="external">browser-sync</a>提供了更强的操作同步的功能。这点其实主要不想去盲目攀比功能(实现其实并不难，因为基础的注入脚本已经做了，剩下的都只是功能堆砌)，目前的出发点都是作者实际的需求(好吧，其实是懒)。还有就是，其实<strong>puer诞生比它要早一年多</strong>。</p>
+<h2 id="让我们开始使用吧">让我们开始使用吧</h2>
+<h3 id="安装">安装</h3>
+<p>确保你安装了<a href="http://nodejs.org/download/" target="_blank" rel="external">nodejs</a>（现在还有没nodejs环境的前端？ 拖出去喂狗吧）</p>
+<p>使用npm全局安装<code>puer</code>命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="operator"><span class="keyword">install</span> puer -g</span></div></pre></td></tr></table></figure>
+
+<p>输入<code>puer -h</code>可以查看Help</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Usage:	puer [options...]</div><div class="line"></div><div class="line">Options:</div><div class="line">  -<span class="ruby">p,--port 	server<span class="string">'s listen port, 8000 default</span></span></div><div class="line">  -<span class="ruby">f,--filetype 	fileType to watch(split with <span class="string">'|'</span>), defualt <span class="string">'js|css|html|xhtml'</span></span></div><div class="line">  -<span class="ruby">d,--dir 	your customer working dir. default current dir</span></div><div class="line">  -<span class="ruby">i,--inspect   	start weinre server <span class="keyword">and</span> debug all puer page</span></div><div class="line">  -<span class="ruby">x,--exclude   	exclude file under watching(must be a regexp), <span class="symbol">default:</span> <span class="string">''</span></span></div><div class="line">  -<span class="ruby">a,--addon 	your addon<span class="string">'s path</span></span></div><div class="line">  -<span class="ruby">t,--target 	proxy url</span></div><div class="line">     -<span class="ruby">-no-reload   	close  auto-reload feature,(<span class="keyword">not</span> recommended)</span></div><div class="line">     -<span class="ruby">-no-launch   	close the auto launch feature</span></div><div class="line">  -<span class="ruby">h,--help   	help list</span></div></pre></td></tr></table></figure>
+
+<p>强烈中文即时感的英语相信和大家交流起来不会很困难。</p>
+<p><strong>使用</strong></p>
+<p>90%的使用场景下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span> /path/<span class="keyword">to</span>/workspace ↵</div><div class="line">puer ↵</div></pre></td></tr></table></figure>
+
+<p>puer会默认为你打开<a href="http://localhost:8000页面(端口可以" target="_blank" rel="external">http://localhost:8000页面(端口可以</a> <code>-p 8001</code>参数进行控制)，并贴心的帮你列出了所有你本地可用的ip以及当前的地址二维码，方便手机访问。</p>
+<p>编辑当前路径下的文件，会实时更新页面(无论你在多少台电脑打开多少个页面)。</p>
+<p><img src="http://leeluolee.github.io/attach/2014-10/puer-step-1.gif" alt="puer使用1"></p>
+<p>关于如何命令行下快速到达工作目录，作者推荐两个工具</p>
+<ol>
+<li><a href="https://github.com/rupa/z" target="_blank" rel="external">z</a>: 必装shell工具，快速进入最常用目录</li>
+<li><a href="http://wbond.net/sublime_packages/terminal" target="_blank" rel="external">sublime-terminal</a>: 直接进入当前文件或工程的所在路径</li>
+</ol>
+<p>在开发静态页面时，这个简单的功能意义非凡，特别是双屏的时候，可以完全解放你的F5键。关键是：</p>
+<blockquote>
+<p>保存后看到浏览器同步刷新，有种莫名的愉悦感涌上心头有木有？</p>
+</blockquote>
+<p>作者简单将这种现象归结于之前看到的一篇文章：【人无法在两种思维模式下进行高效切换】，猜想这可能这和CPU的进程切换是一样一样的。</p>
+<h3 id="进阶1_mock请求">进阶1 mock请求</h3>
+<p>假设你的静态页面开发到一定程度，需要与服务器端交互了，而后台服务还完全无法联调，这其实是属于最简单的<strong>前后端分离开发</strong>的场景。一般而言， 作者会通过以下几种方案。</p>
+<p><strong>层级1: 通过代码解耦，直接在前端mock数据</strong></p>
+<p>这种方式影响较大，而且无论你解耦的如何，都会增加最终上真实环境的切换成本。</p>
+<p><strong>层级2: 通过fiddler等调试代理工具mock数据</strong></p>
+<p>优点是到正式环境的切换成本小，但<strong>配置成本较大</strong>，也接口mock也有局限性并基本上只能是静态数据模拟。</p>
+<p><strong>层级3：利用puer无痛的解决这个问题</strong></p>
+<p>puer提供了叫插件(addon)的功能，集成了express的route.js来达到最简的路由配置，可以提供基于真实http请求与相应的动态的mock数据。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">puer <span class="operator">-a</span> route.js</div></pre></td></tr></table></figure>
+
+<p>route.js 这么写</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// use addon to mock http request</span></div><div class="line"><span class="built_in">module</span>.exports = {</div><div class="line">  <span class="comment">// GET</span></div><div class="line">  <span class="string">"GET /v1/posts/:id"</span>: <span class="function"><span class="keyword">function</span><span class="params">(req, res, next)</span></span>{</div><div class="line">	<span class="comment">// response json format</span></div><div class="line">    res.send({</div><div class="line">      title: <span class="string">"title changed"</span>,</div><div class="line">      content: <span class="string">"tow post hahahah"</span></div><div class="line">    })</div><div class="line"></div><div class="line">  },</div><div class="line">  <span class="comment">// PUT POST DELETE is the same</span></div><div class="line">  <span class="string">"PUT /v1/posts/:id"</span>: <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line"></div><div class="line">  },</div><div class="line">  <span class="string">"POST /v1/posts"</span>: <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line"></div><div class="line">  },</div><div class="line">  <span class="string">"DELETE /v1/posts/:id"</span>: <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line"></div><div class="line">  }</div><div class="line">}%</div></pre></td></tr></table></figure>
+
+<p>它其实就是一段nodejs程序，输出是一配置对象，key的空格前代表的是请求Method，后半部分是请求路径，而value代表回调函数和express的路由中间件是一致的，传入的request和response对象，相较于原生的提供了一些额外方法，不了解的也可以<a href="http://expressjs.com/3x/api.html#req.params" target="_blank" rel="external">戳这里</a></p>
+<p><strong>【<a href="http://leeluolee.github.io/attach/2014-10/puer-step-2.gif" target="blank">戳这里看演示GIF</a>】</strong></p>
+<p>通过演示其实你可以发现，编辑route.js后，这份配置脚本是动态更新的，免去了你一次次重启服务器的工作。</p>
+<h3 id="进阶2：使用代理模式，应用puer到以有服务器中">进阶2：使用代理模式，应用puer到以有服务器中</h3>
+<p>开发进行到一定阶段，一般后端服务就逐步进入了，静态页面的开发不再适用。到这个时候，我们可以使用<code>--target path</code>切换到代理模式将puer作为一个代理服务器使用。</p>
+<p>比如本地已经存在一个localhost:8020的服务，你要在其上实现自动刷新的功能，请使用<code>-t 或 --target</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">puer -t http:<span class="comment">//localhost:8020</span></div></pre></td></tr></table></figure>
+
+<p><strong><a href="http://leeluolee.github.io/attach/2014-10/puer-step-3.gif" target="_blank" rel="external">【请戳演示GIF】</a></strong></p>
+<p>需要注意的是，进阶2提到的addon是可以和这个模式配合使用，这使得我们在后台服务青黄不接的时候率先开发完前端功能，深藏功与名。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">puer -t http:<span class="comment">//localhost:8020 -a route.js</span></div></pre></td></tr></table></figure>
+
+<p><strong><a href="http://leeluolee.github.io/attach/2014-10/puer-step-4.gif" target="_blank" rel="external">【请戳target配合addon的演示】</a></strong></p>
+<h3 id="进阶3：_使用weinre调试所有经过puer的页面">进阶3： 使用weinre调试所有经过puer的页面</h3>
+<p>weinre是目前最常用的远程调试工具，它虽然几乎无法调试JS，但是由于和平台、浏览器无关的特性，使得这个低效的工具一直流行至今，也有很多工具集成了它，比如我之前提到的MIHTool。</p>
+<p>不过要使用weinre，你需要在每个调试的页面插入一个记不住名字的脚本，并开启weinre服务，这都属于重复性劳动。puer通过 <code>-i</code> flag来开启 weinre的内置集成，每一个经过puer的页面都会被自动注入脚本。你可以在9001端口找到你的weinre服务，也可以通过puer的初始页面进入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">puer -i</div></pre></td></tr></table></figure>
+
+<p><strong><a href="http://leeluolee.github.io/attach/2014-10/puer-step-5.gif" target="_blank" rel="external">【请戳inspect的演示】</a></strong></p>
+<h3 id="进_阶4：_作为中间件来应用与nodejs作为后台的产品">进 阶4： 作为中间件来应用与nodejs作为后台的产品</h3>
+<p>这个功能其实并不常用了，它将puer作为express/connect服务器的中间件来使用，先贴个代码范例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> connect = <span class="built_in">require</span>(<span class="string">"connect"</span>)</div><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</div><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>)</div><div class="line"><span class="keyword">var</span> puer = <span class="built_in">require</span>(<span class="string">"puer"</span>)</div><div class="line"><span class="keyword">var</span> app = connect()</div><div class="line"><span class="keyword">var</span> server = http.createServer(app)</div><div class="line"></div><div class="line"><span class="keyword">var</span> options = {</div><div class="line">    dir: <span class="string">"path/to/watch/folder"</span>,</div><div class="line">    ignored: <span class="regexp">/(\/|^)\..*|node_modules/</span>  <span class="comment">//ignored file</span></div><div class="line">}</div><div class="line"></div><div class="line">app.use(puer.connect(app, server , options))   <span class="comment">//use as puer connect middleware</span></div><div class="line"><span class="comment">// you must use puer middleware before route and static midleware(before any middle may return 'text/html')</span></div><div class="line">app.use(<span class="string">"/"</span>, connect.static(__dirname))</div><div class="line"></div><div class="line"></div><div class="line">server.listen(<span class="number">8001</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"listen on 8001 port"</span>)</div><div class="line">})</div></pre></td></tr></table></figure>
+
+<p>一般你在<code>development</code>环境开启它，而在<code>product</code>环境关闭即可，<strong>需要注意的是它必须放在可能输出html的中间件之前。</strong></p>
+<hr>
+<p>一个简单的<code>puer</code>命令可以带你在各个开发阶段自由飞翔，还不赶紧试一下？</p>
+<h2 id="写在最后">写在最后</h2>
+<p><strong>名字含义</strong> ： puer意为普洱，除了爱喝和够短没有任何含义，懒得取名罢了。</p>
+<p>写puer的原动力是作者对<a href="http://www.getf5.com/" target="_blank" rel="external">f5网页免刷新工具</a>欲求不满（况且它如此简单的功能还需要开启一个桌面gui完全不能忍是么），所以功能抉择上带有一些主观性。如果你试用后，觉得它有价值并有改进余地，可以在<a href="https://github.com/leeluolee/puer/issues" target="_blank" rel="external">issues</a>下留下你的灼见(<strong>必须先来一发star</strong>)。</p>
+<p><em>碰到问题先<code>puer -h</code>看看有没有你的答案</em></p>
+<h3 id="资源汇总">资源汇总</h3>
+<ol>
+<li><strong><a href="https://github.com/leeluolee/puer" target="_blank" rel="external">puer（推荐）</a></strong>: “低碳”的前端服务器工具</li>
+<li><a href="http://people.apache.org/~pmuellr/weinre-docs/latest/" target="_blank" rel="external">weinre(推荐)</a>:  常用远程调试工具</li>
+<li><a href="https://github.com/rupa/z" target="_blank" rel="external">z(推荐)</a>:  Shell工具，快速跳转到最常用的目录。</li>
+<li><a href="https://github.com/shakyShane/browser-sync" target="_blank" rel="external">browser-sync</a>: 包含puer的部分功能，同时提供多页面的操作同步(跳转、表单)</li>
+<li><a href="http://www.mihtool.com/" target="_blank" rel="external">MIHTool</a>:MIHTool是前端工程师在iOS设备上调试和优化页面的得力助手（原slogan）</li>
+<li><a href="">sublime-terminal</a>: 快速打开sublime工程或当前文件目录</li>
+<li><a href="http://www.getf5.com/" target="_blank" rel="external">f5网页免刷新工具</a>：基于air的免刷新gui工具，习惯windows的gui工具的童鞋可以试用下。</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/tool/">tool</a>, <a href="/tags/nodejs/">nodejs</a>, <a href="/tags/javascript/">javascript</a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>

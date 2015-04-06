@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>GitBook, Git + Markdown 快速发布你的书籍 | 拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="GitBook, Git + Markdown 快速发布你的书籍"/>
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-22T07:39:17.000Z"><a href="/2014/07/22/2014-07-22-gitbook-guide/">7月 22 2014</a></time>
+      
+      
+  
+    <h1 class="title">GitBook, Git + Markdown 快速发布你的书籍</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="https://www.gitbook.io/" target="_blank" rel="external">gitbook</a>是一个用于发布个人书籍的平台，类似于国外著名的LeanPub. 其中一个很大的特点是它利用git作为版本管理和发布工具, 加上是在线形式，你可以很方便的进行作为的快速更新. </p>
+<a id="more"></a>
+<p>gitbook提供了一个简单的命令行工具<code>gitbook</code>用来编译和预览的书籍.</p>
+<p><a href="https://nodei.co/npm/gitbook/" target="_blank" rel="external"><img src="https://nodei.co/npm/gitbook.png?downloads=true&amp;stars=true" alt="NPM"></a></p>
+<h2 id="安装">安装</h2>
+<p>你可以直接通过npm安装gitbook到全局</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="operator"><span class="keyword">install</span> -g gitbook</span></div></pre></td></tr></table></figure>
+
+<p>gitbook只提供了如下四个命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">$ <span class="tag">gitbook</span> <span class="tag">-h</span></div><div class="line"><span class="tag">Usage</span>: <span class="tag">gitbook</span> <span class="attr_selector">[options]</span> <span class="attr_selector">[command]</span></div><div class="line"></div><div class="line"><span class="tag">Commands</span>:</div><div class="line"></div><div class="line"><span class="tag">build</span> <span class="attr_selector">[options]</span> <span class="attr_selector">[source_dir]</span> 编译指定目录，输出<span class="tag">Web</span>格式(_<span class="tag">book</span>文件夹中)</div><div class="line"><span class="tag">serve</span> <span class="attr_selector">[options]</span> <span class="attr_selector">[source_dir]</span> 监听文件变化并编译指定目录，同时会创建一个服务器用于预览<span class="tag">Web</span></div><div class="line"><span class="tag">pdf</span> <span class="attr_selector">[options]</span> <span class="attr_selector">[source_dir]</span> 编译指定目录，输出<span class="tag">PDF</span></div><div class="line"><span class="tag">epub</span> <span class="attr_selector">[options]</span> <span class="attr_selector">[source_dir]</span> 编译指定目录，输出<span class="tag">epub</span></div><div class="line"><span class="tag">mobi</span> <span class="attr_selector">[options]</span> <span class="attr_selector">[source_dir]</span> 编译指定目录，输出<span class="tag">mobi</span></div><div class="line"><span class="tag">init</span> <span class="attr_selector">[source_dir]</span>   通过<span class="tag">SUMMARY</span><span class="class">.md</span>生成作品目录</div><div class="line"></div><div class="line"><span class="tag">Options</span>:</div><div class="line"></div><div class="line"><span class="tag">-h</span>, <span class="tag">--help</span>     <span class="tag">output</span> <span class="tag">usage</span> <span class="tag">information</span></div><div class="line"><span class="tag">-V</span>, <span class="tag">--version</span>  <span class="tag">output</span> <span class="tag">the</span> <span class="tag">version</span> <span class="tag">number</span></div></pre></td></tr></table></figure>
+
+<h2 id="书写">书写</h2>
+<p>就以我为 <a href="http://regularjs.github.io" target="_blank" rel="external">regularjs</a> 写的 <a href="http://regularjs.github.io/guide/" target="_blank" rel="external">指南</a>为例，一份gitbook的源文件目录一般是这样的.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">$ tree -L <span class="number">2</span> -U</div><div class="line"></div><div class="line">├── _book</div><div class="line">│   ├── <span class="built_in">index</span>.html</div><div class="line">│   ├── <span class="keyword">en</span></div><div class="line">│   ├── gitbook</div><div class="line">│   └── zh</div><div class="line">├── node_modules</div><div class="line">│   ├── gulp</div><div class="line">│   └── gulp-gh-pages</div><div class="line">├── <span class="keyword">en</span></div><div class="line">│   ├── <span class="keyword">syntax</span></div><div class="line">│   ├── core</div><div class="line">│   ├── getting-start</div><div class="line">│   ├── advanced</div><div class="line">│   ├── SUMMARY.md</div><div class="line">│   ├── README.md</div><div class="line">│   ├── introduct</div><div class="line">│   └── <span class="keyword">qa</span></div><div class="line">├── zh</div><div class="line">│   ├── <span class="keyword">syntax</span></div><div class="line">│   ├── core</div><div class="line">│   ├── getting-start</div><div class="line">│   ├── advanced</div><div class="line">│   ├── SUMMARY.md</div><div class="line">│   ├── README.md</div><div class="line">│   └── introduct</div><div class="line">├── LANGS.md</div><div class="line">├── cover_small.png</div><div class="line">├── gulpfile.js</div><div class="line">├── package.json</div><div class="line">├── book.json</div><div class="line">└── README.md</div></pre></td></tr></table></figure>
+
+<p><strong>几个关键文件的说明</strong></p>
+<ul>
+<li><strong>LANGS.md</strong><br>当你需要发布多个语言版本时，根目录只需要放置一个LANGS.md, 格式如下</li>
+</ul>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="bullet">* </span>[<span class="link_label">English</span>](<span class="link_url">en</span>)</div><div class="line"><span class="bullet">* </span>[<span class="link_label">中文</span>](<span class="link_url">zh</span>)</div><div class="line"><span class="bullet">* </span>...</div></pre></td></tr></table></figure>
+
+<p>  每个zh，en文件夹现在就相当于一个独立的书籍.</p>
+<ul>
+<li>README.md<br>REAME相当于书籍的前言部分, 可以忽略</li>
+<li><p>cover_small.png 和 cover.png<br>书籍的封面图</p>
+</li>
+<li><p><strong>SUMMARY.md</strong><br>SUMMARY是最重要的一个部分, 它创建的是整书的索引, 你也可以通过<code>gitbook init</code>读取<code>SUMMARY.md</code>来生成目录结构. 格式如下</p>
+</li>
+</ul>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="bullet">* </span>[<span class="link_label">前言</span>](<span class="link_url">introduct/README.md</span>)</div><div class="line">  - [<span class="link_label">API索引</span>](<span class="link_url">introduct/index.md</span>)</div><div class="line"><span class="bullet">* </span>[<span class="link_label">你好 Regular</span>](<span class="link_url">getting-start/README.md</span>)</div><div class="line">  - [<span class="link_label">安装</span>](<span class="link_url">getting-start/install.md</span>)</div><div class="line">  - [<span class="link_label">快速起步</span>](<span class="link_url">getting-start/quirk-example.md</span>)</div><div class="line">  - [<span class="link_label">小结</span>](<span class="link_url">getting-start/review.md</span>)</div><div class="line"><span class="bullet">* </span>[<span class="link_label">内建模板引擎</span>](<span class="link_url">syntax/README.md</span>)</div><div class="line">  - [<span class="link_label">语法说明</span>](<span class="link_url">syntax/syntax.md</span>)</div><div class="line">  - [<span class="link_label">插值</span>](<span class="link_url">syntax/inteplation.md</span>)</div><div class="line">  - [<span class="link_label">逻辑控制</span>](<span class="link_url">syntax/if.md</span>)</div><div class="line">  - [<span class="link_label">循环控制</span>](<span class="link_url">syntax/list.md</span>)</div><div class="line">  - [<span class="link_label">动态引入</span>](<span class="link_url">syntax/include.md</span>)</div><div class="line">  - [<span class="link_label">表达式</span>](<span class="link_url">syntax/expression.md</span>)</div><div class="line">  - [<span class="link_label">小节</span>](<span class="link_url">syntax/review.md</span>)</div><div class="line"><span class="bullet">* </span>[<span class="link_label">核心概念</span>](<span class="link_url">core/README.md</span>)</div><div class="line">  - [<span class="link_label">类式继承和组件定义</span>](<span class="link_url">core/class.md</span>)</div><div class="line">  - [<span class="link_label">数据监听</span>](<span class="link_url">core/binding.md</span>)</div><div class="line">  - [<span class="link_label">directive——指令</span>](<span class="link_url">core/directive.md</span>)</div><div class="line">  - [<span class="link_label">filter——过滤器</span>](<span class="link_url">core/filter.md</span>)</div><div class="line">  - [<span class="link_label">event——ui事件体系</span>](<span class="link_url">core/event.md</span>)</div><div class="line">  - [<span class="link_label">regular的模块化策略</span>](<span class="link_url">core/use.md</span>)</div><div class="line">  - [<span class="link_label">简单事件发射器emitter</span>](<span class="link_url">core/message.md</span>)</div><div class="line">  - [<span class="link_label">小节</span>](<span class="link_url">core/review.md</span>)</div><div class="line"><span class="bullet">* </span>[<span class="link_label">高级特性</span>](<span class="link_url">advanced/README.md</span>)</div><div class="line">  - [<span class="link_label">内嵌组件</span>](<span class="link_url">advanced/component.md</span>)</div><div class="line">  - [<span class="link_label">regular的transclude</span>](<span class="link_url">advanced/content.md</span>)</div><div class="line">  - [<span class="link_label">小节</span>](<span class="link_url">advanced/review.md</span>)</div></pre></td></tr></table></figure>
+
+<p>接下来就是依次完成你每个章节的书写了, 你需要开启<code>gitbook serve .</code>来进行实时的web预览(服务器默认为<code>localhost:400</code>)</p>
+<p>markdown的标准格式可以看<a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">这里</a>，现在的程序圈的markdown包括gitbook普遍使用的是<a href="https://help.github.com/articles/github-flavored-markdown" target="_blank" rel="external">GitHub Flavored Markdown</a>，除了github中已经说明的那些, 它还支持一些额外的小特性, 比如<code>[x]</code>可以用来设置一个checkbox来实现todolist的功能.</p>
+<h2 id="发布">发布</h2>
+<p>gitbook的命令行工具不提供对发布操作的支持，你可以直接使用<code>git</code>发布，首先你需要添加gitbook的仓库作为你的一个远程库. 比如regularjs的路径为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git remote <span class="keyword">add</span> gitbook https://<span class="keyword">push</span>.gitbook.io/leeluolee/regular-guide.git</div><div class="line"></div><div class="line">git <span class="keyword">push</span> gitbook master</div></pre></td></tr></table></figure>
+
+<p>在push成功后，gitbook.io会自动在服务端进行build. 你可以在gitbook.io的个人主页上查看到build信息.</p>
+<h2 id="常见问题">常见问题</h2>
+<ol>
+<li><p>gitbook 好卡啊 我可以发布到我的个人网站吗?<br>当然可以，<code>gitbook build</code>之后的<code>_book</code> 就是一个完整的web目录, 你可以放置到你的个人网站上.</p>
+<p>一个更好的做法是直接发布到github的gh-pages上, 由于gitbook每次build都会重新生成整个目录.所以你需要利用<code>gulp-gh-pages</code>或<code>grunt-gh-pages</code>等工具进行发布.  </p>
+<p>你可以参考我的<a href="https://github.com/regularjs/guide/tree/master" target="_blank" rel="external">做法</a>, 这样一键<code>gulp deploy</code>可以完成指定目录<code>_book</code>发布gh-pages.</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/npm/">npm</a>, <a href="/tags/tool/">tool</a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>

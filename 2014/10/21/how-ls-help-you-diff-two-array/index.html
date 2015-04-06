@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用莱文斯坦距离（Levenshtein distance）计算两数组的差异 | 拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="使用莱文斯坦距离（Levenshtein distance）计算两数组的差异"/>
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-21T13:40:04.000Z"><a href="/2014/10/21/how-ls-help-you-diff-two-array/">10月 21 2014</a></time>
+      
+      
+  
+    <h1 class="title">使用莱文斯坦距离（Levenshtein distance）计算两数组的差异</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2>
+<p><a href="http://en.wikipedia.org/wiki/Levenshtein_distance" target="_blank" rel="external">莱文斯坦距离(Levenshtein distance以下简称ld)</a>是一种常见的算法或可以称之为一种度量单位(前提是操作权重确定)，它用于表示从字串序列A到字串序列B所需要进行操作(增加、删除、更新)的综合。</p>
+<p><strong>鉴于数组与字符的相似性，这个算法当然同样适合与数组</strong></p>
+<p>问题是作为一个前端开发，你不好好切图，用这个算法做啥？</p>
+<p>事实上<a href="https://github.com/regularjs/regular/" target="_blank" rel="external">Regularjs</a>内部就使用到了这种算法，它用于检测数组的变动差异，并将差异反映到View中(即Dom)。</p>
+<p>ld算法的另一个好处是，可以容易的将计算结果映射到未来将会到来的JS ES6<a href="http://wiki.ecmascript.org/doku.php?id=harmony:observe_api_usage#array" target="_blank" rel="external">Array.observe</a>的返回值形式，方便未来的无缝迁移。</p>
+<a id="more"></a>
+<h2 id="原理描述">原理描述</h2>
+<p><img src="http://upload.wikimedia.org/math/d/4/f/d4f80cafb626ae9d9b8dc748360f61ec.png" alt="ld算法"></p>
+<p>上图从Wiki上引用，它表示了LD距离的计算的基本原理，事实上我们需要提取编辑路径，这样我们才可以映射到具体的路径操作(比如更新dom).</p>
+<p>在执行ld算法后，我们可以得到这样的二维矩阵</p>
+<p><img src="https://leeluolee.github.io/attach/ld/ld-table.png" alt="ld table"></p>
+<p>生成的矩阵的最后一个单元格, 即代表LS计算距离，这里从最后一个单元格回溯，我们就可以获得到从字符串A到字符串B的操作步骤，其中各个方向代表的含义是：</p>
+<ol>
+<li>左上角: 不变或者替换（根据ld距离是否改变）</li>
+<li>直左：代表删除一个字符</li>
+<li>直右： 代表增加一个字符</li>
+</ol>
+<p><strong>具体路径选择根据特定环境而定</strong> 比如我们由于后续要用于dom更新的特点，我们需要保留的原对象越多越好。</p>
+<h3 id="【一知半解？戳这个demo】"><a href="http://codepen.io/leeluolee/pen/GnkAC" target="_blank" rel="external">【一知半解？戳这个demo】</a></h3>
+<p data-height="266" data-theme-id="480" data-slug-hash="GnkAC" data-default-tab="result" data-user="leeluolee" class="codepen">See the Pen <a href="http://codepen.io/leeluolee/pen/GnkAC/" target="_blank" rel="external">GnkAC</a> by leeluolee (<a href="http://codepen.io/leeluolee" target="_blank" rel="external">@leeluolee</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p> 
+
+<p>你可以手动输入字符串1和字符串2，由于使用了<a href="https://github.com/regularjs/regular" target="_blank" rel="external">Regularjs</a>，结果会实时响应。</p>
+<h2 id="javascript实现源代码">javascript实现源代码</h2>
+<p><strong>说明</strong></p>
+<ol>
+<li>diff用来生成首次路径matrix</li>
+<li>whole函数用来回溯路径matrix，选择最合适路径</li>
+<li>这里除了算法本身，还引入了转换数据格式的逻辑，方便后续操作</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ld = (<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">  <span class="comment">// 代表判定两者是否相等依据，这里我们认为 ===</span></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">equals</span><span class="params">(a,b)</span></span>{</div><div class="line">    <span class="keyword">return</span> a === b;</div><div class="line">  }</div><div class="line">  <span class="comment">// 计算</span></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">diff</span><span class="params">(array1, array2)</span></span>{</div><div class="line">    <span class="keyword">var</span> n = array1.length;</div><div class="line">    <span class="keyword">var</span> m = array2.length;</div><div class="line">    <span class="keyword">var</span> matrix = [];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt;= n; i++){</div><div class="line">      matrix.push([i]);</div><div class="line">    }</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">1</span>;j&lt;=m;j++){</div><div class="line">      matrix[<span class="number">0</span>][j]=j;</div><div class="line">    }</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= n; i++){</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">1</span>; j &lt;= m; j++){</div><div class="line">        <span class="keyword">if</span>(equals(array1[i-<span class="number">1</span>], array2[j-<span class="number">1</span>])){</div><div class="line">          matrix[i][j] = matrix[i-<span class="number">1</span>][j-<span class="number">1</span>];</div><div class="line">        }<span class="keyword">else</span>{</div><div class="line">          matrix[i][j] = <span class="built_in">Math</span>.min(</div><div class="line">            matrix[i-<span class="number">1</span>][j]+<span class="number">1</span>, <span class="comment">//delete</span></div><div class="line">            matrix[i][j-<span class="number">1</span>]+<span class="number">1</span><span class="comment">//add</span></div><div class="line">            )</div><div class="line">        }</div><div class="line">      }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> matrix;</div><div class="line">  }</div><div class="line">  <span class="comment">// 根据diff算法，回溯matrix，得到最后结果</span></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">whole</span><span class="params">(arr2, arr1)</span> </span>{</div><div class="line">      <span class="keyword">var</span> matrix = ld(arr1, arr2)</div><div class="line">      <span class="keyword">var</span> n = arr1.length;</div><div class="line">      <span class="keyword">var</span> i = n;</div><div class="line">      <span class="keyword">var</span> m = arr2.length;</div><div class="line">      <span class="keyword">var</span> j = m;</div><div class="line">      <span class="keyword">var</span> edits = [];</div><div class="line">      <span class="keyword">var</span> current = matrix[i][j];</div><div class="line">      <span class="keyword">while</span>(i&gt;<span class="number">0</span> || j&gt;<span class="number">0</span>){</div><div class="line">      <span class="comment">// the last line</span></div><div class="line">        <span class="keyword">if</span> (i === <span class="number">0</span>) {</div><div class="line">          edits.unshift(<span class="number">3</span>);</div><div class="line">          j--;</div><div class="line">          <span class="keyword">continue</span>;</div><div class="line">        }</div><div class="line">        <span class="comment">// the last col</span></div><div class="line">        <span class="keyword">if</span> (j === <span class="number">0</span>) {</div><div class="line">          edits.unshift(<span class="number">2</span>);</div><div class="line">          i--;</div><div class="line">          <span class="keyword">continue</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">var</span> northWest = matrix[i - <span class="number">1</span>][j - <span class="number">1</span>];</div><div class="line">        <span class="keyword">var</span> west = matrix[i - <span class="number">1</span>][j];</div><div class="line">        <span class="keyword">var</span> north = matrix[i][j - <span class="number">1</span>];</div><div class="line"></div><div class="line">        <span class="keyword">var</span> min = <span class="built_in">Math</span>.min(north, west, northWest);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (min === west) {</div><div class="line">          edits.unshift(<span class="number">2</span>); <span class="comment">//delete</span></div><div class="line">          i--;</div><div class="line">          current = west;</div><div class="line">        } <span class="keyword">else</span> <span class="keyword">if</span> (min === northWest ) {</div><div class="line">          <span class="keyword">if</span> (northWest === current) {</div><div class="line">            edits.unshift(<span class="number">0</span>); <span class="comment">//no change</span></div><div class="line">          } <span class="keyword">else</span> {</div><div class="line">            edits.unshift(<span class="number">1</span>); <span class="comment">//update</span></div><div class="line">            current = northWest;</div><div class="line">          }</div><div class="line">          i--;</div><div class="line">          j--;</div><div class="line">        } <span class="keyword">else</span> {</div><div class="line">          edits.unshift(<span class="number">3</span>); <span class="comment">//add</span></div><div class="line">          j--;</div><div class="line">          current = north;</div><div class="line">        }</div><div class="line">      }</div><div class="line">      <span class="keyword">var</span> LEAVE = <span class="number">0</span>;</div><div class="line">      <span class="keyword">var</span> ADD = <span class="number">3</span>;</div><div class="line">      <span class="keyword">var</span> DELELE = <span class="number">2</span>;</div><div class="line">      <span class="keyword">var</span> UPDATE = <span class="number">1</span>;</div><div class="line">      <span class="keyword">var</span> n = <span class="number">0</span>;m=<span class="number">0</span>;</div><div class="line">      <span class="keyword">var</span> steps = [];</div><div class="line">      <span class="keyword">var</span> step = {index: <span class="literal">null</span>, add:<span class="number">0</span>, removed:[]};</div><div class="line"></div><div class="line">      <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i <span class="number">0</span> ){ <span class="comment">// NOT LEAVE</span></div><div class="line">          <span class="keyword">if</span>(step.index === <span class="literal">null</span>){</div><div class="line">            step.index = m;</div><div class="line">          }</div><div class="line">        } <span class="keyword">else</span> { <span class="comment">//LEAVE</span></div><div class="line">          <span class="keyword">if</span>(step.index != <span class="literal">null</span>){</div><div class="line">            steps.push(step)</div><div class="line">            step = {index: <span class="literal">null</span>, add:<span class="number">0</span>, removed:[]};</div><div class="line">          }</div><div class="line">        }</div><div class="line">        <span class="keyword">switch</span>(edits[i]){</div><div class="line">          <span class="keyword">case</span> LEAVE:</div><div class="line">            n++;</div><div class="line">            m++;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">          <span class="keyword">case</span> ADD:</div><div class="line">            step.add++;</div><div class="line">            m++;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">          <span class="keyword">case</span> DELELE:</div><div class="line">            step.removed.push(arr1[n])</div><div class="line">            n++;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">          <span class="keyword">case</span> UPDATE:</div><div class="line">            step.add++;</div><div class="line">            step.removed.push(arr1[n])</div><div class="line">            n++;</div><div class="line">            m++;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line">      }</div><div class="line">      <span class="keyword">if</span>(step.index != <span class="literal">null</span>){</div><div class="line">        steps.push(step)</div><div class="line">      }</div><div class="line">      <span class="keyword">return</span> steps</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> whole;</div><div class="line">  })();</div></pre></td></tr></table></figure>
+
+<h2 id="结尾">结尾</h2>
+<p>对一个正常人来讲，这种程度的算法都花不了你几个小时用来学习(更别说一些更常见的算法)，<strong>关键是要有这个意识它能用来解决什么实际问题</strong>，否则对数据结构与算法倒背如流都毫无意义。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/algorithm/">algorithm</a>, <a href="/tags/javascript/">javascript</a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>

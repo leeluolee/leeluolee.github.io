@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>归档：2014/11 | 拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2014/11</h2>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-11-04T01:57:11.000Z"><a href="/2014/11/04/you-dont-know-terminal/">11月 4 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/11/04/you-dont-know-terminal/">你不知道的终端Terminl</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>以下内容大部分源自 <strong><code>man console_codes</code></strong></p>
+<h3 id="关于转移字符">关于转移字符</h3>
+<p>首先废话下转移字符，因为后面介绍到CSI等部分时会涉及到.</p>
+<ol>
+<li>八进制: “\” + 1~3位的8位数字 例如 “\123”;</li>
+<li>16进制长 “\u” + 4位16位数字  例如 “\u738b” (王).<br>数字即 <code>char.charCodeAt(0).toString(16)</code>的值</li>
+<li>16进制短 “\x” + 两位16位数字 例如 “\x55”(U) 它等价于 “\u0055”;</li>
+<li>其它诸如<code>\t</code>等制表符 等就不再做说明了</li>
+</ol>
+<h3 id="终端的control_codes">终端的control codes</h3>
+<p>比如Linux的终端实现了VT102(<a href="http://en.wikipedia.org/wiki/VT100" target="_blank" rel="external">?</a>)和ECMA-48的，以及一些私有字符集。</p>
+<p>看到VT102 terminal实体可能你就明白为何我们称之为“终端”. 对，就是这大家伙<br><img src="http://terminals.classiccmp.org/wiki/images/thumb/d/d0/DEC_VT102_291060983768-1.jpg/800px-DEC_VT102_291060983768-1.jpg" alt="VT102"></p>
+<p>VT102 被称之为 De facto standard, 即虽然没有相关标准化，但是已然成为了一种事实标准，<br>我们常规Linux的终端就是模拟实现了它的接口标准</p>
+<p>当你输入字符时，如果终端判断其为一个控制字符或正处于一个，它不会将其转换为字符实体并显示，<br>而是会发生一些特殊的处理，比如改变字体颜色，上下移动光标隐藏光标，发出蜂鸣声等等。</p>
+<h2 id="控制字符_(Control_characters)_与转移序列">控制字符 (Control characters) 与转移序列</h2>
+<p>有以下控制字符</p>
+<ul>
+<li>00(NUL)</li>
+<li>07(BEL)</li>
+<li>08(BS)</li>
+<li>09(HT)</li>
+<li>0a(LF)</li>
+<li>0b(VT)</li>
+<li>0c(FF)</li>
+<li>0d(CR)</li>
+<li>0e(SO)</li>
+<li>0f(SI)</li>
+<li>18(CAN)</li>
+<li>1a(SUB)</li>
+<li><strong>1b(ESC)</strong></li>
+<li>7f(DEL)</li>
+</ul>
+<p>事实上我们平时term-dom中使用到的只有ESC转义起始符(以及用来蜂鸣的<code>\x07</code> BEL);</p>
+<p>控制字符会立即生效并且不会被显示, 如果前面的序列正处于CSI阶段，CSI会在生效后继续进行,<br>唯一的例外是ESC控制符, 它会终止当前的CSI序列</p>
+<h3 id="ESC">ESC</h3>
+<p>ESC控制符是我们最常用的</p>
+<p>ESC c    RIS    重绘屏幕.<br>ESC D    IND    换行.<br>ESC E    NEL    新的一行.<br>ESC H    HTS    设置当前列为制表位.<br>ESC M    RI    翻转换行(Reverse linefeed).<br>ESC Z    DECID    DEC 私有定义.内核将其解释为<br>        VT102字符,返回字符ESC [ ? 6 c.<br>ESC 7    DECSC    存储当前状态(光标坐标,<br>        属性,字符集).<br>ESC 8    DECRC    恢复上一次储存的设置<br>ESC [    CSI    控制序列介绍<br>ESC %        开始一个字符集选择序列<br>ESC % @        \0\0\0选择默认字符集(ISO 646 / ISO 8859-1)<br>ESC % G        \0\0\0选择 UTF-8<br>ESC % 8        \0\0\0选择 UTF-8(已不用)<br>ESC # 8    DECALN    DEC 屏幕校准测试 - 以E’s填充屏幕.<br>ESC(        开始一个 G0 字符集定义序列<br>ESC( B        \0\0\0选择默认字符集(ISO 8859-1 mapping)<br>ESC( 0        \0\0\0选择 vt100 图形映射<br>ESC( U        \0\0\0选择空映射 - 直接访问字符ROM<br>ESC( K        \0\0\0选择用户映射 -  由程序\fBmapscrn\fP(8)<br>        \0\0\0加载.<br>ESC )        开始一个 G1 字符集定义<br>        (后面跟 B,0,U,K,同上).<br>ESC &gt;    DECPNM    设置数字小键盘模式<br>ESC =    DECPAM    设置程序键盘模式<br>ESC ]    OSC    (是perating system command的缩写)<br>ESC ] P Inrrggbb P: 设置调色板,后面紧跟7个<br>十六进制数,再跟一个 P :-(.<br>这里 \fIn\fP 是颜色(0-16),而 \fIrrggbb\fP 表示<br>红/绿/蓝 值(0-255).<br>ESC ] R: 重置调色板</p>
+<p>这里的部分序列是term-dom中需要的</p>
+<h3 id="CSI">CSI</h3>
+<p>CSI(<code>ESC [</code>) 是由分号隔开的十进制数.空参数或缺少的参数以0处理.<br>可以用一个问号代替参数序列.</p>
+<p>CSI可以实现一些文字效果，比如term-dom大部分实现都基于CSI来实现文件颜色，背景色等</p>
+<p>CSI序列的动作由最后一个数字决定</p>
+<p>那么问题来了，我只是想换个文字颜色你和我扯那么多干嘛？</p>
+<p>1</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>

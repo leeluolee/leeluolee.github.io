@@ -1,0 +1,335 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>LESS to MCSS 指南 | 拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="LESS to MCSS 指南"/>
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-08-05T13:40:04.000Z"><a href="/2013/08/05/less-to-mcss/">8月 5 2013</a></time>
+      
+      
+  
+    <h1 class="title">LESS to MCSS 指南</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2>
+<p>虽然首页没有开始做，昨天仍决定将<a href="https://github.com/NetEaseWD/mcss" target="_blank" rel="external">MCSS</a>从身边的基友们开始向杭研推广了，从开始做这个直到现在推广遇到最多的问题是：</p>
+<blockquote>
+<p><strong>不是有LESS了吗？</strong></p>
+</blockquote>
+<p>这个问题回答了很多遍了，但是觉得回答的都不够好，所以觉得写一篇文章解释一下。其实很多答案也都可以从基于MCSS封装的函数库<a href="https://github.com/leeluolee/mass" target="_blank" rel="external">mass</a>中得到解答，本文针对MCSS的例子都可以在这个<a href="http://leeluolee.github.io/mcss/" target="_blank" rel="external">Try-Page</a>中进行尝试。</p>
+<a id="more"></a>
+<hr>
+<h2 id="LESS特性在MCSS中的对应">LESS特性在MCSS中的对应</h2>
+<p>首先解答下LESS的特性在MCSS中的对应，这几乎也囊括了在实际生产使用时的80%的功能(实际生产并不包含基础类库封装)</p>
+<h3 id="1-_嵌套">1. 嵌套</h3>
+<p>MCSS与LESS等其它预处理器的嵌套规则完全一致，支持<code>&amp;</code>占位符，例如:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">.m-home{</div><div class="line">    display: block;</div><div class="line">    div, ul{</div><div class="line">        + div{</div><div class="line">            margin-top: 20px;</div><div class="line">        }</div><div class="line">        border: 2px solid #ccc;</div><div class="line">        &gt; a{</div><div class="line">            color: #fff;</div><div class="line">            &:hover{</div><div class="line">               text-decoration: none; </div><div class="line">            }</div><div class="line">            ~ span{</div><div class="line">                display: block;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>MCSS同时支持另一个占位符<code>%</code>，与<code>&amp;</code>类似，但它不包含顶级的选择器</p>
+<p>比如有时候，我们需要在<code>.ms-form</code>的扩展类<code>.ms-form-stack</code>中修改某层节点的样式，这时我们不需要重新重复一次书写，例如</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">.ms-form{</div><div class="line">    input[<span class="class"><span class="keyword">type</span></span>=<span class="string">"text"</span>],</div><div class="line">    input[<span class="class"><span class="keyword">type</span></span>=<span class="string">"password"</span>],</div><div class="line">    input[<span class="class"><span class="keyword">type</span></span>=<span class="string">"email"</span>],</div><div class="line">    input[<span class="class"><span class="keyword">type</span></span>=<span class="string">"url"</span>],</div><div class="line">    select{</div><div class="line">      display: <span class="keyword">inline</span>-block;</div><div class="line">      .ms-form-stack %{</div><div class="line">        display: block;</div><div class="line">      }</div><div class="line">    }</div><div class="line">    <span class="comment">// other ruleset</span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>outport</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class">.ms-form</span> <span class="tag">input</span><span class="attr_selector">[type="text"]</span>,</div><div class="line"><span class="class">.ms-form</span> <span class="tag">input</span><span class="attr_selector">[type="password"]</span>,</div><div class="line"><span class="class">.ms-form</span> <span class="tag">input</span><span class="attr_selector">[type="email"]</span>,</div><div class="line"><span class="class">.ms-form</span> <span class="tag">input</span><span class="attr_selector">[type="url"]</span>,</div><div class="line"><span class="tag">select</span><span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value">inline-block</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.ms-form-stack</span>  <span class="tag">input</span><span class="attr_selector">[type="text"]</span>,</div><div class="line"><span class="class">.ms-form-stack</span>  <span class="tag">input</span><span class="attr_selector">[type="password"]</span>,</div><div class="line"><span class="class">.ms-form-stack</span>  <span class="tag">input</span><span class="attr_selector">[type="email"]</span>,</div><div class="line"><span class="class">.ms-form-stack</span>  <span class="tag">input</span><span class="attr_selector">[type="url"]</span>,</div><div class="line"><span class="tag">select</span><span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value">block</span></span>;</div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
+
+<p><strong>另外MCSS也可以进行<code>@media</code>的条件嵌套</strong></p>
+<h3 id="2-_变量">2. 变量</h3>
+<p>变量是CSS Preprocessor的最基本功能，LESS的变量占用了CSS规范中的<a href="http://dev.w3.org/csswg/css-syntax/#at-rule-diagram" target="_blank" rel="external">at-keyword</a> (例如<code>@name</code>)并以<code>:</code>作为分隔, 例如</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="at_rule">@<span class="keyword">name:</span> <span class="number">10px</span></span>;</div></pre></td></tr></table></figure>
+
+<p>而在MCSS中，变量的声明是以为<code>dollar-name</code>(如<code>$name</code>)作为标志</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$name</span> = <span class="number">10</span>px;</div></pre></td></tr></table></figure>
+
+<p><strong>WHY?</strong></p>
+<ol>
+<li><p><strong>避免冲突</strong>：<br>LESS由于占用<code>@</code>, 达到了在词法上与css一致，成就了它看起来最像CSS的美誉，事实上从语法角度讲，LESS可以说是最不规范的，因为它占用了<code>@at-keyword</code>, 在css中@at-keyword是作为<a href="http://dev.w3.org/csswg/css-syntax/#at-rule-diagram" target="_blank" rel="external"><code>@at-rule</code></a>开始的标志， 这就有潜在冲突的可能性，并且也不利于未来功能的扩展(mcss中所有的功能扩展都是通过自定义@atrule)</p>
+</li>
+<li><p><strong>赋值符扩展</strong>:<br>除了<code>=</code>，MCSS中有另外两种赋值符号：</p>
+<ol>
+<li><code>?=</code>: 赋值操作只在变量不存在时进行，例如:</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$effect</span>-outport = <span class="literal">true</span>;</div><div class="line"><span class="variable">$effect</span>-outport ?= <span class="literal">false</span>;</div></pre></td></tr></table></figure>
+
+<pre><code>此时第二个赋值无效
+</code></pre><ol>
+<li><code>^=</code>: 它可以将赋值定义在全局作用域，MCSS与LESS一样有作用域，所以有时候需要跳脱作用域限制时，这个赋值符就起作用了</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$global</span> = <span class="number">10</span>px;</div><div class="line">p{</div><div class="line">  <span class="variable">$global</span> ^= <span class="number">20</span>px;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>以上两个赋值符其实都在函数封装时会常用到。</p>
+<h3 id="3-_mixin函数">3. mixin函数</h3>
+<p>LESS中的<code>mixin</code>跟<code>ruleset</code>是一致的，不过可以带上操作,例如</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">.<span class="keyword">size</span>(<span class="variable">@width</span>, <span class="variable">@height</span>){</div><div class="line">  width: <span class="variable">@width</span></div><div class="line">}</div><div class="line"><span class="comment">//使用时</span></div><div class="line">p{</div><div class="line">  .<span class="keyword">size</span>(<span class="number">20</span>px, <span class="number">40</span>px);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>而在MCSS中，函数可以达到同样效果。首先了解下MCSS中函数的书写方式，与LESS的mixin一样，一个函数可以有参数，也可以没有，同时在MCSS中，函数是一种值类型，同样可以通过赋值操作进行定义，例如:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 带参数</span></div><div class="line"><span class="variable">$size</span> = (<span class="variable">$width</span>, <span class="variable">$height</span>){</div><div class="line">    <span class="variable">$height</span> ?= <span class="variable">$width</span>; <span class="comment">// ?= 操作符的作用场景一</span></div><div class="line">    height: <span class="variable">$height</span>; </div><div class="line">    width: <span class="variable">$width</span>; </div><div class="line">}</div><div class="line"><span class="comment">// 不带参数</span></div><div class="line"><span class="variable">$clearfix</span> = {</div><div class="line">    <span class="variable">*zoom</span>: <span class="number">1</span>;</div><div class="line">    &:before, &:after {</div><div class="line">        display: table;</div><div class="line">        content: <span class="string">""</span>;</div><div class="line">        line-height: <span class="number">0</span>; </div><div class="line">    }</div><div class="line">    &:after {</div><div class="line">        <span class="keyword">clear</span>: both; </div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>使用时候，你可以用类似的括号来调用，也可以用所谓的<code>隐式调用</code>, 比如:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">body</span>{</div><div class="line">    <span class="variable">$clearfix</span>(); <span class="comment">//正常调用</span></div><div class="line">    <span class="variable">$size</span><span class="value">: <span class="number">5px</span>;</span>  <span class="comment">//设置宽高的隐式调用</span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>输出</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="tag">body</span><span class="rules">{</span></div><div class="line">  <span class="rule">*<span class="attribute">zoom</span>:<span class="value"><span class="number">1</span></span></span>;</div><div class="line">  <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">5px</span></span></span>;</div><div class="line">  <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">5px</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="tag">body</span><span class="pseudo">:before</span>,<span class="tag">body</span><span class="pseudo">:after</span><span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">display</span>:<span class="value">table</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">content</span>:<span class="value"><span class="string">""</span></span></span>;</div><div class="line">  <span class="rule"><span class="attribute">line-height</span>:<span class="value"><span class="number">0</span></span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="tag">body</span><span class="pseudo">:after</span><span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">clear</span>:<span class="value">both</span></span>;</div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
+
+<p><strong>需要注意的是，MCSS中的函数是一种真正的值类型，它可以被传递进函数，也可以被函数返回(或用<code>^=</code>操作符定义在全局)，并保留作用域——所谓闭包</strong>，这不仅仅是个语法糖，使得MCSS拥有其它预处理器没有封装能力！。比较近的例子可以查看MCSS的官方函数库<a href="https://github.com/leeluolee/mass#effect" target="_blank" rel="external">mass的effect.mcss</a>，利用它，你可以封装出类似<code>$swing</code>的函数，并且可以传入参数进行效果调整。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="at_rule">@<span class="keyword">import</span> <span class="string">'https://rawgithub.com/leeluolee/mass/master/mass/effect.mcss'</span>;</span></div><div class="line"></div><div class="line"><span class="variable">$swing</span>(24deg);</div></pre></td></tr></table></figure>
+
+<p><strong>Outport</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line"><span class="tag">body</span><span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-backface-visibility</span>:<span class="value">hidden</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.animated</span><span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-animation-duration</span>:<span class="value"><span class="number">1s</span></span></span>;</div><div class="line">  <span class="rule"><span class="attribute">-moz-animation-duration</span>:<span class="value"><span class="number">1s</span></span></span>;</div><div class="line">  <span class="rule"><span class="attribute">animation-duration</span>:<span class="value"><span class="number">1s</span></span></span>;</div><div class="line">  <span class="rule"><span class="attribute">-webkit-animation-fill-mode</span>:<span class="value">both</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">-moz-animation-fill-mode</span>:<span class="value">both</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">animation-fill-mode</span>:<span class="value">both</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="at_rule">@<span class="keyword">-webkit-keyframes</span> swing</span>{</div><div class="line">  20%,40%,60%,80%,100%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-webkit-transform-origin</span>:<span class="value">top center</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  20%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-webkit-transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">24deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  40%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-webkit-transform</span>:<span class="value"><span class="function">rotate</span>(-<span class="number">16deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  60%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-webkit-transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">8deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  80%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-webkit-transform</span>:<span class="value"><span class="function">rotate</span>(-<span class="number">8deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  100%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-webkit-transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">}</div><div class="line"><span class="at_rule">@<span class="keyword">-moz-keyframes</span> swing</span>{</div><div class="line">  20%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-moz-transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">24deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  40%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-moz-transform</span>:<span class="value"><span class="function">rotate</span>(-<span class="number">16deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  60%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-moz-transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">8deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  80%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-moz-transform</span>:<span class="value"><span class="function">rotate</span>(-<span class="number">8deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  100%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-moz-transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">}</div><div class="line"><span class="at_rule">@<span class="keyword">-o-keyframes</span> swing</span>{</div><div class="line">  20%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-o-transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">24deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">    <span class="tag">-o-transform</span><span class="pseudo">:rotate(-16deg)</span>;</div><div class="line">  }</div><div class="line">  60%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-o-transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">8deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  80%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-o-transform</span>:<span class="value"><span class="function">rotate</span>(-<span class="number">8deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  100%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">-o-transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">}</div><div class="line"><span class="at_rule">@<span class="keyword">keyframes</span> swing</span>{</div><div class="line">  20%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">24deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  40%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">rotate</span>(-<span class="number">16deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  60%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">8deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  80%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">rotate</span>(-<span class="number">8deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">  100%<span class="rules">{</span></div><div class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"><span class="function">rotate</span>(<span class="number">0deg</span>)</span></span>;</div><div class="line">  <span class="rule">}</span></div><div class="line">}</div><div class="line"><span class="class">.animated</span><span class="class">.swing</span><span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-animation-name</span>:<span class="value">swing</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">-moz-animation-name</span>:<span class="value">swing</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">animation-name</span>:<span class="value">swing</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">-webkit-transform-origin</span>:<span class="value">top center</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">-moz-transform-origin</span>:<span class="value">top center</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">-ms-transform-origin</span>:<span class="value">top center</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">-o-transform-origin</span>:<span class="value">top center</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">transform-origin</span>:<span class="value">top center</span></span>;</div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
+
+<p>这个不仅仅是LESS，是所有其它预处理器没有的能力！</p>
+<h3 id="4-_颜色函数">4. 颜色函数</h3>
+<p>mcss支持hsl以及hsla的色值格式，最终会被输出为rgba或者<code>#ccc</code></p>
+<p>与LESS不同的是，MCSS不提供类似<code>lighten</code>等动词的函数，统一为rgb概念中的red、green、 blue 和 hsl概念中 的hue、saturation、lightness 以及alpha 这7个通道的调节，函数名分别为<code>r-adjust</code>,<code>g-adjust</code>,<code>b-adjust</code>,<code>h-adjust</code>,<code>s-adjust</code>,<code>l-adjust</code>,<code>a-adjust</code> 全部支持相对和绝对调节</p>
+<p>比如LESS中<code>lighten</code>、<code>darken</code>其实就是lightness的相对调节</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="at_rule">@<span class="keyword">color1:</span> <span class="function">lighten</span>(#ccc, <span class="number">10%</span>)</span>;</div><div class="line"><span class="at_rule">@<span class="keyword">color2:</span> <span class="function">darken</span>(#ccc, <span class="number">10%</span>)</span>;</div></pre></td></tr></table></figure>
+
+<p>在MCSS其实就是</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$color1</span> = l-adjust(#ccc, <span class="number">10</span><span class="variable">%)</span>; <span class="comment">//往亮调</span></div><div class="line"><span class="variable">$color2</span> = l-adjust(#ccc, -<span class="number">10</span><span class="variable">%)</span>; <span class="comment">// 往暗调节</span></div></pre></td></tr></table></figure>
+
+<p>所以MCSS的色值函数需要你对hsl颜色格式有一定的了解(前端开发应该这是必备的基础概念吧)</p>
+<h3 id="5-_操作符">5. 操作符</h3>
+<p>MCSS支持所有LESS的操作符(或者说其实MCSS支持JS中的二元以及以下的所有操作符，并且优先级与JS完全一致)</p>
+<h2 id="一些LESS所欠缺的能力">一些LESS所欠缺的能力</h2>
+<h3 id="1-逻辑控制@for、@if、@elseif、@else">1.逻辑控制<code>@for</code>、<code>@if、@elseif、@else</code></h3>
+<p>由于LESS占用了<code>@at-keyword</code>，所以很难提供类似的语言功能。LESS提供一个在选择器上的扩展<code>when</code>但是能力仍然有限。</p>
+<h3 id="2-@extend">2.<code>@extend</code></h3>
+<p>mixin函数可以帮助我们实现代码片的复用，但是有个巨大的问题就是，mixin会让代码变得庞大(可以看看基于less的bootstrap的重复样式)，当有明显的派生关系时，我们可以使用<code>@extend</code>，<code>@extend</code>是一个源于SASS的概念，它会将派生类的选择器添加到基础类之后。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class">.u-ipt</span> {</div><div class="line">  <span class="attribute">padding</span><span class="value">: <span class="number">5px</span> <span class="number">10px</span>;</span></div><div class="line">  <span class="attribute">box-shadow</span><span class="value">: inset <span class="number">1px</span> <span class="number">1px</span> <span class="number">3px</span> <span class="function">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="class">.m-form</span>{</div><div class="line">    <span class="tag">input</span><span class="attr_selector">[type="text"]</span>,</div><div class="line">    <span class="tag">input</span><span class="attr_selector">[type="password"]</span>{</div><div class="line">      <span class="at_rule">@<span class="keyword">extend</span><span class="preprocessor"> .u-ipt</span>;</span></div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>Outport</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">.<span class="keyword">u</span>-ipt,</div><div class="line">.<span class="keyword">m</span>-form <span class="built_in">input</span>[<span class="built_in">type</span>=<span class="string">"text"</span>],</div><div class="line">.<span class="keyword">m</span>-form <span class="built_in">input</span>[<span class="built_in">type</span>=<span class="string">"password"</span>]</div><div class="line">  paddin<span class="variable">g:5px</span> <span class="number">10</span>px;</div><div class="line">  box-shado<span class="variable">w:inset</span> <span class="number">1</span>px <span class="number">1</span>px <span class="number">3</span>px rgba(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>没有参数的<code>mixin</code>其实都可以用<code>@extend</code>来实现(但<code>@extend</code>一般用在有明显派生关系的ruleset)，MCSS支持多重<code>@extend</code>以及嵌套<code>@extend</code>，具体请查看MCSS主页</p>
+<h3 id="3-@abstract">3.<code>@abstract</code></h3>
+<p>由于组件封装时，我们无法知道后续是否需要某个ruleset，<code>@abstract</code>这个@atrule的作用是，将一个或多个ruleset标记为不输出，但是仍然可以被派生。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//标记一个ruleset</span></div><div class="line">@<span class="keyword">abstract</span> btn{</div><div class="line">  left: <span class="number">10</span>px</div><div class="line">}</div><div class="line"><span class="comment">//标记一整个块</span></div><div class="line">@<span class="keyword">abstract</span> {</div><div class="line">  .btn{</div><div class="line">  }</div><div class="line">  .fbtn{</div><div class="line">  }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>你也可以抽象一整个文件, 它是<code>@import</code> 的抽象版</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="at_rule">@<span class="keyword">abstract</span> <span class="string">'ui.mcss'</span></span>;</div></pre></td></tr></table></figure>
+
+<p>比如在团队开发时，<code>ui.mcss</code>已经被公有样式<code>base.mcss</code> import了(即会被所有页面所共用)，但是后续的页面中仍然需要使用ui.mcss的变量、函数或者ruleset，此时<code>@abstract出现了</code>;</p>
+<p><strong>ui.mcss</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// btn的mixin函数</span></div><div class="line"><span class="variable">$btn</span> = {</div><div class="line">  padding: <span class="number">10</span>px</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// ui中的ruleset </span></div><div class="line">.u-btn{</div><div class="line">  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p><strong>base.mcss</strong> </p>
+<p>使用<code>@import</code> 会引入<code>ui.mcss</code>中的样式</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@<span class="preprocessor"><span class="keyword">import</span> ui.mcss</span></div></pre></td></tr></table></figure>
+
+<p><strong>page1.mcss</strong> </p>
+<p>使用<code>@absctract</code>，你不会引入任何样式， <strong>但是你仍然可以使用文件中的变量、函数和派生<code>ui.mcss</code>中的ruleset</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@abstract</span> <span class="string">'ui.mcss'</span>;</div><div class="line"></div><div class="line">.u-btn-<span class="number">2</span>{</div><div class="line">  <span class="variable">@extend</span> .u-btn; <span class="regexp">//</span> 仍然可以<span class="variable">@extend</span></div><div class="line">  <span class="variable">$btn</span>();         <span class="regexp">//</span> 仍然可以使用变量、函数</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>这样可以解决团队开发中的问题。一套代码完全取决于<code>@import</code>、<code>@abstract</code>和<code>@media</code>三者的调用会有不同的表现。</p>
+<h3 id="4-更好的出错信息以及sourcemap">4.更好的出错信息以及sourcemap</h3>
+<p>在出现语法错误时，MCSS会给你更精确的信息</p>
+<p><img src="https://github-camo.global.ssl.fastly.net/9b3c4a1accf639b9dffbc877275e3e6cca9360c7/687474703a2f2f6c65656c756f6c65652e6769746875622e696f2f6d6373732f696d672f6572726f722e706e67" alt="error图"></p>
+<p>同时sourcemap v3格式开始被chrome的developer tool的支持，MCSS也支持(需开启MCSS sourcemap选项，并在chrome的开发者工具的实验特性)</p>
+<p><img src="https://github-camo.global.ssl.fastly.net/8933d6c727f1461fbab5592eb48e0e3d778d324c/687474703a2f2f6c65656c756f6c65652e6769746875622e696f2f6d6373732f696d672f736d2e706e67" alt="sourcemap"></p>
+<h3 id="5-_MCSS命令行工具">5. MCSS命令行工具</h3>
+<p>相对于其他预处理器MCSS的命令行工具参数很简单，并且提供了代码的多种输出格式，以及自动编译的功能，基本上你已经无需其它工具的支持。具体请<code>npm install -g mcss</code> 并且<code>mcss -h</code> 一下</p>
+<hr>
+<h2 id="结尾感言">结尾感言</h2>
+<p>LESS的成功来源于它的<code>简单</code>，成功的阐述了<code>82法则</code>，同时也起到了普及CSS预处理器的作用，事实上接触并且熟悉了LESS的那些概念之后，接受MCSS或者SCSS都是比较轻松的事情。</p>
+<p>如果觉得LESS无法满足你的需求时</p>
+<blockquote>
+<p><strong>npm install -g mcss</strong> 尝试一下吧！</p>
+</blockquote>
+<p><em>同时MCSS是个易用的CSS Parser哦</em></p>
+<p><br></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/mcss/">mcss</a>, <a href="/tags/css/">css</a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>

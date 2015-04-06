@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="page">
+  
+  <div class="post-content">
+    <header>
+      
+      
+  
+    <h1 class="title"></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <script src="bower_components/marked/lib/marked.js"></script>
+<script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
+<script src="bower_components/marked/lib/marked.js"></script>
+<link rel="import" href="./nwd-codepen.html">
+  <template>
+   <style>
+      :host(nwd-slide) {
+        font-family: Helvetica,  Arial,STHeiti STXihei, Microsoft JhengHei, STXihei, "华文细黑","Microsoft YaHei", "微软雅黑",  Heiti, "黑体", SimSun, "宋体", sans-serif;
+        font-size: 30px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        /* 配色 https://kuler.adobe.com/vintage-card-color-theme-3165833/ */
+        /**
+         * bg : #f2ebbf;
+         * color: #5c4b51;
+         * link: #8cbeb2;
+         */
+        background: #F2EBBF;
+        color: #5C4B51;
+      }
+      :host(.bespoke-slide){
+        opacity: 0;
+        z-index: 0;
+        -webkit-transition: opacity .5s ease-in-out;
+        transition: opacity .5s ease-in-out;
+      }
+      :host(.bespoke-active){
+        opacity: 1;
+        z-index: 1;
+      }
+      :host(.bespoke-active .bespoke-bullet){
+        opacity: 0;
+  
+      }
+      :host(.bespoke-active .bespoke-bullet-active){
+        opacity: 1;
+      }
+    
+    :host(.content) {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      max-height: 90%;
+      max-width: 80%;
+      width: 80%;
+      padding: 1rem;
+      text-align: left;
+      -webkit-transform: translate3d(-50%, -50%, 0);
+      transform: translate3d(-50%, -50%, 0);
+      -moz-box-sizing: border-box;
+      box-sizing: border-box
+    }
+
+    content::-webkit-distributed(ul),
+    content::-webkit-distributed(ol) {
+      text-align: left;
+      margin: 0 0 15px;
+    }
+    content::-webkit-distributed(h2) {
+      font-size: 1.2em;
+      color: #777;
+    }
+    content::-webkit-distributed(h1) {
+      text-align: center;
+    }
+    content::-webkit-distributed(blockquote ) {
+      border-top: 1px solid #fffffe;
+      border-bottom: 1px solid #fff;
+      font-style: italic;
+      color: #888;
+      font-family: "Georgia", serif;
+      font-size: 0.8em;
+      text-align: center;
+    }
+    content::-webkit-distributed(pre) {
+      font-size: .7em;
+      text-align: left;
+      display: block;
+      background: #fafaff;
+      border-radius: 4px;
+      line-height: 1.4;
+      font-family: monaco;
+      padding: 4px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    content::-webkit-distributed(h1) {
+      margin: 0 0 20px;
+    }
+    content::-webkit-distributed(a) {
+      color:  #8cb1b2;
+      text-decoration: none;
+    }
+    content::-webkit-distributed(.bespoke-bullet-inactive) {
+      opacity: 0;
+    }
+    content::-webkit-distributed(.bespoke-bullet) {
+      opacity: 0;
+      -webkit-transition: opacity .5s ease-in-out;
+      transition: opacity .5s ease-in-out;
+    }
+    content::-webkit-distributed(.bespoke-bullet-active) {
+      opacity: 1;
+    }
+  </style>
+  <div class="content"><content></content></div>
+</template>
+<style>
+pre{
+  color: red !important;
+}
+</style>
+<script type="text/javascript">
+(function(){
+  var proto = Object.create(HTMLElement.prototype);
+  var thisDoc = document.currentScript.ownerDocument;
+  
+  marked.setOptions({
+    gfm: true,
+    highlight: function (code, lang, callback) {
+      callback(null, hljs.highlight(lang||'javascript', code).value)
+    }
+  });
+
+  proto.setContent = function(txt){
+    var node = this;
+    var content = thisDoc.querySelector('template').content.cloneNode(true);
+    marked(txt,function(err,html){
+      if(err) throw err;
+      else{
+        node.innerHTML = html;
+        var root = node.shadowRoot || node.createShadowRoot();
+        root.applyAuthorStyles = true;
+        root.appendChild(content);
+      }
+    })
+  }
+  proto.createdCallback = function() {
+    if(this.innerHTML){
+      this.setContent(this.innerHTML||'');
+    }
+  };
+
+  document.registerElement('nwd-slide', {
+    prototype: proto
+  });
+})();
+</script>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>

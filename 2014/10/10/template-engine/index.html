@@ -1,0 +1,465 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>前端模板技术面面观 | 拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="前端模板技术面面观"/>
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-10T10:59:49.000Z"><a href="/2014/10/10/template-engine/">10月 10 2014</a></time>
+      
+      
+  
+    <h1 class="title">前端模板技术面面观</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>此文的写作耗时很长，称之为雄文不为过，小心慢用</p>
+</blockquote>
+<h2 id="此文缘由">此文缘由</h2>
+<p>其实从发布<a href="http://github.com/regularjs/regular" target="_blank" rel="external">regularjs</a>之后，我发现在google搜索regularjs 不是给我这个画面</p>
+<p><img src="http://leeluolee.github.io/attach/template-engine/regularjs-search1.png" alt="regular-search-1"></p>
+<a id="more"></a>
+<p>就是给我这个画面</p>
+<p><img src="http://leeluolee.github.io/attach/template-engine/regular-search-2.png" alt="regular-search-2"></p>
+<p>突然发现取名字真是个大学问，当时就基本预计到了会有不明真相的朋友认为它只是一个照搬<a href="http://angularjs.org" target="_blank" rel="external">angularjs</a>的家伙，对于这点，有兴趣的朋友可以看下<a href="http://regularjs.github.io/guide/zh/introduct/README.html" target="_blank" rel="external">【为什么要造Regularjs这个轮子】</a>。</p>
+<p>而在这个文章，我<strong>不会直截了当去与angular做直接的对比</strong>，而是从最基本原理开始对现有的<strong>模板解决方案</strong>进行一个全面的分类，同时会给出它们的一些或优或劣的特性，这些特性基本都是本质性的，即它不为<strong>维护者的水平高低和勤勉与否</strong>所限制，所以是具有客观性的。</p>
+<hr>
+<h2 id="什么是模板解决方案？">什么是模板解决方案？</h2>
+<p>你可以先简单的理解为模板引擎。</p>
+<p>事实上前端的模板解决方案已经从 <strong>“选出一个好用的模板好难”</strong> 发展到了 <strong>“从这么多模板中选一个好难的”</strong>的阶段，<a href="http://garann.github.io/template-chooser/" target="_blank" rel="external">Template-Engine-Chooser!</a>似乎也开始无法跟上节奏了。再加上目前Dom-based的模板技术的崛起(angularjs, knockout等)，渐渐让这个领域有乱花渐欲迷人眼的感觉。</p>
+<p>这篇文章会对当今前端界的三种截然不同的模板方案做一个全面的对比，它们分别是</p>
+<ol>
+<li><strong>String-based 模板技术</strong> (基于字符串的parse和compile过程)</li>
+<li><strong>Dom-based 模板技术</strong> (基于Dom的link或compile过程)</li>
+<li>杂交的<strong>Living templating 技术</strong> (基于字符串的parse 和 基于dom的compile过程)</li>
+</ol>
+<p>同种类型的模板技术的<strong>可能性</strong>都是相同的，即同样身为dom-based的<a href="http://vuejs.org" target="_blank" rel="external">vuejs</a>如果愿意可以发展为angularjs的相同功能层级。</p>
+<p>(<em>注: 其实这么说作者后续思考后觉得并不是很妥当，因为决定这类框架的还有重要一环就是它们的数据管理层:，比如是基于脏检查还是基于setter和getter，就会有截然不同的定位</em>)</p>
+<p>另外需要注意的是任何一种类型的模板技术都是不可被替代的，它们甚至可以结合使用，并且很长一段时间内还会继续共存下去。</p>
+<p>除此之外另外一种奇葩模板技术本文也会提到即<strong>react</strong>，了解后你会发现它的特性更接近于Living templating。</p>
+<p>在进入介绍之前，我们需要先过一下不得不说的 <strong>InnerHTML</strong>，它是本文的关键因素。</p>
+<h2 id="innerHTML">innerHTML</h2>
+<p>我不认为还需要从<code>innerHTML</code>的细节讲起，我们对它太熟悉了，那就直接从优劣开始讲吧！</p>
+<h3 id="innerHTML_毫无疑问是好的">innerHTML 毫无疑问是好的</h3>
+<p>在<code>innerHTML</code>正是成为 <a href="https://domparsing.spec.whatwg.org/#innerhtml" target="_blank" rel="external">web 标准</a> 前，它当之无愧的已经是大家公认的事实标准，这是因为：</p>
+<p><strong>1 . 它便于书写并且直观</strong></p>
+<p>想象下你必须添加如下的html到你的文档里</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">h2</span> <span class="attribute">title</span>=<span class="value">"header"</span>&gt;</span>title<span class="tag">&lt;/<span class="title">h2</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>content<span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>直接使用 <code>innerHTML</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node.innerHTML = <span class="string">"&lt;h2 title="</span>heade<span class="string">r"&gt;title&lt;/h2&gt;&lt;p&gt;content&lt;/p&gt;"</span></div></pre></td></tr></table></figure>
+
+<p>在对比使用<code>Dom API</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> header = <span class="built_in">document</span>.createElement(<span class="string">'h2'</span>);</div><div class="line"><span class="keyword">var</span> content = <span class="built_in">document</span>.createElement(<span class="string">'p'</span>);</div><div class="line">h2.setAttribute(<span class="string">'title'</span>, <span class="string">'header'</span>);</div><div class="line">h2.textContent = <span class="string">'title'</span>;</div><div class="line">p.textContent = <span class="string">'content'</span>;</div><div class="line">node.appendChild(header);</div><div class="line">node.appendChild(content);</div></pre></td></tr></table></figure>
+
+<p><code>innerHTML</code> 毫无疑问赢得了这张比赛.</p>
+<p>尽管部分框架例如<a href="http://mootools.net/docs/core/Element/Element#Element:constructor" target="_blank" rel="external">mootools:Element</a> 提供了高效的API来帮助你创建dom结构，<code>innerHTML</code>仍然会是大多数人的最佳选择</p>
+<p><strong>2 . 它很快，特别在<a href="http://www.quirksmode.org/dom/innerhtml.html" target="_blank" rel="external">old IE</a></strong></p>
+<blockquote>
+<p>随着浏览器的发展，这个测试可能越来越不符合实际，<code>innerHTML</code>和 <code>Dom Level 1</code>创建dom结构的差距正变得原来越小  </p>
+</blockquote>
+<p><strong>3. 它完成进行了String -&gt; Dom的转换</strong></p>
+<p>这个论点有点拗口，事实上后续要提到的两类模板技术都是因为这个特点而与其有了强依赖</p>
+<hr>
+<p>然而我们又清楚的被告知: </p>
+<blockquote>
+<p><em>The recommended way to modify the DOM is to use the DOM Level 1 API.</em><br> ——Chapter 15 of “Javascript: The Definitive Guide_”</p>
+</blockquote>
+<p>为什么？</p>
+<h3 id="innerHTML_有时候又是不听话的">innerHTML 有时候又是不听话的</h3>
+<p><strong>1. 安全问题</strong></p>
+<p><code>innerHTML</code> 具有安全隐患.,例如:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">document.body.innerHTML = "<span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">x</span>   <span class="attribute">onerror</span>=<span class="value">'alert(xss)'</span>/&gt;</span>"</div></pre></td></tr></table></figure>
+
+<p>我知道像你这样优秀的程序员不会写出这样的代码，但当html片段不完全由你来控制时(比如从远程服务器中)，这会成为一个可能引爆的炸弹。</p>
+<p><strong>2. 它很慢</strong></p>
+<p>等等，你刚才说了它很快！<br>是的，但是如果你仅仅为了替换一个属性而用<code>innerHTML</code>替换了所有的Dom节点，这显然不是一个明智的决定，因为你深知这是低效的。所以说:</p>
+<blockquote>
+<p>Context is everything</p>
+</blockquote>
+<p>所有离开背景谈的性能、功能、性功能都是伪科学</p>
+<p><strong>3. 它很笨</strong></p>
+<p>它会完全移除所有现有的Dom，并重新渲染一遍，包括事件和状态都以不复存在，这点利用innerHTML来进行render的框架(例如Backbone)的开发者应该深有体会，为了减少损失，不能不把View拆的越来越细，从而抱着看似“解耦完美”的架构体系进入了维护的深渊。</p>
+<p><em>注: 其实react的最大贡献就是它差不多是提供了一个更smart的innerHTML解决方案。</em></p>
+<p><strong>4. 有可能会创建出意料之外的节点.</strong></p>
+<p>由于html的parser非常的<strong>“友好”</strong>， 以至于它接受并不规范的写法，从而创建出意料之外的结构，而开发者得不到错误提示。</p>
+<hr>
+<p>好了，到现在为止，我们大概了解了<code>innerHTML</code>这个朝夕相处的小伙伴，接下来我们正式聊一聊模板技术，首先我们从最常见的<strong>“String-based templating”</strong>开始</p>
+<h2 id="String-based_templating">String-based templating</h2>
+<p>基于字符串的模板引擎最大的功劳就是把你从大量的夹带逻辑的字符串拼接中解放出来了，由于它的完全基于字符串的特性，它拥有一些无可替代的优势。</p>
+<blockquote>
+<p>It is essentially a way to address the need to populate an HTML view with data in a better way than having to write a big, ugly string concatenation expression.<br>—- cited from <a href="http://www.dehats.com/drupal/?q=node/107" target="_blank" rel="external">http://www.dehats.com/drupal/?q=node/107</a></p>
+</blockquote>
+<p><strong>示例</strong></p>
+<ol>
+<li><a href="http://mustache.github.io/" target="_blank" rel="external">mustache</a>及其衍生: 弱逻辑</li>
+<li><a href="http://linkedin.github.io/dustjs/" target="_blank" rel="external">Dust.js</a>: 强逻辑 (推荐)</li>
+<li><a href="olado.github.io/">doT.js</a>:  超级快</li>
+</ol>
+<p><strong>基本原理</strong></p>
+<p><img src="http://leeluolee.github.io/attach/template-engine/String-based-Template.png" alt="string-based"></p>
+<p>如上图所示，我们发现字符串模板强依赖于<code>innerHTML</code>(渲染), 因为它的输出物就是字符串。由于这篇文章的重点不在这里，我们不会再对它们如何使用作深究。</p>
+<p><strong>优点</strong></p>
+<ol>
+<li>快速的初始化时间: 很多angular的簇拥者在奚落String-based templating似乎遗漏了这一点。</li>
+<li>同构性: 完全的dom-independent，即可作为用服务器端和浏览器端(客官先不要急着搬phantomjs哈).</li>
+<li>更强大的语法支持：因为它们都是不是自建DSL就是基于JavaScript语法，Parser的灵活性与受限于HTML的Dom-based模板技术不可同日而语</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>安全隐患:  见<code>innerHTML</code></li>
+<li>性能问题：见 <code>innerHTML</code>.</li>
+<li>不够聪明:  见<code>innerHTML</code>(呵呵)，除此之外render之后数据即与view完全分离。</li>
+</ol>
+<p>尽管在这几年的发展之下，由于异常激烈的竞争，基于字符串的前端模板技术变得越来越快，但是它们显然大部分都遗漏了一些问题</p>
+<ol>
+<li>大侠们你们没有考虑进把输出字符串加载到Dom的时间，这才是<a href="https://github.com/leonidas/transparency/wiki/Defining-template-engine-performance" target="_blank" rel="external">真正瓶颈之一</a></li>
+<li>不在相同功能前提下的对比有意义么？</li>
+</ol>
+<h2 id="Dom-based_Template_Engine">Dom-based Template Engine</h2>
+<p>近几年，借着Angularjs的东风，Dom-based的模板技术开始大行其道，与此同时也出现了一些优秀的替代者，就我们国人而言，近的就有<a href="http://weibo.com/arttechdesign" target="_blank" rel="external">@尤小右</a>的<a href="http://vuejs.org" target="_blank" rel="external">Vuejs</a> 和 <a href="">司徒大大</a>的<a href="https://github.com/RubyLouvre/avalon" target="_blank" rel="external">avalonjs</a>。看仓库就可以发现风格也是完全不同：1) 一个简洁优雅  2)一个奔放不羁</p>
+<p><strong>示例</strong></p>
+<ol>
+<li>Angularjs:  都28000star了还需多说么</li>
+<li>Knockout:  在此领域内，对Web前端而言是鼻祖级的</li>
+</ol>
+<p><strong>大致流程</strong></p>
+<p><img src="http://leeluolee.github.io/attach/template-engine/Dom-based-Template.png" alt="dom-based"></p>
+<p>Dom-based的模板技术事实上并没有完整的parse的过程(先抛开表达式不说)，如果你需要从一段字符串创建出一个view，你必然通过<code>innerHTML</code>来获得初始Dom结构. 然后引擎会利用<code>Dom API</code>(<code>attributes</code>, <code>getAttribute</code>, <code>firstChild</code>… etc)层级的从这个原始Dom的属性中提取指令、事件等信息，继而完成数据与View的绑定，使其”活动化”。</p>
+<p>所以Dom-based的模板技术更像是一个数据与dom之间的<strong>“链接”</strong>和<strong>“改写”</strong>过程。</p>
+<p><em>注意，dom-based的模板技术不一定要使用<code>innerHTML</code>，比如所有模板都是写在入口页面中时, 但是此时parse过程仍然是浏览器所为。</em></p>
+<p><strong>优点</strong></p>
+<ol>
+<li>是活动的:  完成compile之后，data与View仍然保持联系，即你可以不依赖与手动操作<code>Dom API</code>来更新View</li>
+<li>是<strong>运行时</strong>高效的: 可以实现局部更新</li>
+<li>指令等强大的附属物帮助我们用声明式的方式开发APP</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>部分请见innerHTML</li>
+<li>没有独立的Parser，必须通过innerHTML(或首屏)获取初始节点，即它的语法是强依赖与HTML，这也导致它有潜在的安全问题</li>
+<li>信息承载于属性中，这个其实是不必要和冗余的。<br> 部分框架在读取属性后会通过诸如<code>removeAttribute</code>的方式移除它们，其实这个不一定必要，而且其实并无解决它们Dom强依赖的特性，比如如果你查看[angular的todomvc]的节点，你会发现它的输出是这样的:<br> <img src="http://leeluolee.github.io/attach/template-engine/angular-todo.png" alt="angular-todo"></li>
+<li>FOUC(Flash of unstyled content)：即内容闪动，这个无需多说了，只怪它初次进入dom的内容并不是最终想要的内容。</li>
+</ol>
+<h2 id="Living_Template_Engine">Living Template Engine</h2>
+<p>String-based 和 Dom-based的模板技术都或多或少的依赖与<code>innerHTML</code>, 它们的区别是一个是主要是为了<strong>Rendering</strong> 一个是为了 <strong>Parsing</strong> 提取信息</p>
+<blockquote>
+<p> 所以为什么不结合它们两者来完全移除对<code>innerHTML</code>的依赖呢？</p>
+</blockquote>
+<p>事实上，值得庆幸的是，已经有几个现实例子在这么做了。</p>
+<p><strong>例子</strong></p>
+<ol>
+<li><a href="https://github.com/tildeio/htmlbars" target="_blank" rel="external">htmlbar</a>:  运行在<a href="">handlebar</a>之后的二次编译</li>
+<li><a href="https://github.com/ractivejs/ractive" target="_blank" rel="external">ractivejs</a>:  独立</li>
+<li><a href="https://github.com/regularjs/regular" target="_blank" rel="external"><strong>Regularjs</strong></a> 独立,  <strong>本文作者结精之一</strong></li>
+</ol>
+<p><strong>基本原理</strong></p>
+<p><img src="http://leeluolee.github.io/attach/template-engine/Living-Template.png" alt="Living-Template"></p>
+<p>就如图中所示，parse和compile的过程分别类似于String-based 模板技术 和 Dom-based模板技术。</p>
+<p>下面来完整讲述下这两个过程</p>
+<h3 id="1_-_Parsing">1 . Parsing</h3>
+<p>首先我们使用一个内建DSL来解析模板字符串并输出AST。</p>
+<p>例如，在<a href="https://github.com/regularjs/regular" target="_blank" rel="external">regularjs</a>中，下面这段简单的模板字符串</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">button</span> {{#<span class="attribute">if</span> !<span class="attribute">isLogin</span>}} <span class="attribute">on-click</span>=<span class="value">{{this.login()}}</span> {{/<span class="attribute">if</span>}}&gt;</span></div><div class="line">  {{isLogin? 'Login': 'Wellcome'}}</div><div class="line"><span class="tag">&lt;/<span class="title">button</span>&gt;</span>'</div></pre></td></tr></table></figure>
+
+<p>会被解析为以下这段数据结构</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  {</div><div class="line">    <span class="string">"type"</span>: <span class="string">"element"</span>,</div><div class="line">    <span class="string">"tag"</span>: <span class="string">"button"</span>,</div><div class="line">    <span class="string">"attrs"</span>: [</div><div class="line">      {</div><div class="line">        <span class="string">"type"</span>: <span class="string">"if"</span>,</div><div class="line">        <span class="string">"test"</span>: {</div><div class="line">          <span class="string">"type"</span>: <span class="string">"expression"</span>,</div><div class="line">          <span class="string">"body"</span>: <span class="string">"(!_d_['isLogin'])"</span>,</div><div class="line">          <span class="string">"constant"</span>: <span class="literal">false</span>,</div><div class="line">          <span class="string">"setbody"</span>: <span class="literal">false</span></div><div class="line">        },</div><div class="line">        <span class="string">"consequent"</span>: [</div><div class="line">          [</div><div class="line">            {</div><div class="line">              <span class="string">"type"</span>: <span class="string">"attribute"</span>,</div><div class="line">              <span class="string">"name"</span>: <span class="string">"on-click"</span>,</div><div class="line">              <span class="string">"value"</span>: {</div><div class="line">                <span class="string">"type"</span>: <span class="string">"expression"</span>,</div><div class="line">                <span class="string">"body"</span>: <span class="string">"_c_['login']()"</span>,</div><div class="line">                <span class="string">"constant"</span>: <span class="literal">false</span>,</div><div class="line">                <span class="string">"setbody"</span>: <span class="literal">false</span></div><div class="line">              }</div><div class="line">            }</div><div class="line">          ]</div><div class="line">        ],</div><div class="line">        <span class="string">"alternate"</span>: []</div><div class="line">      }</div><div class="line">    ],</div><div class="line">    <span class="string">"children"</span>: [</div><div class="line">      {</div><div class="line">        <span class="string">"type"</span>: <span class="string">"expression"</span>,</div><div class="line">        <span class="string">"body"</span>: <span class="string">"_d_['isLogin']?'Login':'Wellcome'"</span>,</div><div class="line">        <span class="string">"constant"</span>: <span class="literal">false</span>,</div><div class="line">        <span class="string">"setbody"</span>: <span class="literal">false</span></div><div class="line">      }</div><div class="line">    ]</div><div class="line">  }</div><div class="line">]</div></pre></td></tr></table></figure>
+
+<p>这个过程有以下特点</p>
+<ol>
+<li>灵活强大的语法，因为它与基于字符串的模板一般，DSL是自治的，完全不依赖与html，你可以想像下dom-based的模板的那些语法相关的指令，<strong>事实上它们甚至无法表达上述那段简单的模板的逻辑。</strong></li>
+<li>Living模板技术需要同时处理<code>dsl元素</code> 与 <code>xml元素</code>来实现最终视图层的活动性，即它们是<strong>dom-aware</strong>的，而在字符串模板中其实<code>xml元素</code>完全可以无需关心，它们被统一视为<code>文本元素</code>。</li>
+</ol>
+<h3 id="2_Compiler">2 Compiler</h3>
+<p>结合特定的数据模型(在regularjs中，是一个裸数据)， 模板引擎层级游历AST并递归生成Dom节点(不会涉及到<code>innerHTML</code>). 与此同时，指令、事件和插值等binder也同时完成了绑定，使得最终产生的Dom是与Model相维系的，即是<strong>活动的</strong>. </p>
+<p>事实上，Living template的compile过程相对与Dom-based的模板技术更加纯粹, 因为它完全的依照AST生成，而不是在原Dom上的改写。</p>
+<p>以上面的模板代码的一个插值为例:<code>{{isLogin? &#39;Login&#39;: &#39;Wellcome&#39;}}</code>。一旦regularjs的引擎遇到这段模板与代表的语法元素节点，会进入如下函数处理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// some sourcecode from regularjs</span></div><div class="line">walkers.expression = <span class="function"><span class="keyword">function</span><span class="params">(ast)</span></span>{</div><div class="line">  <span class="keyword">var</span> node = <span class="built_in">document</span>.createTextNode(<span class="string">""</span>);</div><div class="line">  <span class="keyword">this</span>.$watch(ast, <span class="function"><span class="keyword">function</span><span class="params">(newval)</span></span>{</div><div class="line">    dom.text(node, <span class="string">""</span> + (newval == <span class="literal">null</span>? <span class="string">""</span>: <span class="built_in">String</span>(newval)));</div><div class="line">  })</div><div class="line">  <span class="keyword">return</span> node;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>正如我们所见， 归功于<code>$watch</code>函数，一旦表达式发生改变，文本节点也会随之改变，这一切其实与angularjs并无两样(事实上regularjs同样也是基于脏检查)</p>
+<p>与Dom-based 模板技术利用Dom节点承载信息所不同的是，它的中间产物AST 承载了所有Compile过程中需要的信息(语句, 指令, 属性…等等). 这带来几个好处</p>
+<ol>
+<li><strong>轻量级</strong>, 在Dom中进行读写操作是低效的.</li>
+<li><strong>可重用的</strong>. </li>
+<li><strong>可序列化</strong> , 你可以在本地或服务器端预处理这个过程。</li>
+<li><strong>安全</strong>, 因为安全不需要<code>innerHTML</code>帮我们生成初始Dom</li>
+</ol>
+<p>如果你查看Living Template的输出，你会发现是这样的</p>
+<p><img src="http://leeluolee.github.io/attach/template-engine/regular-todo.png" alt="regular-todo"></p>
+<p>只有需要的内容被输出了</p>
+<p><strong>总结Living templating </strong></p>
+<p>我们可以发现Living templating几乎同时拥有String-based和Dom-based模板技术的优点</p>
+<p>利用一个如字符串模板的自定义DSL来描述结构来达到了语法上的灵活性，并在Parse后承载信息(AST)。而在Compile阶段,利用AST和<code>Dom API</code>来完成View的组装，在组装过程中，我们同样可以引入Dom-based模板技术的诸如<code>Directive</code>等优良的种子。</p>
+<h3 id="living_template’s_近亲_——_React">living template’s 近亲 —— React</h3>
+<p>React当然也可以称之为一种模板解决方案，它同样也巧妙规避了<code>innerHTML</code>，不过却使用的是截然不同的策略：react使用一种<code>virtual dom</code> 的技术，它也同样基于脏检查，不过与众不同的是，它的脏检查发生在view层面，即发生在virtual dom上，从而可以以较小的开销来实现局部更新。</p>
+<p><strong>Example</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var MyComponent = React.createClass({</div><div class="line"> render: function() {</div><div class="line">   <span class="keyword">if</span> (<span class="keyword">this</span>.props.first) {</div><div class="line">     <span class="keyword">return</span> &lt;<span class="keyword">div</span> className=<span class="string">"first"</span>&gt;&lt;span&gt;A Span&lt;<span class="regexp">/span&gt;&lt;/</span><span class="keyword">div</span>&gt;;</div><div class="line">   } <span class="keyword">else</span> {</div><div class="line">     <span class="keyword">return</span> &lt;<span class="keyword">div</span> className=<span class="string">"second"</span>&gt;&lt;p&gt;A Paragraph&lt;<span class="regexp">/p&gt;&lt;/</span><span class="keyword">div</span>&gt;;</div><div class="line">   }</div><div class="line"> }</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>同样的逻辑使用regularjs描述</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">{{#if first}}</div><div class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">className</span>=<span class="value">"first"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span>&gt;</span>A Span<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">{{#else}}</div><div class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">className</span>=<span class="value">"second"</span>&gt;</span><span class="tag">&lt;<span class="title">p</span>&gt;</span>A Paragraph<span class="tag">&lt;/<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>;</div><div class="line">{{/if}}</div></pre></td></tr></table></figure>
+
+<p><strong>仁者见仁智者见智</strong>, 反正我倾向于使用模板来描述结构，而不是杂糅Virtual dom和js语句。你呢？</p>
+<p>值得一提的是，由于React的特性，它两次render之间，内部节点的替换是无法预计的(参考<a href="http://calendar.perfplanet.com/2013/diff/" target="_blank" rel="external">这里</a>)，所以无法有效的保留信息，所以它也有大量的关于id的placeholder存在。你可以同样查看<a href="http://todomvc.com/architecture-examples/react/#/" target="_blank" rel="external">react-todomvc生成的节点</a></p>
+<h2 id="一个全面的对照表">一个全面的对照表</h2>
+<table>
+<thead>
+<tr>
+<th>Contrast /Solutions</th>
+<th>String-based templating</th>
+<th>Dom-based templating</th>
+<th>Living templating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>例子</td>
+<td>Mustache,Dustjs</td>
+<td>Angularjs, Vuejs</td>
+<td>Regularjs 、Ractivejs、htmlbars</td>
+<td></td>
+<td>Usage</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>语法</td>
+<td>♦♦♦</td>
+<td>♦♦♦</td>
+<td>♦♦♦</td>
+</tr>
+<tr>
+<td>活动性</td>
+<td>X</td>
+<td>♦♦♦</td>
+<td>♦♦♦</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>初始: ♦♦♦<br> 更新: ♦</td>
+<td>初始: ♦ <br> 更新: ♦♦♦</td>
+<td>初始: ♦ <br> 更新: ♦♦♦</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>♦</td>
+<td>♦♦</td>
+<td>♦♦♦♦♦</td>
+</tr>
+<tr>
+<td>Dom 无关</td>
+<td>♦♦♦♦♦</td>
+<td>X</td>
+<td>♦♦</td>
+</tr>
+<tr>
+<td>SVG support(*1)</td>
+<td>X</td>
+<td>♦♦</td>
+<td>♦♦♦</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>任何一类无法被另一类全面替代</li>
+<li>它们并不是无法同时存在的，比如你可以使用字符串模板来生成Dom-based的模板需要的模板字符串。</li>
+</ol>
+<h3 id="参考资料">参考资料</h3>
+<ol>
+<li><a href="http://codingarchitect.wordpress.com/2012/10/22/template-engines/" target="_blank" rel="external">Template Engines by @Sendhil</a></li>
+<li><a href="http://modernweb.com/2014/03/24/string-templating-considered-harmful/" target="_blank" rel="external">string-templating-considered-harmful</a></li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/regularjs/">regularjs</a>, <a href="/tags/javascript/">javascript</a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>

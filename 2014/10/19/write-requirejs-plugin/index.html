@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>requirejs的插件介绍与制作 | 拴萝卜的棍子</title>
+  <meta name="author" content="leeluolee">
+  
+  <meta name="description" content="所有涉及javascript的一切(nodejs, frontend-develop, compile-to-js...etc) 和各种Web相关">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="requirejs的插件介绍与制作"/>
+  <meta property="og:site_name" content="拴萝卜的棍子"/>
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="拴萝卜的棍子" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <script src="/js/jquery.js"></script>
+  
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-41582683-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">拴萝卜的棍子</a></h1>
+  <h2><a href="/">萝卜的技术博客</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/archives">归档</a></li>
+    
+      <li><a href="/atom.xml">订阅</a></li>
+    
+      <li><a href="https://github.com/leeluolee">Github</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-19T07:39:17.000Z"><a href="/2014/10/19/write-requirejs-plugin/">10月 19 2014</a></time>
+      
+      
+  
+    <h1 class="title">requirejs的插件介绍与制作</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2>
+<p>我这里就不介绍<a href="http://requirejs.org/" target="_blank" rel="external">requirejs</a>了， 简而言之： requirejs是支持<a href="https://github.com/amdjs/amdjs-api/wiki/AMD" target="_blank" rel="external">AMD</a>规范的模块加载器， 事实上它也是AMD的最直接推动者。</p>
+<p>现在可供挑选的开源模块解决方案很多，比如component、cjs+browserify、umd等等，但是无疑类似requirejs这类加载系统是现在最成熟和可靠的解决方案，所以<a href="https://github.com/regularjs/regular" target="_blank" rel="external">regularjs</a>第一步就是提供对requirejs的插件支持。</p>
+<a id="more"></a>
+<hr>
+<h2 id="requirejs的插件体系">requirejs的插件体系</h2>
+<p>requirejs的源码内部预留了hook，使得你可以创建插件来增强这个模块系统，并且这个插件可以做到影响到你的<a href="http://requirejs.org/docs/optimization.html" target="_blank" rel="external">OPTIMIZER</a>阶段，一些资源可以被处理为标准的AMD模块。</p>
+<p>插件普遍被用来</p>
+<ol>
+<li>预编译   </li>
+<li>加载非js文本</li>
+<li>lint 或 test 后置或前置的操作 等等</li>
+</ol>
+<p><strong>example</strong><br>比如它本身是不支持加载文本信息的，但是你可以通过<a href="http://requirejs.org/docs/api.html#text" target="_blank" rel="external">text!</a>插件来加载。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>([<span class="string">'text!foo.html'</span>, <span class="string">'jquery'</span>], <span class="function"><span class="keyword">function</span><span class="params">(foo, $)</span></span>{</div><div class="line">	$(<span class="string">'#anchor'</span>).html(foo);</div><div class="line">})</div></pre></td></tr></table></figure>
+
+<p>需要注意的是由于文本无法用script标签进行加载，所以text内部是通过XHR来载入的，即它会受到同源策略的影响。</p>
+<p><strong>优化OPTIMIZER</strong></p>
+<p>由于requirejs同时提供工具(npm:requirejs)可以静态打包优化AMD，刚才的那个<code>text!foo.html</code>会同时被<strong>text插件</strong>转换为类似下面的AMD模块结构</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">define(<span class="string">'text!foo.html'</span>,[],<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>{ </div><div class="line">	<span class="keyword">return</span> <span class="string">'&lt;h2&gt;早上好\n&lt;/h2&gt;'</span>;</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>requirejs的插件其实是一个<a href="http://requirejs.org/docs/plugins.html#apiload" target="_blank" rel="external">实现的特定接口</a>的标准AMD模块，它在定义时与其它业务模块并无区别。</p>
+<p>例如官方text插件的源文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">define([<span class="string">'module'</span>], <span class="function"><span class="keyword">function</span> <span class="params">(module)</span> </span>{</div><div class="line"><span class="pi">    'use strict'</span>;</div><div class="line">    <span class="keyword">var</span> text = {</div><div class="line">	    load: <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{}</div><div class="line">	    ....</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> text</div><div class="line">})</div></pre></td></tr></table></figure>
+
+<p>其中load等接口是插件必须实现的，</p>
+<p>对于各个接口描述我就不细究了，大家可以参考官网</p>
+<p><strong>顺便列举一些有用的requirejs插件</strong></p>
+<ol>
+<li><a href="http://requirejs.org/docs/api.html#text" target="_blank" rel="external">text插件</a>(最常用插件)<br> 如果你的文本内容无需在打包优化阶段做处理，几乎都可以使用这个插件来完成加载</li>
+<li><a href="">json插件</a><br> 比楼上多做了一步JSON.parse.</li>
+<li><a href="http://requirejs.org/docs/api.html#pageload" target="_blank" rel="external">amd-loader</a>(好东西):<br> 注意不要requirejs本身弄混了，因为requirejs本身不是基于xhr的，这个插件主要是提供完善的xhr支持来加载文本内容。一句化即它是<strong>[插件的loader插件]</strong>，作者事后才发现有这么一个插件…绕了不少弯路。具体例子可以查看<a href="https://github.com/guybedford/es6" target="_blank" rel="external">es6</a></li>
+<li><a href="https://github.com/SlexAxton/require-handlebars-plugin" target="_blank" rel="external">handlebars</a><br>  用来加载handlebar的插件</li>
+</ol>
+<p>其实由于amd等模块系统占据了开发中的模块入口这一环，其实在开发中可以有无限的可能性，这也是常规大公司都会自造一个轮子来最优配置的缘由之一，事实上requirejs目前的插件系统已经有足够的灵活性来定制自己的策略。</p>
+<h3 id="实现requirejs-regular的过程">实现requirejs-regular的过程</h3>
+<p><strong>背景</strong></p>
+<p>首先我们先理清我们的需求, 与常规的的模板预编译类似，我们的插件主要为了实现两个功能。</p>
+<ol>
+<li>在开发阶段，我们希望能加载js文件一样，加载我们的模板文件，这带来的几个好处<ul>
+<li>这使得我们不必将模板零散的填充到页面的script 或 textarea标签中</li>
+<li>依赖系统唯一化, 模板依赖集成进了模块依赖中</li>
+</ul>
+</li>
+<li>在优化阶段(即requirejs提供的<a href="http://requirejs.org/docs/optimization.html" target="_blank" rel="external">OPTIMIZER</a>的上线打包功能)，我们的模板字符串可以被预处理为序列化的AST对象，这样就不会发生浏览器端的解析，效率更高。</li>
+</ol>
+<p><strong>实现</strong></p>
+<p>一个插件模块会同时跑在浏览器端(开发环境)和node端(为线上或测试环境的打包优化工具)，所以你的插件模块必须可以同时跑在浏览器端和node端，这个几乎是整个开发环境最麻烦的一部分</p>
+<ol>
+<li>regular.js的单文件虽然是<a href="https://github.com/umdjs/umd" target="_blank" rel="external">umd</a>模块可以支持amd环境，但是由于依赖的dom。所以首先要将parser部分(不依赖dom)打成一个AMD模块，由于regularjs本身就是基于commonjs的模块构建，将其中一部分打成AMD模块是分分钟的事情，这里我们使用<a href="https://github.com/webpack/webpack" target="_blank" rel="external">webpack</a>来打包成<a href="https://github.com/regularjs/regular/blob/master/dist/regular-parser.js" target="_blank" rel="external">regular-parser.js</a>，简单起见我们随regularjs模块一同发布到bower上</li>
+<li>我们还要解决模板的加载问题，插件内部的加载问题也要手动解决，即你至少要实现<a href="http://requirejs.org/docs/plugins.html#apiload" target="_blank" rel="external">loader</a>接口和get接口。这里我们完全可以偷个懒，直接使用<strong>!text插件</strong>。</li>
+</ol>
+<p>即插件会依赖这两个模块</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">define([<span class="string">'text'</span>, <span class="string">'regular-parser'</span>], <span class="function"><span class="keyword">function</span><span class="params">(text, parser)</span></span>{</div><div class="line">	<span class="comment">//blalalalala...</span></div><div class="line">	<span class="keyword">return</span>{</div><div class="line">		load: load,</div><div class="line">		write: write</div><div class="line">	}</div><div class="line">})</div></pre></td></tr></table></figure>
+
+<p>然后我们只需要实现两个接口:</p>
+<ul>
+<li><strong>load</strong> </li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> buildMap = {};</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">load</span><span class="params">(name, req, onLoad, config)</span></span>{</div><div class="line">    text.load(name, req, <span class="function"><span class="keyword">function</span><span class="params">(data,r)</span></span>{</div><div class="line">        onLoad(</div><div class="line">          (buildMap[name] = parser.parse(data, <span class="literal">false</span>))</div><div class="line">        );</div><div class="line">    }, config);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>这里直接使用了text插件的纯文本加载，需要注意的是这个onLoad接口，传入参数相当于模块的内容，我们这里预parse了这段文本内容。即你通过<code>rgl!template.html</code>最终会获得解析后的AST数据。</p>
+<p>其实对于regularjs来讲在浏览器端有无进行模块系统层面的预解析并无意义，关键是在打包优化阶段。这里的<strong>buildMap</strong>主要是为了保存这段内容用于打包使用。</p>
+<p><strong>write</strong><br>实现write接口主要是为了在打包优化阶段改写相关模块</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> tpl = <span class="function"><span class="keyword">function</span><span class="params">(str, data)</span></span>{</div><div class="line">    <span class="keyword">return</span> str.replace(<span class="regexp">/\{\{(\w+)\}\}/g</span>, <span class="function"><span class="keyword">function</span><span class="params">(all, name)</span></span>{</div><div class="line">        <span class="keyword">return</span> data[name] || <span class="string">""</span></div><div class="line">    })</div><div class="line">}</div><div class="line"><span class="keyword">var</span> template =<span class="string">'define("{{pn}}!{{mn}}",function(){ return {{ast}} });\n'</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">write</span><span class="params">(pn, mn, writeModule)</span></span>{</div><div class="line">   <span class="keyword">if</span>(buildMap[mn]){</div><div class="line">       writeModule(</div><div class="line">           tpl(template,{</div><div class="line">               pn: pn,</div><div class="line">               mn: mn,</div><div class="line">               ast: parser.parse(buildMap[mn])</div><div class="line">           })</div><div class="line">       )</div><div class="line">   }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>此时这个插件必须依赖于两个模块，即必须同时保证<code>text</code>和<code>regular-parser</code>模块同时存在，类似的方案可以查看<a href="https://github.com/millermedeiros/requirejs-hogan-plugin" target="_blank" rel="external">hogan</a>，它必须保证环境中有<code>hogan</code>和<code>text</code>才可以运行. 熟悉requirejs打包过程的同学也知道，除了loader端的配置，我们在build的打包文件也需要一并将这些依赖模块剔除，因为上线时是不需要这些插件的。<strong>所以这将大大增加配置成本</strong>，其实解决方案也很简单，就是使用[webpack]再将其打包成一个standlone的AMD模块即可，具体可以参考<a href="https://github.com/regularjs/requirejs-regular" target="_blank" rel="external">这里的gulpfile</a>。</p>
+<p><strong>大功告成</strong></p>
+<p>使用就非常简单了，和你使用<a href="">requirejs-text</a>差不多, </p>
+<p>1.首先下载<a href="https://github.com/regularjs/requirejs-regular#download" target="_blank" rel="external">rgl.js</a>，最简单的就是bower安装</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bower <span class="operator"><span class="keyword">install</span> regularjs-regular <span class="comment">--save</span></span></div></pre></td></tr></table></figure>
+
+<p><em>save参数是安装后并写入到bower.json中，这个和npm一致</em></p>
+<p>2.配置</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">require</span><span class="class">.config</span>(<span class="rules">{</span></div><div class="line">   <span class="rule"><span class="attribute">paths </span>:<span class="value"> {</span></span></div><div class="line">       <span class="string">"rgl"</span>: <span class="string">'../../bower_components/regularjs-regular/rgl'</span>，</div><div class="line">       // 同时载入我们的regularjs来使用这些模板</div><div class="line">       <span class="string">"regularjs"</span>: <span class="string">'../../bower_components/regularjs/dist/regular'</span></div><div class="line">   }</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>3.使用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>([<span class="string">'rgl!./foo.html'</span>, <span class="string">'regularjs'</span>], <span class="function"><span class="keyword">function</span><span class="params">( tpl, Regular)</span></span>{</div><div class="line"></div><div class="line">    <span class="keyword">var</span> Foo = Regular.extend({</div><div class="line">      template: tpl</div><div class="line">    })</div><div class="line"></div><div class="line">    <span class="keyword">new</span> Foo({}).$inject(<span class="string">"#app"</span>)</div><div class="line"></div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>4.打包</p>
+<p>模板文件<code>&lt;h2&gt;{{message}}&lt;/h2&gt;</code>经过插件处理后会打包成</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">define(<span class="string">"rgl!foo.html"</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{<span class="keyword">return</span> [{<span class="string">"type"</span>:<span class="string">"element"</span>,<span class="string">"tag"</span>:<span class="string">"h2"</span>,<span class="string">"attrs"</span>:[],<span class="string">"children"</span>:[{<span class="string">"type"</span>:<span class="string">"expression"</span>,<span class="string">"body"</span>:<span class="string">"_c_._sg_('message', _d_['message'])"</span>,<span class="string">"constant"</span>:<span class="literal">false</span>,<span class="string">"setbody"</span>:<span class="string">"_c_._ss_('message',_p_,_d_, '=')"</span>}]}] });</div></pre></td></tr></table></figure>
+
+<p>即上线后就不会有parse了，比如PO主目前正在开发的项目在初期就有几十个模板文件，build成单文件后的运行时开销还是应该尽量避免.</p>
+<p><strong>tip：build.js记得通过</strong>stubModules<strong>配置项目删除掉这个插件模块，具体看demo的<a href="https://github.com/regularjs/requirejs-regular/blob/master/demo/build.js" target="_blank" rel="external">build.js</a>。</strong></p>
+<h3 id="对于NEJ的使用者">对于NEJ的使用者</h3>
+<p><strong>NEJ的新模块系统支持上述类似的regular模板加载了</strong></p>
+<p>网易杭州的同事，事实上你已经可以在NEJ的<strong>新模块系统中</strong>（完全兼容老版本）通过<code>regular!path/to/template.html</code>的方式来加载你的regular模板了，打包之后模板将会被预解析，同时新版NEJ也支持<code>text!</code>加载纯文本内容, 详询<strong>@飞锅</strong>。新版本的加载系统，支持类似AMD的注入写法，并且兼容老版本的模块写法，亲测好用哈。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/javascript/">javascript</a>, <a href="/tags/requirejs/">requirejs</a>, <a href="/tags/regularjs/">regularjs</a>
+  </div>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+<div class="search">
+  <form action="http://google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:leeluolee.github.com">
+  </form>
+</div>
+
+
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/tutorial/">tutorial</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/npm/">npm</a><small>1</small></li>
+  
+    <li><a href="/tags/tool/">tool</a><small>3</small></li>
+  
+    <li><a href="/tags/mcss/">mcss</a><small>2</small></li>
+  
+    <li><a href="/tags/css/">css</a><small>2</small></li>
+  
+    <li><a href="/tags/algorithm/">algorithm</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>6</small></li>
+  
+    <li><a href="/tags/regularjs/">regularjs</a><small>3</small></li>
+  
+    <li><a href="/tags/3d/">3d</a><small>1</small></li>
+  
+    <li><a href="/tags/nodejs/">nodejs</a><small>1</small></li>
+  
+    <li><a href="/tags/requirejs/">requirejs</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 leeluolee
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'leeluolee';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+  <script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</body>
+</html>
