@@ -37,6 +37,11 @@
 5. regularjs: 组件模块
 6. bootstrap.css: 无它, 真的没空去设计这个demo的样式了
 
+1. regularjs: 模块系统
+2. bower : 包管理
+3. requirejs-regular: requirejs的regular模板预解析插件，如果你的项目够小不需要预解析，也可以用requirejs官方的`text`插件来代替　对于使用browserify的同学也有regularify供大家选择
+4. restate: 提供路由支持，stateman的简单封装, 为的是更好的集成regularjs，这个封装很简单百行以内，相信大家都看得懂
+5. bootstrap: 无它, 真的没空去设计这个demo的样式了, 用bootstrap搭个能看的吧
 
 ###示例的结构
 
@@ -46,6 +51,9 @@
 ## 第一步: 模块切分
 
 常规的路由库一般的思路是这样的　ｂａｌａｌａｌａｌａｌａ，这种思路的路由只适合做，如果做复杂应用，你自己做分层处理，因为浏览器与服务端的路由有个最明显的区别，而stateman可以说是ui-router的思想的衍生, 不过也有很多差别
+常规的路由库一般的思路是这样的　ｂａｌａｌａｌａｌａｌａ，这种思路的路由只适合做，如果做复杂应用，你自己做分层处理，因为浏览器与服务端的路由有个最明显的区别，而stateman可以说是ui-router的思想的衍生, 不过也有很多差别，毕竟，官方对于stateman做了基于两种类库的封装: 1) regularjs  2) reactjs
+
+reactjs 仅仅发布了一篇博文，有兴趣的同学可以帮我翻译一份
 
 
 如图所示，以博客详情与博客列表所示，本APP显然可以切分三级结构
@@ -58,6 +66,10 @@
 4. app.chat: 完全杜赞
 
 __注意, 模块划分应该以模块视觉构成为主，而不是击逻辑__
+=======
+2. app.blog: 内容区域
+3. app.blog.detail: 
+>>>>>>> 40102278ab31780efdddd28a4e218bc5693e4f2a
 
 
 好我们先不急着进入下一步，访问 !#/app 看看
@@ -126,6 +138,12 @@ __Arguments__
 
 
 其中传入state函数的第二个参数如Application等都是标准的Regularjs组件(无需继承自特定的基类). 以Application为例.
+=======
+
+```
+
+其中传入state函数的第二个参数如Application等都是标准的Regularjs组件(无需继承自特定的基类). 以Application为例. 
+>>>>>>> 40102278ab31780efdddd28a4e218bc5693e4f2a
 
 __application.js__
 ```javascript
@@ -174,6 +192,8 @@ app.blog.detail.html
 
 ```
 
+d
+```
 由于BlogDetail以及是最后一级叶子节点，所以也就无需指定`ref=view`
 
 最终BlogDetail的内容会自动插入到Blog的view节点，而Blog的内容则会插入App的view节点中, 以此类推.
@@ -202,6 +222,7 @@ __app.js__中我们有这样一个函数
 
 ```js
 <li class={ {'z-crt': this.$state.is('app.index') } }> HomePage </li>
+
 ```
 
 ## 最后
@@ -275,3 +296,8 @@ var router = stateful( { view: document.getElementById("view"), Component: BaseC
 ```
 
 我们创建了一个可以查看首页的，这个例子事实上只有１级路由，因为app本身基本是不会活动了.　它主要是用来维持全局状态，比如边栏、登录信息等等.
+事实上，我们目前正在尝试的系统要远比这个例子复杂，但是仍然保持着良好的可扩展性，而且全程无需去关心dom的开发体验和业务逻辑的清晰度只有真正去尝试了才会知道其中的奇妙。
+
+我们创建了一个可以查看首页的，这个例子事实上只有１级路由，因为app本身基本是不会活动了.　它主要是用来维持全局状态，比如边栏、登录信息等等.
+
+
