@@ -6,7 +6,7 @@
     "hexo-generator-feed": "^0.2.0",
     "hexo-math": "^1.0.5",
     "hexo-renderer-ejs": "*",
-    "hexo-renderer-marked": "*",
-    "hexo-renderer-stylus": "*"
+    "hexo-renderer-marked": "0.1",
+    "hexo-renderer-stylus": "0.1"
   }
 }
