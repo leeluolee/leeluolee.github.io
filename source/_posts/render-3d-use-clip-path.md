@@ -67,7 +67,7 @@ _本文涉及到的资源clip3d: [https://github.com/leeluolee/clip3d](https://g
 }
 ```
 
-这里不得不提一下， 其实css和svg在很多方面有着千丝万缕的关系, [Masking Module规范](http://www.w3.org/TR/2014/WD-css-masking-1-20140213/)(clip-path隶属)基本源自于SVG 所以支持svg的[clipPath](http://www.w3.org/TR/css-masking-1/#svg-clipping-paths)来定义裁剪图形也丝毫都不奇怪了, 如下例所示
+其实css和svg在很多方面有着千丝万缕的关系, [Masking Module规范](http://www.w3.org/TR/2014/WD-css-masking-1-20140213/)(clip-path隶属)基本源自于SVG. 所以支持svg的[clipPath](http://www.w3.org/TR/css-masking-1/#svg-clipping-paths)来定义裁剪图形也丝毫都不奇怪了, 如下例所示
 
 ```css
 .cliped{
