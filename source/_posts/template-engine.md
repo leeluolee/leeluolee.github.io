@@ -424,11 +424,6 @@ __仁者见仁智者见智__, 反正我倾向于使用模板来描述结构，�
 2. [string-templating-considered-harmful](http://modernweb.com/2014/03/24/string-templating-considered-harmful/)
 
 
-
-
-
-
-
 {%endraw%}
 
 

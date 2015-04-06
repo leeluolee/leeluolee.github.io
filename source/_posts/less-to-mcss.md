@@ -27,7 +27,7 @@ tags: ['mcss', 'css']
 
 MCSS与LESS等其它预处理器的嵌套规则完全一致，支持`&`占位符，例如:
 
-```
+```css
 .m-home{
     display: block;
     div, ul{
@@ -134,6 +134,7 @@ __WHY?__
 ###3. mixin函数
 
 LESS中的`mixin`跟`ruleset`是一致的，不过可以带上操作,例如
+
 ```
 .size(@width, @height){
   width: @width
@@ -179,7 +180,8 @@ body{
 
 __输出__
 
-```
+```css
+
 body{
   *zoom:1;
   height:5px;
@@ -193,6 +195,7 @@ body:before,body:after{
 body:after{
   clear:both;
 }
+
 ```
 
 

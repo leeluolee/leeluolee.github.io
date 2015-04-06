@@ -8,50 +8,25 @@
 	"buffers":
 	[
 		{
-			"file": "source/_posts/create-a-todomvc-step-by-step.md",
+			"file": "source/_drafts/router.md",
 			"settings":
 			{
-				"buffer_size": 14274,
+				"buffer_size": 16159,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "source/_posts/template-engine.md",
 			"settings":
 			{
-				"buffer_size": 10846,
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "source/_posts/write-requirejs-plugin.md",
+			"file": "source/_drafts/get-spa-done.md",
 			"settings":
 			{
-				"buffer_size": 5779,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "source/_posts/use-hexo.md",
-			"settings":
-			{
-				"buffer_size": 1001,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "source/_drafts/why-you-dont-really-not-a-ui-library.md",
-			"settings":
-			{
-				"buffer_size": 200,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "source/_drafts/mdv-tech-comparation.md",
-			"settings":
-			{
-				"buffer_size": 1310,
+				"buffer_size": 4432,
 				"line_ending": "Unix"
 			}
 		}
@@ -120,8 +95,36 @@
 	},
 	"file_history":
 	[
-		"/home/code/leeluolee.github.com/source/_drafts/write-requirejs-plugin.md",
+		"/home/code/leeluolee.github.com/source/_drafts/mdv-tech-comparation.md",
+		"/home/code/leeluolee.github.com/.deploy/slide/webcomponent/nwd-slideshow/bower_components/marked/test/original/markdown_documentation_basics.html",
+		"/home/code/leeluolee.github.com/.deploy/js/moment.min.js",
+		"/home/code/leeluolee.github.com/source/slide/dsl/index.html",
+		"/home/code/leeluolee.github.com/source/slide/webcomponent/nwd-progress.html",
+		"/home/code/leeluolee.github.com/source/_drafts/why-you-dont-really-not-a-ui-library.md",
+		"/home/code/leeluolee.github.com/source/_drafts/template-english.md",
+		"/home/code/leeluolee.github.com/source/slide/dsl/nwd-slideshow/nwd-slideshow.html",
+		"/home/code/leeluolee.github.com/source/slide/dsl/dsl.md",
+		"/home/code/leeluolee.github.com/public/index.html",
+		"/home/code/leeluolee.github.com/source/slide/webcomponent/nwd-slideshow/nwd-slideshow.html",
+		"/home/code/leeluolee.github.com/public/slide/webcomponent/nwd-progress.html",
 		"/home/code/leeluolee.github.com/source/_posts/template-engine.md",
+		"/home/code/tmp/puer-test/route.js",
+		"/home/code/leeluolee.github.com/public/slide/webcomponent/index.html",
+		"/home/code/tmp/puer-test/xx.haml",
+		"/home/code/leeluolee.github.com/public/slide/webcomponent/nwd-slideshow/nwd-slide.html",
+		"/home/code/leeluolee.github.com/public/slide/webcomponent/nwd-slideshow/nwd-slideshow.html",
+		"/home/code/leeluolee.github.com/themes/light/source/slide/webcomponent/index.html",
+		"/home/code/leeluolee.github.com/source/_posts/you-dont-know-terminal.md",
+		"/home/code/leeluolee.github.com/source/_posts/create-a-todomvc-step-by-step.md",
+		"/home/code/leeluolee.github.com/themes/light/layout/default.ejs",
+		"/home/code/leeluolee.github.com/source/_posts/how-ls-help-you-diff-two-array.md",
+		"/home/code/leeluolee.github.com/source/_posts/use-puer-helpus-developer-frontend.md",
+		"/home/code/leeluolee.github.com/source/_drafts/use-puer-helpus-developer-frontend.md",
+		"/home/code/leeluolee.github.com/debug.log",
+		"/home/code/leeluolee.github.com/source/demo/ld/index.html",
+		"/home/code/leeluolee.github.com/source/_drafts/how-ls-help-you-diff-two-array.md",
+		"/home/code/leeluolee.github.com/source/_posts/write-requirejs-plugin.md",
+		"/home/code/leeluolee.github.com/source/_drafts/write-requirejs-plugin.md",
 		"/home/code/leeluolee.github.com/.deploy/js/twitter.js",
 		"/home/code/leeluolee.github.com/source/_posts/template-string-vs-dom.md",
 		"/home/code/leeluolee.github.com/source/_posts/yeoman-generator-start.md",
@@ -219,30 +222,7 @@
 		"/home/code/regularjs/node_modules/mocha/node_modules/mkdirp/test/umask_sync.js",
 		"/home/code/regularjs/src/util.js",
 		"/home/code/regularjs/node_modules/gulp-browserify/node_modules/browserify-shim/test/fixtures/entry-requires-root-level-var.js",
-		"/home/code/regularjs/node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/node_modules/ws/test/testserver.js",
-		"/home/code/regularjs/node_modules/karma-coverage/node_modules/ibrik/node_modules/coffee-script-redux/node_modules/cscodegen/test/interpolations.coffee",
-		"/home/code/regularjs/node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/node_modules/ws/test/WebSocket.integration.js",
-		"/home/code/regularjs/node_modules/karma-coverage/node_modules/ibrik/node_modules/coffee-script-redux/node_modules/esmangle/lib/post/transform-infinity.js",
-		"/home/code/regularjs/node_modules/karma/node_modules/connect/lib/middleware/responseTime.js",
-		"/home/code/regularjs/node_modules/karma/node_modules/rimraf/test/setup.sh",
-		"/home/code/regularjs/node_modules/karma/node_modules/log4js/test/setLevel-asymmetry-test.js",
-		"/home/code/regularjs/node_modules/gulp-browserify/node_modules/browserify/test/standalone_events.js",
-		"/home/code/regularjs-github-io/examples/slider.html",
-		"/home/code/regularjs/test/spec/browser-directive.js",
-		"/home/code/regularjs/test/spec/browser-watcher.js",
-		"/home/code/regularjs/node_modules/gulp-browserify/node_modules/.bin/browserify",
-		"/home/code/regularjs/node_modules/karma/lib/browser_result.js",
-		"/home/code/regularjs/bower.json",
-		"/home/code/regularjs/src/Regular.js",
-		"/home/code/regularjs/dist/regular.js",
-		"/home/code/regularjs/regular.sublime-project",
-		"/home/code/regularjs/bin/regular",
-		"/home/code/regularjs-github-io/bower_components/bootstrap/less/responsive-embed.less",
-		"/home/code/regularjs/README.md",
-		"/home/code/regularjs/example/getting-start.html",
-		"/home/luobo/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
-		"/home/code/regularjs/node_modules/gulp-util/lib/isNull.js",
-		"/home/code/regularjs-github-io/index.html"
+		"/home/code/regularjs/node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/node_modules/ws/test/testserver.js"
 	],
 	"find":
 	{
@@ -261,6 +241,80 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"much",
+			"iframe",
+			"Firefox",
+			"get_fragment",
+			"getFrage",
+			"domain",
+			"popstate",
+			"str_hashchange",
+			"      $",
+			"undefined",
+			"name",
+			"Hello",
+			"Component",
+			"config",
+			"hello",
+			"abc",
+			"hello",
+			"nameto",
+			"param",
+			"xxx",
+			"hello",
+			"app",
+			"handler",
+			"Callback",
+			"routers",
+			"style",
+			"slideshow",
+			"root",
+			"register",
+			"view",
+			"this",
+			"but",
+			"and",
+			"simply",
+			"expression",
+			"\n###",
+			"###",
+			"javascript",
+			"#",
+			"java",
+			"#",
+			"weight",
+			"producing",
+			"afterMarket",
+			"accessory",
+			"careLabel",
+			"airContraband",
+			"inRoad",
+			"item_index",
+			"item",
+			"in",
+			"matrix",
+			"row",
+			"matrix",
+			"fromt",
+			"from",
+			"data",
+			"toStrto",
+			"toStr",
+			"fromStr",
+			"comuteco",
+			"comute",
+			"return",
+			"HelloRegularE",
+			"HelloRegular",
+			"from",
+			"postfix",
+			"rmStr",
+			"data",
+			"converStrToArray",
+			"matrix",
+			"doComputed",
+			"hello",
+			"HelloRegular",
 			">",
 			"regularjs",
 			"-------------",
@@ -314,81 +368,7 @@
 			"site",
 			"this",
 			"search",
-			"jquery",
-			"layout",
-			"permalink",
-			"swiftype",
-			"swf",
-			"github",
-			"Search",
-			"fonts",
-			"Blog",
-			"inner",
-			"reference",
-			"active",
-			"Reference",
-			"h2",
-			"inverse",
-			"background-color",
-			"asserts",
-			"dynamic",
-			"library",
-			"framework",
-			"./",
-			"_partials",
-			"error",
-			"hahah",
-			"style",
-			"config",
-			"Text",
-			"Compositor",
-			"all",
-			"the",
-			"ability",
-			"extensiable",
-			"and",
-			"two",
-			"as",
-			"delegate",
-			"is",
-			"two",
-			"using",
-			"freque",
-			"filename",
-			"stylus",
-			"styl",
-			"stylus",
-			"hexojs",
-			"stylus",
-			"Stylus",
-			"stylus",
-			"Stylus",
-			"stylus",
-			"Stylus",
-			"stylus",
-			"nib",
-			"Stylus",
-			"Function",
-			"__msetter",
-			"stylus",
-			"styl",
-			"stylus",
-			"border",
-			"grey",
-			"default",
-			"codemirror",
-			"font",
-			"var",
-			"header",
-			"side",
-			"siderbar",
-			"sidebar.ejs",
-			"stylus",
-			"styl",
-			"mcss",
-			"stylus",
-			"renderer",
-			"stylus"
+			"jquery"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -406,79 +386,64 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "source/_posts/create-a-todomvc-step-by-step.md",
+					"file": "source/_drafts/router.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14274,
+						"buffer_size": 16159,
 						"regions":
 						{
-							"TagLint":
-							{
-								"flags": 2356,
-								"icon": "dot",
-								"regions":
-								[
-									[
-										4543,
-										4549
-									]
-								],
-								"scope": "variable.parameter"
-							}
 						},
 						"selection":
 						[
 							[
-								120,
-								120
+								1128,
+								1128
 							]
 						],
 						"settings":
 						{
 							"is_xml": false,
-							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"syntax": "Packages/Markdown Extended/Syntaxes/Markdown Extended.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 611.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "source/_posts/template-engine.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10846,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10832,
-								10832
+								0,
+								0
 							]
 						],
 						"settings":
 						{
+							"default_dir": "/home/code/leeluolee.github.com/source/stateman",
 							"is_xml": false,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 7181.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -486,130 +451,29 @@
 				},
 				{
 					"buffer": 2,
-					"file": "source/_posts/write-requirejs-plugin.md",
+					"file": "source/_drafts/get-spa-done.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5779,
+						"buffer_size": 4432,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1080,
-								1080
+								1963,
+								1963
 							]
 						],
 						"settings":
 						{
 							"is_xml": false,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Markdown Extended/Syntaxes/Markdown Extended.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 547.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "source/_posts/use-hexo.md",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 1001,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								16,
-								16
-							]
-						],
-						"settings":
-						{
-							"is_xml": false,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "source/_drafts/why-you-dont-really-not-a-ui-library.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 200,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								200,
-								200
-							]
-						],
-						"settings":
-						{
-							"is_xml": false,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "source/_drafts/mdv-tech-comparation.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1310,
-						"regions":
-						{
-							"TagLint":
-							{
-								"flags": 2356,
-								"icon": "dot",
-								"regions":
-								[
-									[
-										645,
-										649
-									]
-								],
-								"scope": "variable.parameter"
-							}
-						},
-						"selection":
-						[
-							[
-								7,
-								7
-							]
-						],
-						"settings":
-						{
-							"is_xml": false,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 731.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -664,6 +528,22 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"mdv",
+				"source/_drafts/mdv-tech-comparation.md"
+			],
+			[
+				"you",
+				"source/_posts/you-dont-know-terminal.md"
+			],
+			[
+				"templ",
+				"source/_posts/template-engine.md"
+			],
+			[
+				"template",
+				"source/_posts/template-engine.md"
+			],
 			[
 				"te",
 				"source/_posts/template-engine.md"
@@ -741,12 +621,36 @@
 		"selected_items":
 		[
 			[
-				"",
-				"/home/code/source/test/test.sublime-project"
+				"rgl",
+				"/home/code/regular/regular-state/rgl.sublime-project"
+			],
+			[
+				"ma",
+				"/home/code/maze/maze.sublime-project"
+			],
+			[
+				"rg",
+				"/home/code/regular/regular-state/rgl.sublime-project"
+			],
+			[
+				"de",
+				"/home/code/regular/guide.sublime-project"
 			],
 			[
 				"re",
 				"/home/code/regularjs/regular.sublime-project"
+			],
+			[
+				"pu",
+				"/home/code/puer/puer.sublime-workspace"
+			],
+			[
+				"te",
+				"/home/code/source/test/test.sublime-project"
+			],
+			[
+				"",
+				"/home/code/source/test/test.sublime-project"
 			],
 			[
 				"gui",
@@ -774,7 +678,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 408.0,
+	"side_bar_width": 265.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

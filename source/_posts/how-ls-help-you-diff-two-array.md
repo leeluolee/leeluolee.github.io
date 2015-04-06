@@ -1,10 +1,16 @@
 title: 使用莱文斯坦距离（Levenshtein distance）计算两数组的差异
 tags: [algorithm, javascript]
+date: 2014-10-21 21:40:04
 
 ---
 {%raw%}
 
+
+纯嘲讽哈，发博的人太少了，没有社区感
+
 ##前言
+
+
 
 [莱文斯坦距离(Levenshtein distance以下简称ld)](http://en.wikipedia.org/wiki/Levenshtein_distance)是一种常见的算法或可以称之为一种度量单位(前提是操作权重确定)，它用于表示从字串序列A到字串序列B所需要进行操作(增加、删除、更新)的综合。
 

@@ -1,6 +1,6 @@
-title: GitBook: Git + Markdown 快速发布你的书籍
+title: GitBook, Git + Markdown 快速发布你的书籍
 date: 2014-07-22 15:39:17
-tags: ["npm", "tool"]
+tags: [npm, tool]
 ---
 
 

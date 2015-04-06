@@ -1,5 +1,6 @@
 title:  requirejs的插件介绍与制作
 tags: [javascript, requirejs, regularjs]
+date: 2014-10-19 15:39:17
 
 ---
 
