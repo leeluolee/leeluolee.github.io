@@ -3,10 +3,13 @@ date:  2015-4-1 22:49:03
 tags: ['3d', 'javascript']
 ---
 
+__⚠警告__:
 
-_本页DEMO只兼容到webkit浏览器(如chrome)， 请确保你的正确打开姿势_
+- _本页DEMO只兼容到webkit浏览器(如chrome)， 请确保你的正确打开姿势_
 
-_本文涉及到的资源clip3d: [https://github.com/leeluolee/clip3d](https://github.com/leeluolee/clip3d) _
+- _本文涉及到的资源clip3d: [https://github.com/leeluolee/clip3d](https://github.com/leeluolee/clip3d) _
+
+- _前戏较长， 请耐心.._
 
 
 ## 缘由
@@ -94,7 +97,7 @@ _本文涉及到的资源clip3d: [https://github.com/leeluolee/clip3d](https://g
 
 今天我们会提到的图形定义主要是多边形polygon, 这也是最为灵活的一种图形描述方式, 例如下图
 
-![/attach/2015/clip/raw.jpg](/attach/2015/clip/raw.jpg)
+![/attach/2015/clip/raw.jpg](https://leeluolee.github.io/attach/2015/clip/raw.jpg)
 
 利用以下代码(兼容非IE浏览器)裁剪后
 
@@ -115,7 +118,7 @@ clip-path: url("#clipPolygon");
 
 __结果__
 
-![/attach/2015/clip/cliped.jpg](/attach/2015/clip/cliped.jpg)
+![/attach/2015/clip/cliped.jpg](https://leeluolee.github.io/attach/2015/clip/cliped.jpg)
 
 对于firefox，我们需要用`<clipPath>`来定义图形.
 
@@ -208,7 +211,7 @@ __结果__
 
 以上例的`crow`乌鸦为例，所有的图形描述其实都定义在css中, 由`:nth-child`伪类选择器来控制每一块三角的形状. polygon传入了三个参数即代表三角形的 三个顶点. 这里注意到由于是百分比单位， __图形天然就是响应式的, 创建的图形就像是svg图形__.
 
-![responsive](/attach/2015/clip/responsive.jpg)
+![responsive](https://leeluolee.github.io/attach/2015/clip/responsive.jpg)
 
 另外几个关键知识点
 
@@ -302,7 +305,7 @@ __结果__
 _事实上，在进行矩阵计算时,是四维齐次坐标_
 
 
-![/attach/2015/clip/3d.jpg](/attach/2015/clip/3d.jpg)
+![/attach/2015/clip/3d.jpg](https://leeluolee.github.io/attach/2015/clip/3d.jpg)
 
 
 但是问题来了， 我们的窗口只能显示2维平面图形, 如何实现3D展示? 
@@ -351,19 +354,17 @@ __投影变换__
 
 ![/attach/2015/clip/axis.png](http://xieguanglei.com/post/model-view-projection-matrix/images/ccv.jpg)
 
-这么做带来的最终结果是： 近大远小的视锥体，变成了等宽等长的立方体.
+这么做带来的最终结果是： 近大远小的视锥体，变成了等宽等长的立方体。 这样所有标准体内的节点到投影面都是等值投影(不需要做近大远小处理)。
 
 理论上我们只要将各个面包含的顶点的[x,y]坐标连接起来并填充成面，就可以完成物体的渲染了！ 实际上推广到Web前端实现， 我们还需要多做一步， 那就是:
 
 
 __荧幕坐标系到窗口坐标系的转换__
 
-经过投影矩阵变换后， x/y轴的范围是[-1, 1]. z轴为[-1, 1]. 
-
-假设我们最终获得的某个三角形顶点位置为分别是`-0.2, 0.3, 0.5` ，`0.2, -0.3, 0.1` 和 `0.5, 0.5, 0.3`. 但由于中心点和坐标轴方向与Web浏览器的定义都完全不同， 如下图所示.
+经过投影矩阵变换后， x/y轴的范围是[-1, 1]. z轴为[-1, 1]. 假设我们最终获得的某个三角形顶点位置为分别是`[-0.2, 0.3, 0.5]` ，`[0.2, -0.3, 0.1]` 和 `[0.5, 0.5, 0.3]`. 但由于中心点和坐标轴方向与Web浏览器的定义都完全不同， 如下图所示.
 
 
-![/attach/2015/clip/axis.png](/attach/2015/clip/axis.png)
+![/attach/2015/clip/axis.png](https://leeluolee.github.io/attach/2015/clip/axis.png)
 
 我们需要将x,y坐标修正到与窗口坐标系匹配.
 
@@ -372,9 +373,8 @@ x` = 0.5 - x
 y` = 0.5 - y
 ```
 
-即三个顶点分别为`0.7, 0.2, 0.5`、`0.3, 0.8, 0.1`和`0, 0, 0.3`, 为避免计算, 我们换算到百分比坐标并取其x,y坐标利用`clip-path`渲染出对应的平面图形.
+即三个顶点分别为`[0.7, 0.2, 0.5]`、`[0.3, 0.8, 0.1]`和`[0, 0, 0.3]`, 为避免计算, 我们换算到百分比坐标并取其x,y坐标利用`clip-path`渲染出对应的平面图形.
 
-由于平面图形符合透视常识， 所以在视觉上你会感觉到这是个3D图形.
 
 ```css
 .face1{
@@ -382,13 +382,14 @@ y` = 0.5 - y
 }
 ```
 
+由于平面图形符合透视常识， 所以在视觉上你会感觉到这是个3D图形.
 
 ### 锦上添花.
 
 
 __z-sorting__
 
-其实我们发现，经过投影变换后， 得到的坐标是有z分量的. 它正是用来帮助我们处理3D下两个面“谁前谁后的问题”. 由于实现方案的天然限制, 我们是无法实现像素级的Z深度缓存的, 但是我们可以利用`z-index`来实现一个山寨的z-sorting, 我们首先记录一个面的平均深度(三顶点), 然后直接将其取负作为节点的`z-index`值就完成了深度排序了
+其实我们发现，经过投影变换后， 得到的坐标是有z分量的, 它正是用来帮助我们处理3D下两个面“谁前谁后的问题”. 由于实现方案的天然限制, 我们是无法实现像素级的Z深度缓存的, 但是我们可以利用`z-index`来实现一个山寨的z-sorting, 我们首先记录一个面的平均深度(三顶点), 然后直接将其取负作为节点的`z-index`值就完成了深度排序了
 
 __背面剔除与光照__
 
@@ -433,7 +434,7 @@ __它们都是由三角形组成的图形, 并且每个三角形是由div和clip
 
 ```
 
-六面体的例子稍微复杂一点, 但仍然可以做， 即使用[border来模拟出我们的三角形](http://www.zhangxinxu.com/wordpress/2010/05/css-border%E4%B8%89%E8%A7%92%E3%80%81%E5%9C%86%E8%A7%92%E5%9B%BE%E5%BD%A2%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/).
+五面体的例子稍微复杂一点, 但仍然可以做， 即使用[border来模拟出我们的三角形](http://www.zhangxinxu.com/wordpress/2010/05/css-border%E4%B8%89%E8%A7%92%E3%80%81%E5%9C%86%E8%A7%92%E5%9B%BE%E5%BD%A2%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/).
 
 但是如果是下面这种例子呢？`transform`就束手无策了, __[【DEMO戳这里】](http://codepen.io/leeluolee/full/zxQqpm/)__
 

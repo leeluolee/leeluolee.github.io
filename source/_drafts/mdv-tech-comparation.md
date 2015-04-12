@@ -3,7 +3,7 @@ tags: []
 
 ---
 
-__这个面面观系列共有三篇，此文是第二篇。__ 
+__这个面面观系列共有三篇，此文是第二篇。__
 
 完成这三篇之后，我们开始由浅入深的介绍regularjs的实际应用技巧。
 
@@ -61,7 +61,7 @@ __前端狗1__: "哦" -  `<span>{{count}}台<span>`移至预约按钮下.
 __前端狗2__: `<span class='zhuizi'></span>台`移至预约按钮下
 
 ```javascript
-$('#book .zhuizi').text( 
+$('#book .zhuizi').text(
 	+$('#book .zhuizi').text()+3
  );// 预约数
 
@@ -88,11 +88,11 @@ $('#top-all .zhuizi').text(
 	+$('#order .zhuizi').text()+1;  
 )
 $('#top-month .zhuizi').text(
-	+$('#order .zhuiwezi').text()+1   
+	+$('#order .zhuiwezi').text()+1
 )
 ```
 
-第三天。__前端狗2__ ---->  __顶包侠__ 
+第三天。__前端狗2__ ---->  __顶包侠__
 
 -----------------------
 
@@ -120,7 +120,7 @@ $('#top-month .zhuizi').text(
 - 存取器（Accessor）
 	1. 存取Wrap型 (setter、getter)
 	2. defineProperty
-	
+
 - 脏检查（Dirty Check）
 	1. 广度脏检查(数据层的观察者系统)
 	2. 深度脏检查(view层抽象如virtual dom)
@@ -129,6 +129,7 @@ $('#top-month .zhuizi').text(
 跟[上篇关于模板的文章]()一样，我会从客观的基本原理和限制来阐述我的观点，避免产生不必要的鸡同鸭讲的技术争论。
 
 
+##对于对象类型
 
 ##存取器Accessor
 
@@ -143,7 +144,7 @@ $('#top-month .zhuizi').text(
 
 ### 共性
 
-### 
+###
 
 ### 值代理defineproperty
 
@@ -169,7 +170,7 @@ __Example__
 
 首先react当然是属于脏检查，各位有异议的除了看官网和人云亦云之外要学会主观判断哈。
 
-区别至于angularjs，regularjs这类的数据层脏检查，react的脏检查发生在view抽象层——virtual dom. 
+区别至于angularjs，regularjs这类的数据层脏检查，react的脏检查发生在view抽象层——virtual dom.
 
 
 
