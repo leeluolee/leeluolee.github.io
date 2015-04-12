@@ -4,7 +4,7 @@
   <subtitle><![CDATA[萝卜的技术博客]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leeluolee.github.com/"/>
-  <updated>2015-04-06T14:04:39.003Z</updated>
+  <updated>2015-04-12T04:08:31.172Z</updated>
   <id>http://leeluolee.github.com/</id>
   
   <author>
@@ -19,9 +19,16 @@
     <link href="http://leeluolee.github.com/2015/04/01/render-3d-use-clip-path/"/>
     <id>http://leeluolee.github.com/2015/04/01/render-3d-use-clip-path/</id>
     <published>2015-04-01T14:49:03.000Z</published>
-    <updated>2015-04-06T13:59:36.000Z</updated>
-    <content type="html"><![CDATA[<p><em>本页DEMO只兼容到webkit浏览器(如chrome)， 请确保你的正确打开姿势</em></p>
-<p><em>本文涉及到的资源clip3d: <a href="https://github.com/leeluolee/clip3d" target="_blank" rel="external">https://github.com/leeluolee/clip3d</a> </em></p>
+    <updated>2015-04-07T01:27:20.000Z</updated>
+    <content type="html"><![CDATA[<p><strong>⚠警告</strong>:</p>
+<ul>
+<li><p><em>本页DEMO只兼容到webkit浏览器(如chrome)， 请确保你的正确打开姿势</em></p>
+</li>
+<li><p><em>本文涉及到的资源clip3d: <a href="https://github.com/leeluolee/clip3d" target="_blank" rel="external">https://github.com/leeluolee/clip3d</a> </em></p>
+</li>
+<li><p><em>前戏较长， 请耐心..</em></p>
+</li>
+</ul>
 <h2 id="缘由">缘由</h2>
 <p>几天之前, 一个<a href="http://species-in-pieces.com/#" target="_blank" rel="external">species-in-pieces</a>的网站把我震到了(如下图), 出于一个<strong>优秀前端的敏锐嗅觉和原始本能</strong>，<br>我立刻祭出了看家法宝——Chrome开发者工具开始偷窥这个网站.</p>
 <p><img src="http://www.species-in-pieces.com/img/assets/poster-detail-2.png" alt="species in pieces"></p>
@@ -51,12 +58,12 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">clipPath</span> <span class="attribute">id</span>=<span class="value">"clipping"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">circle</span> <span class="attribute">cx</span>=<span class="value">"150"</span> <span class="attribute">cy</span>=<span class="value">"150"</span> <span class="attribute">r</span>=<span class="value">"50"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">rect</span> <span class="attribute">x</span>=<span class="value">"150"</span> <span class="attribute">y</span>=<span class="value">"150"</span> <span class="attribute">width</span>=<span class="value">"100"</span> <span class="attribute">height</span>=<span class="value">"100"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">clipPath</span>&gt;</span></div></pre></td></tr></table></figure>
 
 <p>今天我们会提到的图形定义主要是多边形polygon, 这也是最为灵活的一种图形描述方式, 例如下图</p>
-<p><img src="/attach/2015/clip/raw.jpg" alt="/attach/2015/clip/raw.jpg"></p>
+<p><img src="https://leeluolee.github.io/attach/2015/clip/raw.jpg" alt="/attach/2015/clip/raw.jpg"></p>
 <p>利用以下代码(兼容非IE浏览器)裁剪后</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">.clip{</div><div class="line">/*Chrome,Safari*/</div><div class="line">-webkit-clip-path: polygon(647px 409px,840px 203px,619px 12px,418px 213px);</div><div class="line"></div><div class="line">/*Firefox*/</div><div class="line">clip-path: url("#clipPolygon");</div><div class="line"></div><div class="line">/* iOS support inline encoded svg file*/</div><div class="line">-webkit-mask: url(data:image/svg+xml;charset=utf-8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSIwIiBoZWlnaHQ9IjAiPgogIDxjbGlwUGF0aCBpZD0ic3ZnQ2xpcCI+CiAgICA8cGF0aCBpZD0ic3ZnUGF0aCIgZD0iTTY0Nyw0MDkgTDg0MCwyMDMgNjE5LDEyIDQxOCwyMTMgeiIvPgogIDwvY2xpcFBhdGg+CiAgPHBhdGggaWQ9InN2Z01hc2siIGQ9Ik02NDcsNDA5IEw4NDAsMjAzIDYxOSwxMiA0MTgsMjEzIHoiICAvPgo8L3N2Zz4=) no-repeat;</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p><strong>结果</strong></p>
-<p><img src="/attach/2015/clip/cliped.jpg" alt="/attach/2015/clip/cliped.jpg"></p>
+<p><img src="https://leeluolee.github.io/attach/2015/clip/cliped.jpg" alt="/attach/2015/clip/cliped.jpg"></p>
 <p>对于firefox，我们需要用<code>&lt;clipPath&gt;</code>来定义图形.</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">svg</span> <span class="attribute">width</span>=<span class="value">"0"</span> <span class="attribute">height</span>=<span class="value">"0"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">clipPath</span> <span class="attribute">id</span>=<span class="value">"clipPolygon"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">polygon</span> <span class="attribute">points</span>=<span class="value">"647 409,840 203,619 12,418 213"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">polygon</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="title">clipPath</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">svg</span>&gt;</span></div></pre></td></tr></table></figure>
 
@@ -71,7 +78,7 @@
 
 <p>我们可以发现，每个动物其实都是由30个三角形组成的, 每个三角形就代表一对<code>.shard-wrap&gt;.shard</code>节点, 它们都是100%的宽高的盒子.所以图形完完全全是通过<code>clip-path:polygon</code>裁剪而来的.</p>
 <p>以上例的<code>crow</code>乌鸦为例，所有的图形描述其实都定义在css中, 由<code>:nth-child</code>伪类选择器来控制每一块三角的形状. polygon传入了三个参数即代表三角形的 三个顶点. 这里注意到由于是百分比单位， <strong>图形天然就是响应式的, 创建的图形就像是svg图形</strong>.</p>
-<p><img src="/attach/2015/clip/responsive.jpg" alt="responsive"></p>
+<p><img src="https://leeluolee.github.io/attach/2015/clip/responsive.jpg" alt="responsive"></p>
 <p>另外几个关键知识点</p>
 <ul>
 <li><p><strong>clip-path的碰撞盒</strong></p>
@@ -109,7 +116,7 @@
 <h3 id="3维坐标系">3维坐标系</h3>
 <p>既然是3d图形， 当然在3维空间内会有一个唯一的定义， 就比如下图的Ag点， 它由x坐标、y坐标与z坐标组成.</p>
 <p><em>事实上，在进行矩阵计算时,是四维齐次坐标</em></p>
-<p><img src="/attach/2015/clip/3d.jpg" alt="/attach/2015/clip/3d.jpg"></p>
+<p><img src="https://leeluolee.github.io/attach/2015/clip/3d.jpg" alt="/attach/2015/clip/3d.jpg"></p>
 <p>但是问题来了， 我们的窗口只能显示2维平面图形, 如何实现3D展示? </p>
 <p>答案就是利用视觉透视原理的投影变换.</p>
 <h3 id="投影">投影</h3>
@@ -132,22 +139,21 @@
 <p>刚才<a href="#pic3">图3</a>中， 其实还定义了一个四棱台， 这个称之为“视椎体”, 它定义摄像机的最大可视距离, 最小可视距离(一般为投影面)以及可视角度, 只有在这个视锥体之内的物品是可以被显示的, 否则将会被剔除(或裁减).</p>
 <p>投影变换实际上也是一次空间变换， 它将视锥体内的点映射到了标准化的立方体内(如图4), 坐标范围从<code>[-1, -1, -1]</code> 到 <code>[1, 1, 1]</code>, 所有经过映射点如果落在立方体之外即代表它在视锥体之外.</p>
 <p><img src="http://xieguanglei.com/post/model-view-projection-matrix/images/ccv.jpg" alt="/attach/2015/clip/axis.png"></p>
-<p>这么做带来的最终结果是： 近大远小的视锥体，变成了等宽等长的立方体.</p>
+<p>这么做带来的最终结果是： 近大远小的视锥体，变成了等宽等长的立方体。 这样所有标准体内的节点到投影面都是等值投影(不需要做近大远小处理)。</p>
 <p>理论上我们只要将各个面包含的顶点的[x,y]坐标连接起来并填充成面，就可以完成物体的渲染了！ 实际上推广到Web前端实现， 我们还需要多做一步， 那就是:</p>
 <p><strong>荧幕坐标系到窗口坐标系的转换</strong></p>
-<p>经过投影矩阵变换后， x/y轴的范围是[-1, 1]. z轴为[-1, 1]. </p>
-<p>假设我们最终获得的某个三角形顶点位置为分别是<code>-0.2, 0.3, 0.5</code> ，<code>0.2, -0.3, 0.1</code> 和 <code>0.5, 0.5, 0.3</code>. 但由于中心点和坐标轴方向与Web浏览器的定义都完全不同， 如下图所示.</p>
-<p><img src="/attach/2015/clip/axis.png" alt="/attach/2015/clip/axis.png"></p>
+<p>经过投影矩阵变换后， x/y轴的范围是[-1, 1]. z轴为[-1, 1]. 假设我们最终获得的某个三角形顶点位置为分别是<code>[-0.2, 0.3, 0.5]</code> ，<code>[0.2, -0.3, 0.1]</code> 和 <code>[0.5, 0.5, 0.3]</code>. 但由于中心点和坐标轴方向与Web浏览器的定义都完全不同， 如下图所示.</p>
+<p><img src="https://leeluolee.github.io/attach/2015/clip/axis.png" alt="/attach/2015/clip/axis.png"></p>
 <p>我们需要将x,y坐标修正到与窗口坐标系匹配.</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">x<span class="escape">` </span>= <span class="number">0.5</span> - x</div><div class="line">y<span class="escape">` </span>= <span class="number">0.5</span> - y</div></pre></td></tr></table></figure>
 
-<p>即三个顶点分别为<code>0.7, 0.2, 0.5</code>、<code>0.3, 0.8, 0.1</code>和<code>0, 0, 0.3</code>, 为避免计算, 我们换算到百分比坐标并取其x,y坐标利用<code>clip-path</code>渲染出对应的平面图形.</p>
-<p>由于平面图形符合透视常识， 所以在视觉上你会感觉到这是个3D图形.</p>
+<p>即三个顶点分别为<code>[0.7, 0.2, 0.5]</code>、<code>[0.3, 0.8, 0.1]</code>和<code>[0, 0, 0.3]</code>, 为避免计算, 我们换算到百分比坐标并取其x,y坐标利用<code>clip-path</code>渲染出对应的平面图形.</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class">.face1</span><span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">-webkit-clip-path</span>:<span class="value"> (<span class="number">70%</span> <span class="number">20%</span>, <span class="number">30%</span> <span class="number">80%</span>, <span class="number">0%</span> <span class="number">0%</span>)</span></span>;</div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
 
+<p>由于平面图形符合透视常识， 所以在视觉上你会感觉到这是个3D图形.</p>
 <h3 id="锦上添花-">锦上添花.</h3>
 <p><strong>z-sorting</strong></p>
-<p>其实我们发现，经过投影变换后， 得到的坐标是有z分量的. 它正是用来帮助我们处理3D下两个面“谁前谁后的问题”. 由于实现方案的天然限制, 我们是无法实现像素级的Z深度缓存的, 但是我们可以利用<code>z-index</code>来实现一个山寨的z-sorting, 我们首先记录一个面的平均深度(三顶点), 然后直接将其取负作为节点的<code>z-index</code>值就完成了深度排序了</p>
+<p>其实我们发现，经过投影变换后， 得到的坐标是有z分量的, 它正是用来帮助我们处理3D下两个面“谁前谁后的问题”. 由于实现方案的天然限制, 我们是无法实现像素级的Z深度缓存的, 但是我们可以利用<code>z-index</code>来实现一个山寨的z-sorting, 我们首先记录一个面的平均深度(三顶点), 然后直接将其取负作为节点的<code>z-index</code>值就完成了深度排序了</p>
 <p><strong>背面剔除与光照</strong></p>
 <p>背面剔除与光照分别利用平面法线与观察方向和光线投射方向有关， 一些简单的三角函数+向量点积计算和色值混合操作， 这里我们就不再多做说明. 简单起见， 光源这里只处理为平行无限远的光源， 而背面剔除我们仅仅只是<code>display:none</code>而已</p>
 <h3 id="clip小节">clip小节</h3>
@@ -157,7 +163,7 @@
 <p>是的， 上面那个例子其实可以使用transform更简单的解决， 以正方体为例.</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class">.back</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateZ</span>(-<span class="number">100px</span>) <span class="function">rotateY</span>(<span class="number">180deg</span>)</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.right</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotateY</span>(-<span class="number">270deg</span>) <span class="function">translateX</span>(<span class="number">100px</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">transform-origin</span>:<span class="value"> top right</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.left</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotateY</span>(<span class="number">270deg</span>) <span class="function">translateX</span>(-<span class="number">100px</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">transform-origin</span>:<span class="value"> center left</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.top</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotateX</span>(-<span class="number">90deg</span>) <span class="function">translateY</span>(-<span class="number">100px</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">transform-origin</span>:<span class="value"> top center</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.bottom</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotateX</span>(<span class="number">90deg</span>) <span class="function">translateY</span>(<span class="number">100px</span>)</span></span>;</div><div class="line">  <span class="rule"><span class="attribute">transform-origin</span>:<span class="value"> bottom center</span></span>;</div><div class="line"><span class="rule">}</span></div><div class="line"><span class="class">.front</span> <span class="rules">{</span></div><div class="line">  <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateZ</span>(<span class="number">100px</span>)</span></span>;</div><div class="line"><span class="rule">}</span></div></pre></td></tr></table></figure>
 
-<p>六面体的例子稍微复杂一点, 但仍然可以做， 即使用<a href="http://www.zhangxinxu.com/wordpress/2010/05/css-border%E4%B8%89%E8%A7%92%E3%80%81%E5%9C%86%E8%A7%92%E5%9B%BE%E5%BD%A2%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/" target="_blank" rel="external">border来模拟出我们的三角形</a>.</p>
+<p>五面体的例子稍微复杂一点, 但仍然可以做， 即使用<a href="http://www.zhangxinxu.com/wordpress/2010/05/css-border%E4%B8%89%E8%A7%92%E3%80%81%E5%9C%86%E8%A7%92%E5%9B%BE%E5%BD%A2%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/" target="_blank" rel="external">border来模拟出我们的三角形</a>.</p>
 <p>但是如果是下面这种例子呢？<code>transform</code>就束手无策了, <strong><a href="http://codepen.io/leeluolee/full/zxQqpm/" target="_blank" rel="external">【DEMO戳这里】</a></strong></p>
 <p><img src="http://ww4.sinaimg.cn/large/6252205cgw1eqmyg50fsjg208e0a44mf.gif" alt="复杂图形"></p>
 <p>最关键的问题就是, 由于上文所提到的例子在流程上与常规意义上的3d渲染一致的，我们可以使用类似的数据模型来渲染图形。 而transform是以面为基础的， 有着天然的劣势。</p>
@@ -184,8 +190,15 @@
 <hr>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p><em>本页DEMO只兼容到webkit浏览器(如chrome)， 请确保你的正确打开姿势</em></p>
-<p><em>本文涉及到的资源clip3d: <a href="https://github.com/leeluolee/clip3d" target="_blank" rel="external">https://github.com/leeluolee/clip3d</a> </em></p>
+    <![CDATA[<p><strong>⚠警告</strong>:</p>
+<ul>
+<li><p><em>本页DEMO只兼容到webkit浏览器(如chrome)， 请确保你的正确打开姿势</em></p>
+</li>
+<li><p><em>本文涉及到的资源clip3d: <a href="https://github.com/leeluolee/clip3d" target="_blank" rel="external">https://github.com/leeluolee/clip3d</a> </em></p>
+</li>
+<li><p><em>前戏较长， 请耐心..</em></p>
+</li>
+</ul>
 <h2 id="缘由">缘由</h2>
 <p>几天之前, 一个<a href="http://species-in-pieces.com/#" target="_blank" rel="external">species-in-pieces</a>的网站把我震到了(如下图), 出于一个<strong>优秀前端的敏锐嗅觉和原始本能</strong>，<br>我立刻祭出了看家法宝——Chrome开发者工具开始偷窥这个网站.</p>
 <p><img src="http://www.species-in-pieces.com/img/assets/poster-detail-2.png" alt="species in pieces"></p>
