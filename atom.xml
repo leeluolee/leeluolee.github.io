@@ -4,7 +4,7 @@
   <subtitle><![CDATA[萝卜的技术博客]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leeluolee.github.com/"/>
-  <updated>2015-04-12T04:08:31.172Z</updated>
+  <updated>2015-04-12T04:24:59.002Z</updated>
   <id>http://leeluolee.github.com/</id>
   
   <author>
@@ -1214,7 +1214,7 @@
     <link href="http://leeluolee.github.com/2013/08/01/mcss-start/"/>
     <id>http://leeluolee.github.com/2013/08/01/mcss-start/</id>
     <published>2013-08-01T14:49:03.000Z</published>
-    <updated>2015-04-06T13:59:36.000Z</updated>
+    <updated>2015-04-12T04:24:45.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2>
 <p>这些年，从淘宝的工程师翻译LESS首页以及bootstrap带动的LESS热波及到了国内，预处理器开始渐渐被一些工程师所接受。 <a href="http://www.w3cplus.com/sassguide/comments.html" target="_blank" rel="external">@w3cplus</a> 最近也开了一个预处理器专版,主要是针对SASS，版面不错(相较于SASS主页)。同时豆瓣也利用stylus封装了一个简单css framework, 目前三款预处理器算是都有了一定的受众(当然90%应该都是LESS用户)。</p>
 <p>此文会简单进行对预处理器的介绍并进行几款预处理器的简单对比(主要是加入了MCSS,类似的对比文是在太多了)。</p>
