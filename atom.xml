@@ -4,7 +4,7 @@
   <subtitle><![CDATA[萝卜的技术博客]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leeluolee.github.com/"/>
-  <updated>2015-04-15T12:29:14.911Z</updated>
+  <updated>2015-04-15T12:36:34.710Z</updated>
   <id>http://leeluolee.github.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://leeluolee.github.com/2015/04/13/function-to-string/"/>
     <id>http://leeluolee.github.com/2015/04/13/function-to-string/</id>
     <published>2015-04-13T03:46:36.000Z</published>
-    <updated>2015-04-15T11:59:46.000Z</updated>
+    <updated>2015-04-15T12:36:25.000Z</updated>
     <content type="html"><![CDATA[<p><strong>⚠约定</strong>: 以下将<code>Function.prototype.toString</code>简称为<code>fn.toString</code></p>
 <p><em>我发现自己快没救了，又把一个短文硬生生写成了长文，客官慢用…</em></p>
 <h2 id="先介绍下Function-protoype-toString"><strong>先介绍下Function.protoype.toString</strong></h2>
@@ -123,7 +123,7 @@
 <p>但还是那个问题: <strong>ES6目前可用了吗?</strong></p>
 <h2 id="序列化函数">序列化函数</h2>
 <p>什么是函数序列化，即将函数序列话成字符串这种通用数据格式 这样可以实现<strong>程序逻辑在不同的runtime之间传递</strong></p>
-<p>我们这里点一个应用场景: 比依赖外部文件来使用webworker</p>
+<p>我们这里点一个应用场景: 不依赖外部js文件时仍能使用webworker帮助我们进行并行计算</p>
 <h3 id="什么是webworker">什么是webworker</h3>
 <p>在浏览器中， js的执行与UI更新是公用一个进程, 这导致它们会互相阻塞, 用户直接的感受就是, 在长时间的脚本执行中，界面会“卡住”.</p>
 <p>特别在很多处理大列表的场景中，熟练的程序员会通过(setTimeout/setInterval/requestAnimationFrame)等方法来模拟任务分片，<strong>好为UI线程腾出时间</strong>, 这样用户的体验就是按钮可以点了，但总的完成时间其实是增加了</p>
@@ -146,6 +146,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fibonacci-worker: <span class="number">1299.735</span>ms</div><div class="line">fibonacci-noworker: <span class="number">5198.129</span>ms</div></pre></td></tr></table></figure>
 
 <p>使用worker的版本速度会更高一些， 当然更关键的问题是 <strong>noworker版本阻塞的UI线程，使得button等控件都没有反应了</strong>.</p>
+<h3 id="使用function-toString实现单文件的Webworker运算">使用function.toString实现单文件的Webworker运算</h3>
 <p>但是, <strong>非worker版本有个好处就是逻辑定义都在一个文件里</strong>， 而不用分散计算逻辑到子文件， 有没有两全的方案呢？</p>
 <p>答案是 <strong>使用<code>function.toString()</code> 和 <code>URL.createObjectURL</code> 方法来动态创建脚本文件内容</strong>.</p>
 <p>我们对worker.html做以下调整</p>
