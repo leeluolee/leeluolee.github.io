@@ -66,8 +66,8 @@ per_page: 10
 pagination_dir: page
 
 # Disqus
-disqus_shortname: leeluolee
-duoshuo_shortname: leeluolee
+# disqus_shortname: leeluolee
+# duoshuo_shortname: leeluolee
 
 # Extensions
 ## Plugins: https://github.com/tommy351/hexo/wiki/Plugins

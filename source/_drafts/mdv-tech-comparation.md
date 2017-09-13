@@ -85,7 +85,7 @@ __前端狗2__
 ```javascript
 
 $('#top-all .zhuizi').text(
-	+$('#order .zhuizi').text()+1;  
+	+$('#order .zhuizi').text()+1;
 )
 $('#top-month .zhuizi').text(
 	+$('#order .zhuiwezi').text()+1

@@ -20,6 +20,8 @@ Martin Flower　曾经这样定义过:
 [[提问：大家知道这个是什么人吗？　不重要啊，反正大家肯定都觉得它很牛逼对吧，效果达到了
 事实上，此人真的很牛逼，在ＤＳＬ领域有多篇Paper，这本书也是它写的]]
 
+
+dad的骄傲离开
 那么问题又来了？能更具体点么
 
 我先不尝试乏味的去解释这句话的意思，我先转为问大家两个问题
@@ -64,8 +66,7 @@ $("div.first")
 在开始之前，我们先来熟悉几个名词。
 
 1. 抽象: 抽象可以说是我们程序员的本能，我们习惯将熟知的部分封装起来，而关注更上层的业务逻辑。定义一个变量、函数，模块，Class，甚至架构都称之为抽象，而构建DSL是一种更高层次的抽象，它跳脱（或部分跳脱）了语言本身的表达能力
-
-2. 一般接口(command-query-interface): 
+2. 一般接口(command-query-interface):
 
 
 
@@ -170,7 +171,7 @@ DSL分为几种类型: 1) 内部ＤＳＬ　2) 外部ＤＳＬ　3)语言工作�
 
 
 
-其实对于很简单的复杂度的外部ＤＳＬ, 
+其实对于很简单的复杂度的外部ＤＳＬ,
 1. 分隔符指导解析: 适合语法简单的场景
 映射
 ![](http://knockoutjs.com/img/homepage-example.png)
@@ -360,11 +361,11 @@ d.div({className: 'MarkdownEditor'}, [
 
 {div, h3, textarea} = React.DOM
 
-div className: 'MarkdownEditor', 
+div className: 'MarkdownEditor',
   h3 title: 'title', 'Input'
   textarea onKeyUp: @handleKeyUp, ref: 'textarea',
     @state.value
-  
+
 ```
 
 突然就变得容易接受了呢。这就是语法噪音带来的巨大影响，将会极大的影响语言的表达能力
@@ -395,4 +396,3 @@ coffeescript和ruby等语言都是基于缩进的，直接的结果就是语法�
 
 #　说了这么多有没有感觉到我什么都没有说？　这也不是那也不是，就不能给个１００％准确的
 定义？　事实上在知道ＤＳＬ这个词汇之前我已经几乎完成了mcss的开，去涉及下这个领域，当你碰到问题是，ＤＳＬ可能会成为你脱颖而出的杀手锏
-

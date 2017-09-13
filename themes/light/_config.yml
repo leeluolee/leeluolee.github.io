@@ -3,8 +3,9 @@ menu:
   归档: /archives
   订阅: /atom.xml
   Github: https://github.com/leeluolee
+  关于我(简历): /resume
 
-widgets: 
+widgets:
 - search
 - category
 - tag
@@ -22,7 +23,6 @@ addthis:
   pubid:
   facebook: true
   twitter: true
-  google: true
   pinterest: true
 
 fancybox: true
